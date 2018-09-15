@@ -1,0 +1,58 @@
+{% import "macros/macros.html.twig" as macro %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>{{ system.title }} | {{ page.title }}</title>
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+        {% block stylesheet %}
+            {% block linkStylesheet %}
+                <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous" />
+                {% stylesheets
+                    'lib/jquery-ui/jquery-ui.css'
+                    'lib/adminlte/css/AdminLTE.min.css'
+                    filter='cssrewrite'
+                    filter='uglifycss'
+                    output='css/build/backend_layout.css'
+                %}
+                    <link type="text/css" rel="stylesheet" href="{{ asset_url }}" />
+                {% endstylesheets %}
+            {% endblock %}
+
+            {% block styleStylesheets %}
+            {% endblock %}
+        {% endblock stylesheet %}
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body class="hold-transition {{ page.preclass }}-page">
+
+        <div class="{{ page.preclass }}-box">
+            <div class="{{ page.preclass }}-logo">
+                <a href="{{ path('homepage') }}">
+                    {% image 'images/logo.png' filter='optipng' output='images/logo.png'%}
+                        <img style="padding: 0 60px 0 60px; width: 100%;" src="{{ asset_url }}" alt="Diagonales" />
+                    {% endimage %}
+                </a>
+            </div>
+
+            <div class="{{ page.preclass }}-box-body">
+                <p class="{{ page.preclass }}-box-msg">{{ page.title }}</p>
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+        {% block javascript %}
+            <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
+            <script src="//code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+            <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+        {% endblock javascript %}
+    </body>
+</html>

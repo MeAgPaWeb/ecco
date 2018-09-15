@@ -1,0 +1,31 @@
+{% extends 'user/layout.html.twig' %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% set page =
+    {
+        "title": "Registro exitoso",
+        "preclass": "login"
+    }
+%}
+
+{% block content %}
+    <p>{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</p>
+    {% if targetUrl %}
+    <p><a href="{{ path(targetUrl) }}">Volver al portal</a></p>
+    {% endif %}
+    
+    <div class="row">
+        <div class="col-xs-5">
+            <a class="btn btn-primary btn-block btn-flat" href="{{ path('frontend_profile_show') }}">Perfil</a>
+        </div>
+        <div class="col-xs-2"></div>
+        <div class="col-xs-5">
+            <a class="btn btn-default btn-block btn-flat" href="{{ path('fos_user_security_logout') }}">Cerrar sesión</a>
+        </div>
+    </div>
+{% endblock %}
+
+

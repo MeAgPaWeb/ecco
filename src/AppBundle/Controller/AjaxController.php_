@@ -1,0 +1,418 @@
+<?php
+
+namespace AppBundle\Controller\Backend;
+
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use AppBundle\Entity\User;
+use AppBundle\Form\UserType;
+use AppBundle\Entity\Tag;
+use Doctrine\Common\Collections\ArrayCollection;
+
+/**
+ * User controller.
+ *
+ * @Route("/ajax")
+ */
+class AjaxController extends Controller
+{
+    /**
+     * @Route("/ajax_user_configuration", name="ajax_user_configuration")
+     * @Method("post")
+     */
+    public function ajaxUserConfigurationAction()
+    {
+        $request = Request::createFromGlobals();
+        $name = $request->request->get('name');
+        $value = $request->request->get('value');
+        if ($value == 'true') {
+            $value = true;
+        } else if ($value == 'false') {
+            $value = false;
+        }
+
+        $user = $this->get('security.token_storage')->getToken()->getUser(); //$this->get('fos_user.user_manager')->findUserByUsername($editForm["username"]->getData());
+        $userConfig = $user->getConfigurations();
+
+        switch($name) {
+            case "theme":
+                $userConfig->setTheme($value);
+                break;
+            case "lighttheme":
+                $userConfig->setLightTheme($value);
+                break;
+            case "soundnotifications":
+                $userConfig->setSoundNotifications($value);
+                break;
+            case "graphicnotifications":
+                $userConfig->setGraphicNotifications($value);
+                break;
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($userConfig);
+        $em->flush();
+
+        $response = array("code" => 100, "success" => true);
+        return new Response(json_encode($response));
+    }
+
+
+    /**
+     * @Route("/ajax_toggle", name="ajax_toggle")
+     * @Method("POST")
+     */
+    public function ajaxChangeAction(){
+
+      $request = Request::createFromGlobals();
+      $id = $request->request->get('id');
+      $entity = $request->request->get('entity');
+
+      $em = $this->getDoctrine()->getManager();
+      $object = $em->getRepository('AppBundle:'.$entity)->find($id);
+
+      $object->toggle();
+      $em->persist($object);
+      $em->flush();
+
+      $response = array("code" => 100, "success" => true);
+      return new Response(json_encode($response));
+    }
+
+    /**
+     * @Route("/ajax_search_tag", name="ajax_search_tag")
+     * @Method("POST")
+     */
+    public function ajaxSearchTagAction(){
+
+      $request = Request::createFromGlobals();
+      $title = $request->request->get('title');
+
+      $em = $this->getDoctrine()->getManager();
+
+      $object = $em->getRepository('AppBundle:Tag');
+      $tags = $object->createQueryBuilder('c')
+               ->select('c.id', 'c.title')
+               ->where('c.title LIKE :title')
+               ->setParameter('title', '%'.$title.'%')
+               ->setMaxResults(60)
+               ->getQuery();
+
+      $response = array("code" => 100, "success" => true, "data" => $tags->getResult());
+      return new Response(json_encode($response));
+    }
+
+    /**
+     * @Route("/ajax_search_content", name="ajax_search_content")
+     * @Method({"GET", "POST"})
+     */
+    public function ajaxSearchContentAction(){
+
+      $request = Request::createFromGlobals();
+      $title = $request->request->get('title');
+      $opinion = $request->request->get('opinion');
+
+
+      $em = $this->getDoctrine()->getManager();
+
+      $contentEstate = $em->getRepository('AppBundle:ContentEstate')->findOneByName('published');
+      $object = $em->getRepository('AppBundle:Content');
+
+      if ($opinion == "true"){
+        $contents = $object->createQueryBuilder('c')
+                 ->leftJoin('AppBundle:ContentNote', 'cn', 'WITH', 'cn.content = c.id')
+                 ->select('c.id', 'c.titleHome as title')
+                 ->where('c.titleHome LIKE :titleHome AND c.contentEstate = :content_estate')
+                 ->andWhere('cn.opinion = 1')
+                 ->setParameter('titleHome', '%'.$title.'%')
+                 ->setParameter('content_estate', $contentEstate->getId())
+                 ->setMaxResults(60)
+                 ->getQuery();
+        $response = array("code" => 100, "success" => true, "data" => $contents->getResult());
+      }else{
+        if ($title == null){//this returns info for DataTable on ContentNote->new table (and video/poll). Require particular format... -.-
+          $arrayContents = null;
+          if (isset($_GET["search"]["value"]) AND $_GET["search"]["value"] != null AND strlen($_GET["search"]["value"]) >= 4){
+            switch ($_GET["contentType"]){
+              case 'note':
+                $contentType = $em->getRepository('AppBundle:ContentType')->findOneByName('notes');
+                break;
+              case 'opinion':
+                $contentType = $em->getRepository('AppBundle:ContentType')->findOneByName('notes');
+                break;
+              case 'video':
+                $contentType = $em->getRepository('AppBundle:ContentType')->findOneByName('videos');
+                break;
+              case 'poll':
+                $contentType = $em->getRepository('AppBundle:ContentType')->findOneByName('polls');
+                break;
+            }
+
+            if ($_GET["contentType"] == 'opinion'){
+              $contents = $object->createQueryBuilder('c')
+                 ->leftJoin('AppBundle:ContentNote', 'cn', 'WITH', 'cn.content = c.id')
+                 ->select('c')
+                 ->where('c.titleHome LIKE :titleHome AND c.contentEstate = :content_estate AND c.contentType = :content_type')
+                 ->andWhere('cn.opinion = 1')
+                 ->setParameter('titleHome', '%'.$_GET["search"]["value"].'%')
+                 ->setParameter('content_estate', $contentEstate->getId())
+                 ->setParameter('content_type', $contentType->getId())
+                 ->orderBy('c.id', 'DESC')
+                 ->setMaxResults('10')
+                 ->getQuery()
+                 ->getResult();
+            }else{
+              $contents = $object->createQueryBuilder('c')
+                 ->select('c')
+                 ->where('c.titleHome LIKE :titleHome AND c.contentEstate = :content_estate AND c.contentType = :content_type')
+                 ->setParameter('titleHome', '%'.$_GET["search"]["value"].'%')
+                 ->setParameter('content_estate', $contentEstate->getId())
+                 ->setParameter('content_type', $contentType->getId())
+                 ->orderBy('c.id', 'DESC')
+                 ->setMaxResults('10')
+                 ->getQuery()
+                 ->getResult();
+            }
+
+            foreach ($contents as $key => $c) {
+              $link = '?';
+              switch ($_GET["contentType"]){
+                case 'note':
+                  $link = '<a href="'.$this->generateUrl('contentnote_show', array('id' => $c->getContentNote()->getId())).'" title="Ver detalle"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a>&nbsp;&nbsp;
+                  <a href="'.$this->generateUrl('contentnote_edit', array('id' => $c->getContentNote()->getId())).'" title="Editar"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>';
+                  $arrayContents[] = array($c->getId(), $c->getId(), date("d/m/Y H:i", $c->getPublicationDateTime()), $c->getViews(), $c->getContentEstate()->getName(), $c->getSection()->getTitle(), $c->getTitleHome(), $link);
+                  break;
+                case 'opinion':
+                  $link = '<a href="'.$this->generateUrl('contentnote_show', array('id' => $c->getContentNote()->getId())).'" title="Ver detalle"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a>&nbsp;&nbsp;
+                  <a href="'.$this->generateUrl('contentnote_edit', array('id' => $c->getContentNote()->getId())).'" title="Editar"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>';
+                  $arrayContents[] = array($c->getId(), $c->getId(), date("d/m/Y H:i", $c->getPublicationDateTime()), $c->getViews(), $c->getContentEstate()->getName(), $c->getTitleHome(), $c->getSection()->getTitle(), $link);
+                  break;
+                case 'video':
+                  $link = '<a href="'.$this->generateUrl('contentvideo_show', array('id' => $c->getContentVideo()->getId())).'" title="Ver detalle"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a>&nbsp;&nbsp;
+                  <a href="'.$this->generateUrl('contentvideo_edit', array('id' => $c->getContentVideo()->getId())).'" title="Editar"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>';
+                  $arrayContents[] = array($c->getId(), $c->getId(), date("d/m/Y H:i", $c->getPublicationDateTime()), $c->getViews(), $c->getContentEstate()->getName(), $c->getTitleHome(), $link);
+                  break;
+                case 'poll':
+                  $link = '<a href="'.$this->generateUrl('contentpoll_show', array('id' => $c->getContentPoll()->getId())).'" title="Ver detalle"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a>&nbsp;&nbsp;
+                  <a href="'.$this->generateUrl('contentpoll_edit', array('id' => $c->getContentPoll()->getId())).'" title="Editar"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>';
+                  $arrayContents[] = array($c->getId(), $c->getId(), date("d/m/Y H:i", $c->getPublicationDateTime()), $c->getViews(), $c->getContentEstate()->getName(), $c->getTitleHome(), $c->getSection()->getTitle(), $link);
+                  break;
+              }
+            }
+          }
+
+          $response = array("code" => 100, "success" => true, "data" => $arrayContents);
+        }else{
+          $contents = $object->createQueryBuilder('c')
+                 ->leftJoin('AppBundle:ContentNote', 'cn', 'WITH', 'cn.content = c.id')
+                 ->select('c.id', 'c.titleHome as title', 'cn.pictureHome as picture')
+                 ->where('c.titleHome LIKE :titleHome AND c.contentEstate = :content_estate')
+                 ->setParameter('titleHome', '%'.$title.'%')
+                 ->setParameter('content_estate', $contentEstate->getId())
+                 ->getQuery()
+                 ->setMaxResults(60)
+                 ->getResult();
+          $response = array("code" => 100, "success" => true, "data" => $contents);
+        }
+      }
+
+
+      //$response["data"][] = array("1111111111", "31", 'published', 'Politica', 'Titulo...', '???', "1");
+
+      return new Response(json_encode($response));
+    }
+
+    /**
+     * @Route("/ajax_get_content", name="ajax_get_content")
+     * @Method("POST")
+     */
+    public function ajaxGetContentAction(){
+
+      $request = Request::createFromGlobals();
+      $id = $request->request->get('id');
+
+      if ($id != null){
+        $position = $request->request->get('position');
+        $em = $this->getDoctrine()->getManager();
+
+        $contentNoteType = $em->getRepository('AppBundle:ContentType')->findOneByName('notes');
+        $contentVideoType = $em->getRepository('AppBundle:ContentType')->findOneByName('videos');
+        $contentPollType = $em->getRepository('AppBundle:ContentType')->findOneByName('polls');
+        $positionObject = $em->getRepository('AppBundle:Position')->findOneByName($position);
+
+        $content = $em->getRepository('AppBundle:Content')->findOneById($id);
+        switch ($content->getContentType()->getId()) {
+          case $contentNoteType->getId():
+            $contentNote = $em->getRepository('AppBundle:ContentNote')->findOneByContent($id);
+            if ($contentNote->getOpinion()){
+              $contentMedia = '/'.$this->getParameter('media')['root'].'/'.$this->getParameter('media')['avatar'].'/'.$contentNote->getAuthor()->getAvatar();
+            }else{
+              if ($contentNote->getPictureHome()){
+                $contentMedia = '/'.$this->getParameter('media')['root'].'/'.$this->getParameter('media')['note_content'].'/'.$contentNote->getPictureHome();
+              }else{
+                $contentMedia = '/'.$this->getParameter('media')['root'].'/'.$this->getParameter('media')['note_content'].'/'.$contentNote->getPicture();
+              }
+            }
+            $positionObject->setContent($contentNote->getContent());
+            break;
+          case $contentVideoType->getId():
+            $contentVideo = $em->getRepository('AppBundle:ContentVideo')->findOneByContent($id);
+            $contentMedia = $contentVideo->getVideo();
+            $positionObject->setContent($contentVideo->getContent());
+            break;
+          case $contentPollType->getId():
+            $contentPoll = $em->getRepository('AppBundle:ContentPoll')->findOneByContent($id);
+            $contentMedia = '/'.$this->getParameter('media')['root'].'/'.$this->getParameter('media')['poll_content'].'/'.$contentPoll->getPictureHome();
+            $positionObject->setContent($contentPoll->getContent());
+            break;
+          default:
+            die('ERROR; NO VIDEO; NO NOTE; NO POLL ???');
+        }
+
+        $em->persist($positionObject);
+        $em->flush();
+
+        $response = array("code" => 100, "success" => true, "content" => array("title" => $content->getTitleHome(), "type" => $content->getContentType()->getName(), "media" => $contentMedia));
+      }else{
+        $response = array("code" => 100, "success" => true, "content" => array("title" => null, "type" => null, "media" => null));
+      }
+
+      return new Response(json_encode($response));
+    }
+
+    /**
+     * @Route("/ajax_remove_content", name="ajax_remove_content")
+     * @Method("POST")
+     */
+    public function ajaxRemoveContentAction(){
+
+      $request = Request::createFromGlobals();
+      $position = $request->request->get('position');
+      $em = $this->getDoctrine()->getManager();
+
+      $positionObject = $em->getRepository('AppBundle:Position')->findOneByName($position);
+      $positionObject->removeContent();
+
+      $em->persist($positionObject);
+      $em->flush();
+
+      $response = array("code" => 100, "success" => true, 'positionTitle' => $positionObject->getTitle());
+      return new Response(json_encode($response));
+    }
+
+
+    /**
+     * @Route("/ajax_search_author", name="ajax_search_author")
+     * @Method({"GET", "POST"})
+     */
+    public function ajaxSearchAuthorAction(){
+
+      $request = Request::createFromGlobals();
+      $name = $request->request->get('title');
+
+      $em = $this->getDoctrine()->getManager();
+
+      $object = $em->getRepository('AppBundle:User');
+
+      $contents = $object->createQueryBuilder('u')
+            ->select('u.id', 'concat(concat(u.lastname, \' \'),  u.name) as title')
+            ->where('u.roles like :role1 or u.roles like :role2')
+            ->andWhere('u.name LIKE :name OR u.lastname LIKE :name OR u.username LIKE :name')
+            ->setParameter('name', '%'.$name.'%')
+            ->setParameter('role1', '%ROLE_EDITOR%')
+            ->setParameter('role2', '%ROLE_COLUMNIST%')
+            ->orderBy('u.name', 'ASC')
+            ->getQuery()
+            ->setMaxResults(60)
+            ->getResult();
+
+      $response = array("code" => 100, "success" => true, "data" => $contents);
+      return new Response(json_encode($response));
+    }
+
+    /**********************
+    START FROALA AJAX TOOLS
+    ***********************/
+
+    /**
+     * @Route("/ajax_upload_image", name="ajax_upload_image")
+     * @Method("POST")
+     * @param \Symfony\Component\HttpFoundation\Request $p_request
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function ajaxUploadImageAction(Request $p_request)
+    {
+      $mediaManager = $this->get( "kms_froala_editor.media_manager" );
+      $path         = $this->getParameter('media')['contents'];
+      $folder       = $this->getParameter('media')['contents'];
+      $rootDir      = $this->get( "kernel" )->getRootDir();
+      $basePath     = $p_request->getBasePath();
+      return $mediaManager->uploadImage( $p_request->files, $rootDir, $basePath, $folder, $path );
+    }
+
+    /**
+     * @Route("/ajax_delete_image", name="ajax_delete_image")
+     * @Method("POST")
+     * @param \Symfony\Component\HttpFoundation\Request $p_request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function ajaxDeleteImageAction(Request $p_request)
+    {
+      $mediaManager = $this->get( "kms_froala_editor.media_manager" );
+      $imageSrc     = $p_request->request->get( "src" );
+      $folder       = '/media/contents';
+      $rootDir      = $this->get( "kernel" )->getRootDir();
+      // ------------------------- DECLARE ---------------------------//
+
+      $mediaManager->deleteImage( $imageSrc, $rootDir, $folder );
+
+      return new Response ();
+    }
+
+    /**
+     * @Route("/ajax_load_images", name="ajax_load_images")
+     * @Method("GET")
+     * @param \Symfony\Component\HttpFoundation\Request $p_request
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function ajaxLoadImagesAction(Request $p_request)
+    {
+      $mediaManager = $this->get( "kms_froala_editor.media_manager" );
+      $path         = $this->getParameter('media')['contents'];
+      $folder       = $this->getParameter('media')['contents'];
+      $rootDir      = $this->get( "kernel" )->getRootDir();
+      $basePath     = $p_request->getBasePath();
+
+      // ------------------------- DECLARE ---------------------------//
+
+      return $mediaManager->loadImages( $rootDir, $basePath, $folder, $path );
+    }
+
+    /**
+     * @Route("/ajax_upload_file", name="ajax_upload_file")
+     * @Method("POST")
+     * @param \Symfony\Component\HttpFoundation\Request $p_request
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function uploadFileAction(Request $p_request)
+    {
+      $mediaManager = $this->get( "kms_froala_editor.media_manager" );
+      $path         = $this->getParameter('media')['files'];
+      $folder       = $this->getParameter('media')['files'];
+      $rootDir      = $this->get( "kernel" )->getRootDir();
+      $basePath     = $p_request->getBasePath();
+      // ------------------------- DECLARE ---------------------------//
+
+      return $mediaManager->uploadFile( $p_request->files, $rootDir, $basePath, $folder, $path );
+
+    }
+
+    /**********************
+    END FROALA AJAX TOOLS
+    ***********************/
+
+}

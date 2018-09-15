@@ -1,13 +1,14 @@
 <?php
-// src/AppBundle/Entity/User.php
-
 namespace AppBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  * @ORM\Table(name="`user`")
  */
 class User extends BaseUser
@@ -19,9 +20,167 @@ class User extends BaseUser
      */
     protected $id;
 
-    public function __construct()
-    {
+    /**
+     * @ORM\Column(name="name", type="string", length=255)
+     *
+     * @Assert\NotBlank(message="Por favor, ingrese un nombre", groups={"Registration", "Profile"})
+     * @Assert\Length(
+     *     min=3,
+     *     max=255,
+     *     minMessage="El nombre ingresado es muy corto",
+     *     maxMessage="El nombre ingresado es muy largo",
+     *     groups={"Registration", "Profile"}
+     * )
+     */
+    protected $name;
+
+    /**
+     * @ORM\Column(name="lastname", type="string", length=255)
+     *
+     * @Assert\NotBlank(message="Por favor, ingrese un apellido", groups={"Registration", "Profile"})
+     * @Assert\Length(
+     *     min=3,
+     *     max=255,
+     *     minMessage="El apellido ingresado es muy corto",
+     *     maxMessage="El apellido ingresado es muy largo",
+     *     groups={"Registration", "Profile"}
+     * )
+     */
+    protected $lastname;
+
+    /**
+     * @ORM\Column(name="registered_at", type="integer", nullable=false)
+     */
+    private $registeredAt;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $avatar;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $gender;
+
+    public function __construct($configurations = null){
         parent::__construct();
-        // your own logic
+        $this->registeredAt = time();
+        //$this->comments = new \Doctrine\Common\Collections\ArrayCollection();
+        //$this->editions = new \Doctrine\Common\Collections\ArrayCollection();
     }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId(){
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return User
+     */
+    public function setName($name){
+        $this->name = $name;
+        return $this;
+    }
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName(){
+        return $this->name;
+    }
+
+    /**
+     * Set lastname
+     *
+     * @param string $lastname
+     * @return User
+     */
+    public function setLastName($lastname){
+        $this->lastname = $lastname;
+        return $this;
+    }
+    /**
+     * Get lastname
+     *
+     * @return string
+     */
+    public function getLastName(){
+        return $this->lastname;
+    }
+
+    /**
+     * Get registeredAt
+     *
+     * @return string
+     */
+    public function getRegisteredAt(){
+        return $this->registeredAt;
+    }
+
+    /**
+     * Set avatar
+     *
+     * @param string $avatar
+     * @return User
+     */
+    public function setAvatar($avatar){
+        $this->avatar = $avatar;
+        return $this;
+    }
+
+    /**
+     * Get avatar
+     *
+     * @return string
+     */
+    public function getAvatar(){
+        if ($this->avatar == null){
+            return $this->getGender().'_gender.jpg';
+        }else{
+            return $this->avatar;
+        }
+    }
+
+    /**
+     * Set gender
+     *
+     * @param string $gender
+     * @return User
+     */
+    public function setGender($gender){
+        $this->gender = $gender;
+        return $this;
+    }
+    /**
+     * Get gender
+     *
+     * @return string
+     */
+    public function getGender(){
+        return $this->gender;
+    }
+
+    /**
+     * Set registeredAt
+     *
+     * @param integer $registeredAt
+     *
+     * @return User
+     */
+    public function setRegisteredAt($registeredAt)
+    {
+        $this->registeredAt = $registeredAt;
+
+        return $this;
+    }
+
 }

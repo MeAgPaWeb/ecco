@@ -1,0 +1,76 @@
+{% extends 'table.html.twig' %}
+
+{% if visitors is not defined %}
+    {% set visitors = false %}
+{% endif %}
+
+{% set new =
+    {
+        "route": "user_new",
+        "title": "Nuevo usuario"
+    }
+%}
+
+{% set page =
+    {
+        "title": "Usuarios",
+        "subtitle": "Listado"
+    }
+%}
+
+{% set stylesheets = [
+                        'css/User.css'
+                     ] %}
+
+{% block breadcrumb %}
+    <li><a href="{{ path('homepage') }}"><i class="fa fa-dashboard"></i> Inicio</a></li>
+    <li class="active"> {{ page.title }}</li>
+{% endblock %}
+
+
+{% block thead %}
+    <tr>
+        <th class="no-sort table-avatar-column"></th>
+        <th>Nombre de usuario</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        {% if not visitors %}
+        <th class="hidden-xs">Roles</th>
+        {% endif %}
+        <th class="no-sort table-operations-1"></th>
+    </tr>
+{% endblock %}
+
+{% block tfoot %}
+    <tr>
+        <th class="no-sort table-avatar-column"></th>
+        <th>Nombre de usuario</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        {% if not visitors %}
+        <th class="hidden-xs">Roles</th>
+        {% endif %}
+        <th class="no-sort table-operations-1"></th>
+    </tr>
+{% endblock %}
+
+{% block tbody %}
+    {% for user in users %}
+        <tr>
+            <td class="table-avatar-column"><a href="{{ path('user_show', { 'id': user.id }) }}"><img src="{{asset('media/avatars/' ~ user.avatar)}}" class="table-user-image" alt="Imágen del usuario"></a></td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.lastname }}</td>
+            {% if not visitors %}
+            <td class="hidden-xs">{{ user.roles | role }}</td>
+            {% endif %}
+            <td class="table-operations-1"><a href="{{ path('user_show', { 'id': user.id, 'visitors': visitors }) }}" title="Ver detalle"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a></td>
+        </tr>
+    {% endfor %}
+{% endblock %}
+
+{% block new_block %}
+    <div class="box-body">
+        <a class="btn btn-success" href="{{ path('user_new', { 'visitors': visitors }) }}"><span class="glyphicon glyphicon-plus"></span> Nuevo Usuario</a>
+    </div>
+{% endblock %}

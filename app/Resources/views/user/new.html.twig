@@ -1,0 +1,145 @@
+{% extends 'default.html.twig' %}
+
+{% form_theme form 'form/fields.html.twig' %}
+
+{% set page =
+    {
+        "title": "Usuarios",
+        "subtitle": "Nuevo"
+    }
+%}
+
+{% set javascripts = [
+                      'js/User.js',
+                      'js/User.ready.js'
+                     ] %}
+
+{% set stylesheets = [
+                      'css/User.css'
+                     ] %}
+
+{% block breadcrumb %}
+    <li><a href="{{ path('homepage') }}"><i class="fa fa-dashboard"></i> Inicio</a></li>
+    <li><a href="{{ path('user_index') }}"> {{ page.title }}</a></li>
+    <li class="active">{{ page.subtitle }}</li>
+{% endblock %}
+
+{% block content %}
+    {{ form_start(form, {'attr': {'id':'form'} }) }}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box box-default">
+		        <div class="box-header with-border">
+		            <h3 class="box-title">Datos personales</h3>
+		        </div>
+                <div class="box-body">
+                    <div class="row">
+			            <div class="col-md-8 col-xs-8">
+		                    <div class="form-group{% if form.name.vars.errors|length > 0 %} has-error{% endif %}">
+                                {{ form_label(form.name, "Nombre") }}
+                                {{ form_widget(form.name, {"attr": {"placeholder": "Ingrese el nombre"}}) }}
+                                <div class="help-block with-errors">
+                                    {{ form_errors(form.name) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group{% if form.lastname.vars.errors|length > 0 %} has-error{% endif %}">
+                                {{ form_label(form.lastname, "Apellido") }}
+                                {{ form_widget(form.lastname, {"attr": {"placeholder": "Ingrese el apellido"}}) }}
+                                <div class="help-block with-errors">
+                                    {{ form_errors(form.lastname) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-xs-4">
+                            <div class="form-group user_avatar_form_group{% if form.avatar.vars.errors|length > 0 %} has-error{% endif %}">
+                                {{ form_label(form.lastname, "Imágen avatar") }}
+                                <div class="user-avatar-preview" id="user_avatar_preview">
+                                    <div id="avatar_edit" class="avatar-edit">
+                                        <span id="avatar_edit_icon" class="glyphicon glyphicon-camera"></span>
+                                    </div>
+                                </div>                      
+                                {{ form_widget(form.avatar, {'id': 'form_user_avatar'} ) }}                    
+                                <div class="help-block with-errors">
+                                    {{ form_errors(form.avatar) }}
+                                    {% if error %}
+                                        {{ error }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group{% if form.email.vars.errors|length > 0 %} has-error{% endif %}">
+                        {{ form_label(form.email, "Correo electrónico") }}
+                        {{ form_widget(form.email, {"attr": {"placeholder": "Ingrese el correo electrónico"}}) }}
+                        <div class="help-block with-errors">
+                            {{ form_errors(form.email) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group{% if form.gender.vars.errors|length > 0 %} has-error{% endif %}">
+                        <label for="form_user_gender">Sexo</label>                      
+                        {{ form_widget(form.gender, {'id': 'form_user_gender'}) }}
+                        <div class="help-block with-errors">
+                            {{ form_errors(form.gender) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="box box-default">
+                <div class="box-header with-border">
+		            <h3 class="box-title">Datos de la cuenta</h3>
+		        </div>                
+                <div class="box-body">
+
+                    <div class="form-group{% if form.username.vars.errors|length > 0 %} has-error{% endif %}">
+                        {{ form_label(form.username) }}
+                        {{ form_widget(form.username, {"attr": {"placeholder": "Ingrese el nombre de usuario"}}) }}
+                        <div class="help-block with-errors">
+                            {{ form_errors(form.username) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group{% if form.plainPassword.first.vars.errors|length > 0 %} has-error{% endif %}">
+                        {{ form_label(form.plainPassword.first) }}
+                        {{ form_widget(form.plainPassword.first, {"attr": {"placeholder": "Ingrese la contraseña"}}) }}
+                        <div class="help-block with-errors">
+                            {{ form_errors(form.plainPassword.first) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group{% if form.plainPassword.second.vars.errors|length > 0 %} has-error{% endif %}">
+                        {{ form_label(form.plainPassword.second) }}
+                        {{ form_widget(form.plainPassword.second, {"attr": {"placeholder": "Ingrese nuevamente la contraseña"}}) }}
+                        <div class="help-block with-errors">
+                            {{ form_errors(form.plainPassword.second) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group{% if form.roles.vars.errors|length > 0 %} has-error{% endif %}">
+                        {{ form_label(form.roles, "Roles") }}
+                        {{ form_widget(form.roles) }}                        
+                        <div class="help-block with-errors">
+                            {{ form_errors(form.roles) }}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-body">
+                    <a class="btn btn-default" href="{{ path('user_index') }}"><span class="glyphicon glyphicon-chevron-left"></span> Volver</a>
+                    <button type="submit" class="btn btn-success pull-right"><span class="glyphicon glyphicon-floppy-disk"></span> Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

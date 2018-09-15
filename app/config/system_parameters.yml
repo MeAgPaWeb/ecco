@@ -1,0 +1,102 @@
+parameters:
+    system:
+        title: Book
+        backendTitle: <b>B</b>ook
+        backendTitleMini: <b>D</b>
+        version: 0.0.1
+        footer: Validado <strong>HTML5</strong>
+        options:
+            show_messages: false
+            show_notifications: false
+            show_alerts: false
+            show_search: false
+    media:
+        root: media
+        contents: contents/
+        files: files
+        avatar: avatars
+        advertising: advertisings
+        history_content: contents
+        note_content: contents
+        poll_content: contents
+
+    httpCache:
+        homepage: 60
+        section: 60
+        content: 60
+
+    contentGroup:
+        opinion:
+            name: "opinion"
+            title: "Opinión"
+            color: "#d8d9da"
+            noSection: true
+        tag:
+            name: "tag"
+            title: "Etiquetas"
+            color: "#d8d9da"
+            noSection: true
+            byId: true
+        search:
+            name: "search"
+            title: "Resultados de búsqueda:"
+            color: "#d8d9da"
+            noSection: true
+        interview:
+            name: "interview"
+            title: "Entrevistas"
+            color: "#d8d9da"
+            noSection: true
+        video:
+            name: "video"
+            title: "Videos"
+            color: "#d8d9da"
+            noSection: true
+        gallery:
+            name: "gallery"
+            title: "Galería de Imágenes"
+            color: "#0b445b"
+            noSection: true
+
+    mainmenu: [opinion]
+
+    mainmenu_fixed: [opinion, interview, video]
+
+    homepage: []
+
+    search:
+        min: 5
+
+    paginator:
+        contents: 14
+        opinion: 15
+        elpaisfederal: 15
+        interview: 11
+        video: 12
+        tag: 50
+        gallery: 50
+
+    avatar:
+        width:  400
+        height: 400
+
+    contentpicture:
+        width: 1200
+        height: 1200
+
+    contentgallery:
+        width: 600
+        height: 600
+
+    contentlimits:
+        popular: 7*1*24*60*60
+        opinion: 365*24*60*60
+        section: 1*24*60*60
+
+    social:
+        twitter:
+            url: "//twitter.com/diagonalesweb"
+        facebook:
+            url: "//www.facebook.com/diagonalesweb/"
+        instagram:
+            url: "//www.instagram.com/diagonalesweb"

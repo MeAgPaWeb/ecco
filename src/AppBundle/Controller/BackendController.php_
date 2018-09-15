@@ -1,0 +1,83 @@
+<?php
+
+namespace AppBundle\Controller\Backend;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Entity\User;
+use AppBundle\Entity\UserConfiguration;
+
+/**
+ * Abogado controller.
+ *
+ * @Route("/")
+ */
+class BackendController extends Controller
+{
+    /**
+     * @Route("/", name="homepage")
+     */
+    public function indexAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        if (!$user->getConfigurations()) {
+            $userConfiguration = new UserConfiguration();
+            $userConfiguration->setLightTheme(false);
+            $userConfiguration->setUser($user);
+            $user->setConfigurations($userConfiguration);
+            $em->persist($userConfiguration);
+            $em->flush();
+        }
+
+        $newUsersTimeLimit = time() - eval('return ('.$this->getParameter('adminnews')['newusers'].');');
+        $newUsers = $em->getRepository('AppBundle:User')->createQueryBuilder('u')
+                            ->where('u.registeredAt > :limitTime')
+                            ->setParameter('limitTime', $newUsersTimeLimit)
+                            ->getQuery()
+                            ->getResult();
+
+        $contentEstateDraft = $em->getRepository('AppBundle:ContentEstate')->findByName(array('draft'));
+        $contentType = $em->getRepository('AppBundle:ContentType')->findByName(array('notes'));
+        $drafts = $em->getRepository('AppBundle:Content')->findBy(array('contentEstate' => $contentEstateDraft, 'contentType' => $contentType));
+
+        $lastContentsTimeLimit = time() - eval('return ('.$this->getParameter('adminnews')['lastcontents'].');');
+        $contentEstatePublished = $em->getRepository('AppBundle:ContentEstate')->findByName(array('published'));
+        $lastContents = $em->getRepository('AppBundle:Content')->createQueryBuilder('n')
+                            ->where('n.publicDatetime > :limitTime')
+                            ->Andwhere('n.contentEstate = :contentEstate')
+                            ->setParameter('limitTime', $lastContentsTimeLimit)
+                            ->setParameter('contentEstate', $contentEstatePublished)
+                            ->getQuery()
+                            ->getResult();
+
+        $commentsPending = $em->getRepository('AppBundle:Comment')->findBy(array('approved' => '0'));
+        
+        return $this->render('backend/default/index.html.twig', [
+            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..'),
+            'newUsers' => count($newUsers),
+            'drafts' => count($drafts),
+            'lastContents' => count($lastContents),
+            'commentsPending' => count($commentsPending),
+            'analytics' => $this->getParameter('analytics')['url'],
+            'awstats' => $this->getParameter('awstats')['url']
+        ]);
+    }
+    
+    /**
+     * @Route("/new_template", name="new_template")
+     */
+    public function newAction(Request $request)
+    {
+        return $this->render('backend/default/new_template.html.twig', array());
+    }
+    
+    /**
+     * @Route("/list_template", name="list_template")
+     */
+    public function listAction(Request $request)
+    {
+        return $this->render('backend/default/list_template.html.twig', array());
+    }
+}

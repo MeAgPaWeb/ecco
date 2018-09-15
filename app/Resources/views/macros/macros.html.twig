@@ -1,0 +1,27 @@
+{% macro message(m) %}
+    <li>
+        <a href="{{ m.url }}">
+            <div class="pull-left">
+                <img src="{{ m.sender.avatar }}" class="img-circle" alt="Imágen de usuario">
+            </div>
+            <h4>
+                {{ m.sender.name }} {{ m.sender.lastname }}
+                <small><i class="fa fa-clock-o"></i> {{ m.time }}</small>
+            </h4>
+            <p>{{ m.body }}</p>
+        </a>
+    </li>
+{% endmacro %}
+
+{% macro notification(n) %}
+    <li>
+        <a href="{{ n.url }}">
+            <i class="fa fa-{{ n.icon }} text-{{n.color}}"></i> {{ n.title }}
+        </a>
+    </li>
+{% endmacro %}
+
+{% macro sidemenu_item(route, title, icon) %}
+    <li {% if is_route(route) %}class="active"{% endif %}><a href="{{ path(route) }}"><i class="fa {{ icon }}"></i> {{ title }}</a></li>
+{% endmacro %}
+

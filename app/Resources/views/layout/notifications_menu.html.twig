@@ -1,0 +1,17 @@
+<li class="dropdown notifications-menu">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <i class="fa fa-bell-o"></i>
+        {% if notifications | length > 0 %}<span class="label label-warning show-graphic-notification {% if not is_graphic_notifications(app.user) %}hide{% endif %}">{{ notifications | length }}</span>{% endif %}
+    </a>
+    <ul class="dropdown-menu">
+        <li class="header">Tenés {{ notifications | length }} {% if notifications | length == 1 %}notificación nueva{% else %}notificaciones nuevas{% endif %}</li>
+        <li>
+            <ul class="menu">
+                {% for n in notifications %}
+                    {{ backend_macro.notification(n) }}
+                {% endfor %}
+            </ul>
+        </li>
+        <li class="footer"><a href="#">Ver todas las notificaciones</a></li>
+    </ul>
+</li>

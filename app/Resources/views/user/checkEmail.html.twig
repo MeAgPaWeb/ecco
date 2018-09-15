@@ -1,0 +1,20 @@
+{% extends 'user/layout.html.twig' %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% set page =
+    {
+        "title": "Recuperar contraseña",
+        "preclass": "login"
+    }
+%}
+
+{% block content %}
+    <p>{{ 'resetting.check_email'|trans({'%email%': email}) }}</p>
+    <div class="row">
+        <div class="col-xs-8"></div>
+        <div class="col-xs-4">
+            <a class="btn btn-primary btn-block btn-flat" href="{{ path('fos_user_security_login') }}">Ingresar</a>
+        </div>
+    </div>
+{% endblock %}

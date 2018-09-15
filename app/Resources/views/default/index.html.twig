@@ -1,4 +1,4 @@
-{% extends 'backend/default.html.twig' %}
+{% extends 'default.html.twig' %}
 
 {% set page =
     {
@@ -11,86 +11,9 @@
     <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
     <li class="active">Portada</li>
 {% endblock %}
-            
+
 {% block content %}
 <div class="row">
-    <div class="col-lg-2 col-xs-6">
-        <div class="small-box bg-aqua">
-            <div class="inner">
-                <h3>{{lastContents}}</h3>
-                <p>Nuevas noticias publicadas</p>
-            </div>
-            <div class="icon">
-                <i class="ion ion-document"></i>
-            </div>
-            <a href="#" class="small-box-footer">Ver noticias <i class="fa fa-arrow-circle-right"></i></a>
-        </div>
-    </div>
-    <div class="col-lg-2 col-xs-6">
-        <div class="small-box bg-yellow">
-            <div class="inner">
-                <h3>{{drafts}}</h3>
-                <p>Noticias por publicar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-            </div>
-            <div class="icon">
-                <i class="ion ion-compose"></i>
-            </div>
-            <a href="{{ path('contentnote_index_draft') }}" class="small-box-footer">Ver noticias <i class="fa fa-arrow-circle-right"></i></a>
-        </div>
-    </div>
-    <!-- ./col -->
-    <div class="col-lg-2 col-xs-6">
-        <!-- small box -->
-        <div class="small-box bg-green">
-            <div class="inner">
-                <h3>{{newUsers}}</h3>
-                <p>Nuevos usuarios&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-            </div>
-            <div class="icon">
-                <i class="ion ion-person-add"></i>
-            </div>
-            <a href="{{ path('user_index') }}" class="small-box-footer">Ver usuarios <i class="fa fa-arrow-circle-right"></i></a>
-        </div>
-    </div>
-    <div class="col-lg-2 col-xs-6">
-        <!-- small box -->
-        <div class="small-box bg-red">
-            <div class="inner">
-                <h3>{{commentsPending}}</h3>
-                <p>Comentarios sin aprobar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-            </div>
-            <div class="icon">
-                <i class="ion ion-chatbox"></i>
-            </div>
-            <a href="{{ path('comment_pending') }}" class="small-box-footer">Ver comentarios <i class="fa fa-arrow-circle-right"></i></a>
-        </div>
-    </div>
-    <div class="col-lg-2 col-xs-6">
-        <!-- small box -->
-        <div class="small-box bg-purple">
-            <div class="inner">
-                <h3>!</h3>
-                <p>Analytics&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-            </div>
-            <div class="icon">
-                <i class="ion ion-pie-graph"></i>
-            </div>
-            <a href="{{analytics}}" target="_blank" class="small-box-footer">Mas información <i class="fa fa-arrow-circle-right"></i></a>
-        </div>
-    </div>
 
-    {#<div class="col-lg-2 col-xs-6">
-        <!-- small box -->
-        <div class="small-box bg-purple">
-            <div class="inner">
-                <h3>!</h3>
-                <p>AWStats&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-            </div>
-            <div class="icon">
-                <i class="ion ion-pie-graph"></i>
-            </div>
-            <a href="{{awstats}}" target="_blank" class="small-box-footer">Mas información <i class="fa fa-arrow-circle-right"></i></a>
-        </div>
-    </div>#}
 </div>
 {% endblock %}

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1336px" height="441px" viewBox="0 0 1336 441" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 44.1 (41455) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 11</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <polygon id="path-1" points="0 343 1265.68421 343 1344 440.894737 0 440.894737"></polygon>
+    </defs>
+    <g id="Desing-1---Desktop" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Desktop-home" transform="translate(0.000000, -3168.000000)">
+            <g id="Group-11" transform="translate(-8.000000, 3168.000000)">
+                <polygon id="Rectangle-12" fill="#FFCD00" points="136 0 624.684211 0 703 97.8947368 136 97.8947368"></polygon>
+                <g id="Rectangle-12-Copy">
+                    <use fill="#FFCD00" fill-rule="evenodd" xlink:href="#path-1"></use>
+                    <path stroke="#FFCD00" stroke-width="10" d="M5,348 L5,435.894737 L1333.59688,435.894737 L1263.28109,348 L5,348 Z"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
