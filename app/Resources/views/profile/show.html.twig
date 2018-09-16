@@ -1,4 +1,4 @@
-{% extends 'default.html.twig' %}
+{% extends 'user/layout.html.twig' %}
 
 {% form_theme form 'form/fields.html.twig' %}
 {% form_theme pass_form 'form/fields.html.twig' %}
@@ -99,7 +99,7 @@
         </div>
         <div class="col-md-8">
             <div class="nav-tabs-custom">
-                
+
                 <ul class="nav nav-tabs">
                     <li {% if active_tab == "comments" %}class="active"{% endif %}><a aria-expanded="false" href="#comments" data-toggle="tab">Comentarios</a></li>
                     <li {% if active_tab == "publications" %}class="active"{% endif %}><a aria-expanded="false" href="#publications" data-toggle="tab">Publicaciones</a></li>
@@ -108,9 +108,9 @@
                     <li {% if active_tab == "personal" %}class="active"{% endif %}><a aria-expanded="false" href="#personal" data-toggle="tab">Datos personales</a></li>
                     <li {% if active_tab == "account" %}class="active"{% endif %}><a aria-expanded="false" href="#account" data-toggle="tab">Datos de la cuenta</a></li>
                 </ul>
-                
+
                 <div class="tab-content">
-                
+
                     <div class="tab-pane {% if active_tab == "comments" %}active{% endif %}" id="comments">
                         <table class="table table-bordered table-striped datatable">
                             <thead>
@@ -144,7 +144,7 @@
                             </tfoot>
                         </table>
                     </div>
-                    
+
                     <div class="tab-pane {% if active_tab == "publications" %}active{% endif %}" id="publications">
                         <table class="table table-bordered table-striped datatable">
                             <thead>
@@ -175,7 +175,7 @@
                             </tfoot>
                         </table>
                     </div>
-                    
+
                     <div class="tab-pane {% if active_tab == "editions" %}active{% endif %}" id="editions">
                         <table class="table table-bordered table-striped datatable">
                             <thead>
@@ -206,7 +206,7 @@
                             </tfoot>
                         </table>
                     </div>
-                    
+
                     <div class="tab-pane {% if active_tab == "revisions" %}active{% endif %}" id="revisions">
                         <table class="table table-bordered table-striped datatable">
                             <thead>
@@ -237,9 +237,9 @@
                             </tfoot>
                         </table>
                     </div>
-                    
+
                     <div class="tab-pane {% if active_tab == "personal" %}active{% endif %}" id="personal">
-                    
+
                         {{ form_start(form, { 'action': path('backend_profile_show'), 'attr': { 'class': 'form-horizontal' } }) }}
 
                         <div class="form-group{% if form.name.vars.errors|length > 0 %} has-error{% endif %}">
@@ -261,7 +261,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="form-group{% if form.email.vars.errors|length > 0 %} has-error{% endif %}">
                             {{ form_label(form.email, "Correo electrónico", {"label_attr": {"class": "col-sm-3 control-label"}}) }}
                             <div class="col-sm-9">
@@ -271,7 +271,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="form-group{% if form.gender.vars.errors|length > 0 %} has-error{% endif %}">
                             {{ form_label(form.gender, "Sexo", {"label_attr": {"class": "col-sm-3 control-label"}}) }}
                             <div class="col-sm-9">
@@ -279,19 +279,19 @@
                                 <div class="help-block with-errors">
                                     {{ form_errors(form.gender) }}
                                 </div>
-                            </div>                           
+                            </div>
                         </div>
-                        
+
                         <div class="form-group{% if form.avatar.vars.errors|length > 0 %} has-error{% endif %}">
                             <div class="col-sm-3"></div>
                             <div class="col-sm-9">
                                 {{ form_widget(form.avatar) }}
                                 <a id="user_avatar_launcher" class="btn btn-primary form-control" href="#">
-                                    Nueva imágen de avatar             
+                                    Nueva imágen de avatar
                                 </a>
                                 <div class="avatar-preview" id="user_avatar_preview_wrapper">
                                     <img id="user_avatar_preview" alt="Imágen del usuario" src="none"/>
-                                </div>                        
+                                </div>
                                 <div class="help-block with-errors">
                                     {{ form_errors(form.avatar) }}
                                     {% if error %}
@@ -299,10 +299,10 @@
                                     {% endif %}
                                 </div>
                             </div>
-                        </div>                      
-                        
+                        </div>
+
                         <hr>
-                        
+
                         <div class="form-group{% if form.current_password.vars.errors|length > 0 %} has-error{% endif %}">
                             {{ form_label(form.current_password, "Confirmar contraseña", {"label_attr": {"class": "col-sm-3 control-label"}}) }}
                             <div class="col-sm-9">
@@ -312,21 +312,21 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         {{ form_widget(form.username, {"attr": {"class":"hidden"}}) }}
                         <input type="hidden" name="personal" value="true" />
-                       
+
                         <button type="reset" id="personal_reset" class="btn btn-default" value="Reset"> Restablecer</button>
                         <button type="submit" class="btn btn-success pull-right"><span class="glyphicon glyphicon-floppy-disk"></span> Guardar</button>
-                        
+
                         {{ form_end(form) }}
-                    
+
                     </div>
-                    
+
                     <div class="tab-pane {% if active_tab == "account" %}active{% endif %}" id="account">
-                        
+
                         {{ form_start(pass_form, { 'action': path('backend_profile_show'), 'attr': { 'class': 'form-horizontal' } }) }}
-                        
+
                         <div class="form-group{% if pass_form.plainPassword["first"].vars.errors|length > 0 %} has-error{% endif %}">
                             {{ form_label(pass_form.plainPassword["first"], null, {"label_attr": {"class": "col-sm-3 control-label"}}) }}
                             <div class="col-sm-9">
@@ -336,7 +336,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="form-group{% if pass_form.plainPassword["second"].vars.errors|length > 0 %} has-error{% endif %}">
                             {{ form_label(pass_form.plainPassword["second"], null, {"label_attr": {"class": "col-sm-3 control-label"}}) }}
                             <div class="col-sm-9">
@@ -346,9 +346,9 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <hr>
-                        
+
                         <div class="form-group{% if pass_form.current_password.vars.errors|length > 0 %} has-error{% endif %}">
                             {{ form_label(pass_form.current_password, "Confirmar contraseña", {"label_attr": {"class": "col-sm-3 control-label"}}) }}
                             <div class="col-sm-9">
@@ -358,17 +358,17 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <input type="hidden" name="account" value="true" />
                         <button type="reset" class="btn btn-default" value="Reset"> Restablecer</button>
                         <button type="submit" class="btn btn-success pull-right"><span class="glyphicon glyphicon-floppy-disk"></span> Guardar</button>
-                    
+
                         {{ form_end(pass_form) }}
-                    </div>                    
+                    </div>
                 </div>
 
 
-            </div>            
+            </div>
         </div>
     </div>
 {% endblock %}

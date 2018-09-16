@@ -1,4 +1,4 @@
-{% import "macros/macros.html.twig" as backend_macro %}
+{% import "macros/macros.html.twig" as macro %}
 
 {% if stylesheets is not defined %}
     {% set stylesheets = [] %}
@@ -87,6 +87,9 @@
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
         <title>{{ system.title }} | {{ page.title }}</title>
+        {% block stylesheet %}
+            {{ macro.stylesheets(stylesheets) }}
+        {% endblock stylesheet %}
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -139,6 +142,7 @@
         </div>
 
         {% block javascript %}
+            {{ macro.javascripts(javascripts) }}
         {% endblock javascript %}
     </body>
 </html>

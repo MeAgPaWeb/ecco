@@ -21,7 +21,7 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255, nullable=false)
      *
      * @Assert\NotBlank(message="Por favor, ingrese un nombre", groups={"Registration", "Profile"})
      * @Assert\Length(
@@ -35,7 +35,7 @@ class User extends BaseUser
     protected $name;
 
     /**
-     * @ORM\Column(name="lastname", type="string", length=255)
+     * @ORM\Column(name="lastname", type="string", length=255, nullable=false)
      *
      * @Assert\NotBlank(message="Por favor, ingrese un apellido", groups={"Registration", "Profile"})
      * @Assert\Length(

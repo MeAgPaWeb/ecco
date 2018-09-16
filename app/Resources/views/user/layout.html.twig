@@ -1,4 +1,14 @@
 {% import "macros/macros.html.twig" as macro %}
+{% if page is not defined %}
+{% set page =
+    {
+        "title": "sin titulo",
+        "preclass": "login"
+    }
+%}
+
+{% endif %}
+
 <!DOCTYPE html>
 <html>
     <head>

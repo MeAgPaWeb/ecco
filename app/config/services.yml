@@ -1,23 +1,31 @@
 parameters:
 #    parameter_name: value
 
-#services:
-#    service_name:
-#        class: AppBundle\Directory\ClassName
-#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
 services:
-    # app.form.registration:
-    #     class: AppBundle\Form\RegistrationType
-    #     tags:
-    #         - { name: form.type, alias: app_user_registration }
     app.uploader:
         class: AppBundle\Helper\Uploader
+
     app.twig_extension:
         class: AppBundle\Twig\AppExtension
         arguments: [ "@service_container", "@request_stack", "%locale%", "%media%", "%social%"]
         public: false
         tags:
             - { name: twig.extension }
+
+    app.form.registration:
+        class: AppBundle\Form\RegistrationType
+        tags:
+            - { name: form.type, alias: app_user_registration }
+
+    app.form.profile:
+        class: AppBundle\Form\Type\ProfileType
+        tags:
+            - { name: form.type alias: app_user_profile}
+
+    app.roles:
+       class: AppBundle\Helper\Roles
+       arguments: ['%security.role_hierarchy.roles%']
+
     AppBundle\:
         resource: '../../src/AppBundle/*'
         # you can exclude directories or files
@@ -39,8 +47,3 @@ services:
     #         - { name: form.type }
     # app.frontend_controller:
     #     class:     AppBundle\Controller\FrontendController
-#    snc_second_level_cache:
-#        class: %snc_redis.doctrine_cache_predis.class%
-#        calls:
-#            - ["setRedis", ["@snc_redis.cache_doctrine"]]
-#            - ["setNamespace", ["DoctrineSecondLevelCache"]]

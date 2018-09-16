@@ -2,64 +2,53 @@
     {% set page = {"title": "null", "subtitle": "null", "section": "null" } %}
 {% endif %}
 
-<li class="treeview {% if is_route_root("homecontent") %}active{% endif %}">
-    <a href="{{ path('homecontent_index') }}">
-    <i class="fa fa-file-o"></i>
-    <span>Portada</span>
+<li class="treeview {% if is_route_root("home") %}active{% endif %}">
+    <a href="{{ path('homepage') }}">
+    <i class="fa fa-dashboard "></i>
+    <span>Inicio</span>
     </a>
 </li>
 
 <li class="treeview">
     <a href="#">
-    <i class="fa fa-file-o"></i>
-    <span>Notas y columnas</span>
+    <i class="fa fa-institution"></i>
+    <span>Biblitecas</span>
     <i class="fa fa-angle-left pull-right"> </i>
     </i>
     </a>
     <ul class="treeview-menu">
-
-    </ul>
-</li>
-
-<li class="treeview ">
-    <a href="#">
-    <i class="fa fa-file-o"></i>
-    <span>Videos</span>
-    <i class="fa fa-angle-left pull-right"> </i>
-    </a>
-    <ul class="treeview-menu">
-
+      <li><a href="">Listado</a></li>
+      <li><a href="">Agregar</a></li>
     </ul>
 </li>
 
 
-<li class="treeview ">
-    <a href="#">
-    <i class="fa fa-newspaper-o"></i>
-    <span>Secciones</span>
-    <i class="fa fa-angle-left pull-right"> </i>
-    </a>
-    <ul class="treeview-menu">
-      <li>UNO</li>
-      <li>DOS</li>
-    </ul>
-</li>
-
-{% if security_granted(app.user, ['tag'] ) %}
 <li class="treeview">
     <a href="#">
-    <i class="fa fa-tag"></i>
-    <span>Etiquetas</span>
+    <i class="fa fa-puzzle-piece"></i>
+    <span>Salas</span>
+    <i class="fa fa-angle-left pull-right"> </i>
+    </i>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="">Listado</a></li>
+      <li><a href="">Agregar</a></li>
+    </ul>
+</li>
+
+<li class="treeview ">
+    <a href="#">
+    <i class="fa fa-area-chart"></i>
+    <span>Estaditicas</span>
     <i class="fa fa-angle-left pull-right"> </i>
     </a>
     <ul class="treeview-menu">
-      
+      <li>Biblitecas</li>
+      <li>Salas</li>
     </ul>
 </li>
-{% endif %}
 
 
-{% if security_granted(app.user, ['user'] ) %}
 <li class="treeview {% if is_route_root("user") %}active{% endif %}">
     <a href="#">
     <i class="fa fa-user"></i>
@@ -70,4 +59,3 @@
 
     </ul>
 </li>
-{% endif %}
