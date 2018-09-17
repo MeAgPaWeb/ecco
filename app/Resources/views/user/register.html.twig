@@ -9,27 +9,13 @@
     }
 %}
 
-{% block linkStylesheet %}
-    {{ parent() }}
-    {% stylesheets 
-        'css/user/register.css'
-        filter='cssrewrite'
-        filter='uglifycss'
-        output='css/build/register.css'
-    %}
-        <link type="text/css" rel="stylesheet" href="{{ asset_url }}" />
-    {% endstylesheets %}
-{% endblock %}
-                      
-{% block javascript %}
-    {{ parent() }}
-    {% javascripts filter='uglifyjs2' output='js/build/register.js'
-        'js/Register.js'
-        'js/Register.ready.js'
-    %}
-        <script src="{{ asset_url }}"></script>
-    {% endjavascripts %}
-{% endblock %}
+{% set stylesheets = [
+                        'css/user/register.css'
+                     ] %}
+{% set javascripts = [
+                        'js/Register.js',
+                        'js/Register.ready.js'
+                    ]%}
 
 {% block content %}
     {{form_start(form, {'method': 'POST', 'attr':{'class': 'register'}})}}

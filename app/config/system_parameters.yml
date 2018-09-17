@@ -1,8 +1,8 @@
 parameters:
     system:
-        title: Book
-        backendTitle: <b>B</b>ook
-        backendTitleMini: <b>D</b>
+        title: Clima de Bibliotecas
+        backendTitle: <b>C</b>lima de <b>B</b>ibliotecas
+        backendTitleMini: <b>C</b>de<b>B</b>
         version: 0.0.1
         footer: Validado <strong>HTML5</strong>
         options:
@@ -26,17 +26,6 @@ parameters:
         content: 60
 
     contentGroup:
-        opinion:
-            name: "opinion"
-            title: "Opinión"
-            color: "#d8d9da"
-            noSection: true
-        tag:
-            name: "tag"
-            title: "Etiquetas"
-            color: "#d8d9da"
-            noSection: true
-            byId: true
         search:
             name: "search"
             title: "Resultados de búsqueda:"
@@ -47,20 +36,10 @@ parameters:
             title: "Entrevistas"
             color: "#d8d9da"
             noSection: true
-        video:
-            name: "video"
-            title: "Videos"
-            color: "#d8d9da"
-            noSection: true
-        gallery:
-            name: "gallery"
-            title: "Galería de Imágenes"
-            color: "#0b445b"
-            noSection: true
 
-    mainmenu: [opinion]
+    mainmenu: []
 
-    mainmenu_fixed: [opinion, interview, video]
+    mainmenu_fixed: []
 
     homepage: []
 
@@ -95,8 +74,8 @@ parameters:
 
     social:
         twitter:
-            url: "//twitter.com/diagonalesweb"
+            url: "//twitter.com/climadebibliotecas"
         facebook:
-            url: "//www.facebook.com/diagonalesweb/"
+            url: "//www.facebook.com/climadebibliotecas/"
         instagram:
-            url: "//www.instagram.com/diagonalesweb"
+            url: "//www.instagram.com/climadebibliotecas"

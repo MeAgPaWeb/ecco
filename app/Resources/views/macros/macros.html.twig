@@ -25,3 +25,14 @@
     <li {% if is_route(route) %}class="active"{% endif %}><a href="{{ path(route) }}"><i class="fa {{ icon }}"></i> {{ title }}</a></li>
 {% endmacro %}
 
+{% macro stylesheets(stylesheets) %}
+    {% for style in stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset(style) }}" />
+    {% endfor %}
+{% endmacro %}
+
+{% macro javascripts(javascripts) %}
+    {% for script in javascripts %}
+    <script type="text/javascript" src="{{ asset(script) }}"></script>
+    {% endfor %}
+{% endmacro %}
