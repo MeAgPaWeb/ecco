@@ -1,0 +1,52 @@
+{% extends 'default.html.twig' %}
+
+{% set page =
+    {
+        "title": "Biblioteca",
+        "subtitle": "Ver",
+    }
+%}
+
+{% block breadcrumb %}
+    <li><a href="{{ path('library_index') }}"><i class="fa fa-dashboard"></i> Biblioteca</a></li>
+    <li class="active">Ver</li>
+{% endblock %}
+
+{% block content %}
+    <h1>Library</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ library.id }}</td>
+            </tr>
+            <tr>
+                <th>Latitude</th>
+                <td>{{ library.latitude }}</td>
+            </tr>
+            <tr>
+                <th>Longitude</th>
+                <td>{{ library.longitude }}</td>
+            </tr>
+            <tr>
+                <th>Age</th>
+                <td>{{ library.age }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('library_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('library_edit', { 'id': library.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

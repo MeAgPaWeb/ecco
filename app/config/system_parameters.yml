@@ -1,10 +1,10 @@
 parameters:
     system:
-        title: Clima de Bibliotecas
-        backendTitle: <b>C</b>lima de <b>B</b>ibliotecas
-        backendTitleMini: <b>C</b>de<b>B</b>
+        title: ECCO
+        backendTitle: <b>E.C.C.O</b>
+        backendTitleMini: <b>ecco</b>
         version: 0.0.1
-        footer: Validado <strong>HTML5</strong>
+        footer: Evaluación del Clima de Concervación | Validado <strong>HTML5</strong>
         options:
             show_messages: false
             show_notifications: false

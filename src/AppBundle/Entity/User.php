@@ -144,6 +144,9 @@ class User extends BaseUser
      */
     public function getAvatar(){
         if ($this->avatar == null){
+          if (!$this->getGender()) {
+            $this->gender="Male";
+          }
             return $this->getGender().'_gender.jpg';
         }else{
             return $this->avatar;

@@ -1,0 +1,32 @@
+{% extends 'default.html.twig' %}
+{% form_theme form 'form/fields.html.twig' %}
+
+{% set page =
+    {
+        "title": "Biblioteca",
+        "subtitle": "Crear",
+    }
+%}
+
+{% block breadcrumb %}
+    <li><a href="{{ path('library_index') }}"><i class="fa fa-dashboard"></i> Biblioteca</a></li>
+    <li class="active">Crear</li>
+{% endblock %}
+
+{% block content %}
+
+{#
+    <h1>Library creation</h1>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <input type="submit" value="Create" />
+    {{ form_end(form) }}
+
+    <ul>
+        <li>
+            <a href="{{ path('library_index') }}">Back to the list</a>
+        </li>
+    </ul>
+#}
+{% endblock %}

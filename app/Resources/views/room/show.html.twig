@@ -1,0 +1,88 @@
+{% extends 'default.html.twig' %}
+
+{% set page =
+    {
+        "title": "Sala",
+        "subtitle": "Ver",
+    }
+%}
+
+{% block breadcrumb %}
+    <li><a href="{{ path('room_index') }}"><i class="fa fa-dashboard"></i> Sala</a></li>
+    <li class="active">Ver</li>
+{% endblock %}
+
+{% block content %}
+    <h1>Room</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ room.id }}</td>
+            </tr>
+            <tr>
+                <th>Backing</th>
+                <td>{{ room.backing }}</td>
+            </tr>
+            <tr>
+                <th>Transparency</th>
+                <td>{{ room.transparency }}</td>
+            </tr>
+            <tr>
+                <th>Thermaltransmittance</th>
+                <td>{{ room.thermalTransmittance }}</td>
+            </tr>
+            <tr>
+                <th>Width</th>
+                <td>{{ room.width }}</td>
+            </tr>
+            <tr>
+                <th>High</th>
+                <td>{{ room.high }}</td>
+            </tr>
+            <tr>
+                <th>Lenght</th>
+                <td>{{ room.lenght }}</td>
+            </tr>
+            <tr>
+                <th>Glazedsurface</th>
+                <td>{{ room.glazedSurface }}</td>
+            </tr>
+            <tr>
+                <th>Floor</th>
+                <td>{{ room.floor }}</td>
+            </tr>
+            <tr>
+                <th>Walls</th>
+                <td>{{ room.walls }}</td>
+            </tr>
+            <tr>
+                <th>Windows</th>
+                <td>{{ room.windows }}</td>
+            </tr>
+            <tr>
+                <th>Uses</th>
+                <td>{{ room.uses }}</td>
+            </tr>
+            <tr>
+                <th>Conditionerequipment</th>
+                <td>{{ room.conditionerEquipment }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('room_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('room_edit', { 'id': room.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

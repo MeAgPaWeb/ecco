@@ -1,0 +1,85 @@
+{% extends 'table.html.twig' %}
+
+{% set page =
+    {
+        "title": "Salas",
+        "subtitle": "Listado",
+    }
+%}
+
+{% block breadcrumb %}
+    <li><a href="{{ path('room_index') }}"><i class="fa fa-dashboard"></i> Salas</a></li>
+    <li class="active">Listado</li>
+{% endblock %}
+
+{% set page =
+    {
+        "title": "Sala",
+        "subtitle": "Listado"
+    }
+%}
+
+{% set new =
+    {
+        "route": "room_new",
+        "title": "Nueva Sala"
+    }
+%}
+
+{% block thead %}
+<tr>
+    <th>#</th>
+    <th>Adosamiento</th>
+    <th>Trasparencia</th>
+    <th>Trasmitancia Termica</th>
+    <th>Ancho</th>
+    <th>Largo</th>
+    <th>Alto</th>
+    <th>Superficie Vidriada</th>
+    <th>Techo</th>
+    <th>Piso</th>
+    <th>Paredes</th>
+    <th>Ventanas</th>
+    <th></th>
+</tr>
+{% endblock %}
+{% block tfoot %}
+  <tr>
+      <th>#</th>
+      <th>Adosamiento</th>
+      <th>Trasparencia</th>
+      <th>Trasmitancia Termica</th>
+      <th>Ancho</th>
+      <th>Largo</th>
+      <th>Alto</th>
+      <th>Superficie Vidriada</th>
+      <th>Techo</th>
+      <th>Piso</th>
+      <th>Paredes</th>
+      <th>Ventanas</th>
+      <th></th>
+  </tr>
+{% endblock %}
+{% block tbody %}
+  {% for room in rooms %}
+      <tr>
+          <td><a href="{{ path('room_show', { 'id': room.id }) }}">{{ room.id }}</a></td>
+          <td>{{ room.backing }}</td>
+          <td>{{ room.transparency }}</td>
+          <td>{{ room.thermalTransmittance }}</td>
+          <td>{{ room.width }}</td>
+          <td>{{ room.high }}</td>
+          <td>{{ room.lenght }}</td>
+          <td>{{ room.glazedSurface }}</td>
+          <td>{{ room.floor }}</td>
+          <td>{{ room.walls }}</td>
+          <td>{{ room.windows }}</td>
+          <td>{{ room.uses }}</td>
+          <td>{{ room.conditionerEquipment }}</td>
+          <td class="table-operations">
+            <a href="{{ path('room_show', { 'id': room.id }) }}" title="Ver detalle"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a>&nbsp;&nbsp;
+            <a href="{{ path('room_edit', { 'id': room.id }) }}" title="Editar"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+          </td>
+      </tr>
+  {% endfor %}
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'table.html.twig' %}
+
+{% set page =
+    {
+        "title": "Bibliotecas",
+        "subtitle": "Listado",
+    }
+%}
+
+{% block breadcrumb %}
+    <li><a href="{{ path('library_index') }}"><i class="fa fa-dashboard"></i> Bibliotecas</a></li>
+    <li class="active">Listado</li>
+{% endblock %}
+
+{% set page =
+    {
+        "title": "Biblioteca",
+        "subtitle": "Listado"
+    }
+%}
+
+{% set new =
+    {
+        "route": "library_new",
+        "title": "Nueva Biblioteca"
+    }
+%}
+
+{% block thead %}
+    <tr>
+        <th>#</th>
+        <th>Latitud</th>
+        <th>Longitud</th>
+        <th>Años</th>
+        <th>Autor</th>
+        <th></th>
+    </tr>
+{% endblock %}
+{% block tfoot %}
+  <tr>
+      <th>#</th>
+      <th>Latitud</th>
+      <th>Longitud</th>
+      <th>Años</th>
+      <th>Autor</th>
+      <th></th>
+  </tr>
+{% endblock %}
+{% block tbody %}
+  {% for library in libraries %}
+      <tr>
+          <td><a href="{{ path('library_show', { 'id': library.id }) }}">{{ library.id }}</a></td>
+          <td>{{ library.latitude }}</td>
+          <td>{{ library.longitude }}</td>
+          <td>{{ library.age }}</td>
+          <td class="table-operations">
+              <a href="{{ path('library_show', { 'id': library.id }) }}" title="Ver detalle"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a>&nbsp;&nbsp;
+              <a href="{{ path('library_edit', { 'id': library.id }) }}" title="Editar"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+          </td>
+      </tr>
+  {% endfor %}
+{% endblock %}
