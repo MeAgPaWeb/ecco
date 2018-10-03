@@ -23,6 +23,8 @@
                 {% stylesheets
                     'lib/jquery-ui/jquery-ui.css'
                     'lib/adminlte/css/AdminLTE.min.css'
+                    'css/custom.css'
+
                     filter='cssrewrite'
                     filter='uglifycss'
                     output='css/build/backend_layout.css'
@@ -47,9 +49,7 @@
         <div class="{{ page.preclass }}-box">
             <div class="{{ page.preclass }}-logo">
                 <a href="{{ path('homepage') }}">
-                    {% image 'images/logo.png' filter='optipng' output='images/logo.png'%}
-                        <img style="padding: 0 60px 0 60px; width: 60%;" src="{{ asset_url }}" alt="Diagonales" />
-                    {% endimage %}
+                  <span class="logo-font logo-user">ECCO</span>
                 </a>
             </div>
 
