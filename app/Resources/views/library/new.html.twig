@@ -1,6 +1,5 @@
 {% extends 'default.html.twig' %}
 {% form_theme form 'form/fields.html.twig' %}
-
 {% set page =
     {
         "title": "Biblioteca",
@@ -8,15 +7,86 @@
     }
 %}
 
+{% block javascript %}
+    {{ parent() }}
+    <script type="text/javascript">
+        function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 3,
+          mapTypeControl: false,
+          center: {lat: -34.896375, lng: -57.941920900000014}
+        });
+        var geocoder = new google.maps.Geocoder();
+
+        document.getElementById('location_on').addEventListener('click', function() {
+          geocodeAddress(geocoder, map);
+        });
+      }
+
+      function geocodeAddress(geocoder, resultsMap) {
+        var address = document.getElementById('address').value;
+        geocoder.geocode({'address': address}, function(results, status) {
+          if (status === 'OK') {
+            resultsMap.setCenter(results[0].geometry.location);
+            resultsMap.setZoom(16);
+            console.log('lat:'+results[0].geometry.location.lat()+' | lng:'+results[0].geometry.location.lng());
+            var marker = new google.maps.Marker({
+              map: resultsMap,
+              position: results[0].geometry.location
+            });
+          } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+          }
+        });
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbpjX6pyxmw1sKyuCxSUjHeVmtBg32k8A&callback=initMap">
+    </script>
+{% endblock javascript %}
 {% block breadcrumb %}
-    <li><a href="{{ path('library_index') }}"><i class="fa fa-dashboard"></i> Biblioteca</a></li>
+    <li><a href="{{ path('library_index') }}"> Biblioteca</a></li>
     <li class="active">Crear</li>
 {% endblock %}
 
 {% block content %}
-
+  <div class="box box-primary">
+      <div class="box-header with-border">
+        <h3 class="box-title">Agregando una Bibliteca </h3>
+      </div>
+      <form role="form">
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Nombre</label>
+                <input class="form-control" type="text" placeholder="Nombre de la Biblioteca, Dependencia">
+              </div>
+              <div class="form-group">
+                <label>Direccion</label>
+                <div class="input-group">
+                  <input class="form-control" type="text" id="address" placeholder="Calle Numero, Ciudad, Provincia, Pais">
+                  <a class="input-group-addon" type="button" id="location_on" href="#"><i class="fa fa-map-marker"></i></a>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Edad de la Edificacio</label>
+                <input class="form-control" type="text" placeholder="Cantidad de años">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div id="map" style="width: 100%; min-height: 250px"></div>
+            </div>
+          </div>
+          <div class="box-footer">
+              <a href="{{ path('room_new') }}" type="submit" class="btn btn-primary">Agregar una Sala</a>
+              <a href="{{ path('homepage') }}" type="submit" class="btn btn-success">Finalizar Carga</a>
+          </div>
+        </div>
+      </form>
+  </div>
 {#
-    <h1>Library creation</h1>
+    <h1>Room creation</h1>
 
     {{ form_start(form) }}
         {{ form_widget(form) }}
@@ -25,8 +95,9 @@
 
     <ul>
         <li>
-            <a href="{{ path('library_index') }}">Back to the list</a>
+            <a href="{{ path('room_index') }}">Back to the list</a>
         </li>
     </ul>
 #}
+
 {% endblock %}

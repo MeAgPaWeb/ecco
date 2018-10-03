@@ -10,3 +10,6 @@
   background-color: #d06 !important;
   color:#fff;
 }
+#map {
+  height: 100%;
+}
