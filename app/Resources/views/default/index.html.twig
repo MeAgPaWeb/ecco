@@ -15,20 +15,32 @@
 {% block content %}
 <div class="row">
   <!-- ./col -->
-  <div class="col-lg-3 col-xs-6">
-    <!-- small box -->
-    <a href="{{ path('library_new') }}">
-        <div class="small-box bg-green">
-          <div class="inner">
-            <h3>Crear</h3>
-            <p>Biblioteca</p>
-          </div>
-          <div class="icon">
-            <i class="glyphicon glyphicon-plus"></i>
-          </div>
+  <a href="{{ path('library_new') }}">
+    <div class="col-lg-3 col-xs-6">
+      <div class="small-box bg-green">
+        <div class="inner">
+          <h3>Crear</h3>
+          <p>Biblioteca</p>
+        </div>
+        <div class="icon">
+          <i class="glyphicon glyphicon-plus"></i>
         </div>
       </div>
-    </a>
+    </div>
+  </a>
+  <a href="{{ path('library_index') }}">
+    <div class="col-lg-3 col-xs-6">
+      <div class="small-box bg-fucia">
+        <div class="inner">
+          <h3>Buscar</h3>
+          <p>Otras Biblitecas</p>
+        </div>
+        <div class="icon">
+          <i class="ion ion-search"></i>
+        </div>
+      </div>
+    </div>
+  </a>
   <!-- ./col -->
 </div>
 <div class="row">
