@@ -18,6 +18,8 @@
                         'lib/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css',
                         'lib/adminlte/css/AdminLTE.min.css',
                         'lib/adminlte/css/skins/_all-skins.min.css',
+                        'lib/jquery-select2/dist/css/select2.min.css',
+                        'css/custom.css',
                      ] | merge(stylesheets) %}
 
 {% set javascripts = [
@@ -29,6 +31,7 @@
                         'lib/moment.js/moment-with-locales.js',
                         'lib/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js',
                         'lib/jquery-slimscroll/jquery.slimscroll.min.js',
+                        'lib/jquery-select2/dist/js/select2.min.js',
                         'lib/adminlte/js/app.min.js'
                      ] | merge(javascripts) %}
 
@@ -116,17 +119,16 @@
             <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
     </head>
-    <body class="hold-transition skin-blue sidebar-mini">
+    <body class="skin-blue layout-top-nav">
         <div class="wrapper">
             <header class="main-header">
-                <a href="{{ path('homepage') }}" class="logo">
-                    {% block logo %}{% endblock %}
-                </a>
                 <nav class="navbar navbar-static-top" >
-                    <!-- Sidebar toggle button-->
-                    <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-                        <span class="sr-only">Cambiar navegación</span>
-                    </a>
+                    <div class="navbar-header">
+                      <a href="{{ path('homepage') }}" class="navbar-brand"><b>ECCO</b> - Evaluación del Clima de Concervación</a>
+                      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+                        <i class="fa fa-bars"></i>
+                      </button>
+                    </div>
                     <div class="navbar-custom-menu">
                         <ul class="nav navbar-nav">
                             {% block navbarCustomMenu %}{% endblock %}
@@ -134,12 +136,6 @@
                     </div>
                 </nav>
             </header>
-
-            <aside class="main-sidebar">
-                <div class="sidebar">
-                    {% block mainSidebar %}{% endblock %}
-                </div>
-            </aside>
 
             <div class="content-wrapper">
                 {% block contentWrapper %}{% endblock %}

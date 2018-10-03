@@ -14,6 +14,86 @@
 
 {% block content %}
 <div class="row">
+  <!-- ./col -->
+  <div class="col-lg-3 col-xs-6">
+    <!-- small box -->
+    <a href="{{ path('library_new') }}">
+        <div class="small-box bg-green">
+          <div class="inner">
+            <h3>Crear</h3>
+            <p>Biblioteca</p>
+          </div>
+          <div class="icon">
+            <i class="glyphicon glyphicon-plus"></i>
+          </div>
+        </div>
+      </div>
+    </a>
+  <!-- ./col -->
+</div>
+<div class="row">
+    <div class="col-md-6">
+      <!-- Widget: user widget style 1 -->
+      <div class="box box-widget widget-user">
+        <!-- Add the bg color to the header using any of the bg-* classes -->
+        <a href="#">
+          <div class="widget-user-header bg-aqua-active">
+            <h3 class="widget-user-username">Facultad de Arquitectura - UNLP</h3>
+            <h5 class="widget-user-desc">Calle 47 162, La Plata, Pcia de Buenos Aires</h5>
+          </div>
+        </a>
 
+        <div class="box-body">
+          <div class="row">
+            <div class="col-sm-4 border-right">
+              <div class="description-block">
+                <h5 class="description-header">2</h5>
+                <span class="description-text">Salas</span>
+              </div>
+              <!-- /.description-block -->
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-4 border-right">
+              <div class="description-block">
+                <h5 class="description-header">15,800</h5>
+                <span class="description-text">Registros</span>
+              </div>
+              <!-- /.description-block -->
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-4">
+              <div class="description-block">
+                <h5 class="description-header">2</h5>
+                <span class="description-text">Seguidores</span>
+              </div>
+              <!-- /.description-block -->
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.row -->
+
+        </div>
+        <div class="box-footer">
+            <a class="btn btn-app">
+              <i class="fa fa-edit"></i> Edit
+            </a>
+            <a class="btn btn-app" href="{{ path('room_new') }}">
+              <i class="fa fa-plus"></i> Sala
+            </a>
+            <a class="btn btn-app" href="{{ path('room_index') }}">
+              <i class="fa fa-list"></i> Salas
+            </a>
+            <a class="btn btn-app">
+              <span class="badge bg-green">1</span>
+              <i class="fa fa-users"></i> Seguidores
+            </a>
+            <a class="btn btn-app">
+              <i class="fa  fa-line-chart"></i> Estadisticas
+            </a>
+        </div>
+      </div>
+      <!-- /.widget-user -->
+    </div>
+    <!-- /.col -->
 </div>
 {% endblock %}

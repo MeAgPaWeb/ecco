@@ -3,175 +3,154 @@
 {% set page =
     {
         "title": "Sala",
-        "subtitle": "Crear",
+        "subtitle": "Crear en Facultad de Ingeniaria de la UNLP",
     }
 %}
 
+{% block javascript %}
+    {{ parent() }}
+    <script type="text/javascript">
+    $(function () {
+      $('.select2').select2()
+    })
+    </script>
+{% endblock javascript %}
 {% block breadcrumb %}
     <li><a href="{{ path('room_index') }}"><i class="fa fa-dashboard"></i> Sala</a></li>
-    <li class="active">Crear</li>
+    <li>Crear </li>
+    <li class="active">Facultad de Ingeniaria de la UNLP</li>
 {% endblock %}
 
 {% block content %}
   <div class="box box-primary">
       <div class="box-header with-border">
-        <h3 class="box-title">Datos Principales de la Sala</h3>
+        <h3 class="box-title">Agregando una sala </h3>
       </div>
       <div class="box-body">
           <form role="form">
-          <div class="form-group">
-            <label>Uso de la Sala</label>
-            <select class="form-control">
-              <option>deposito</option>
-              <option>sala de lectura</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Equipo de Acondicionamiento</label>
-            <select class="form-control">
-              <option>si</option>
-              <option>no</option>
-            </select>
-          </div>
-          <div class="nav-tabs-custom">
-            <ul class="nav nav-tabs pull-right">
-              <li class="active"><a href="#tab_1-1" data-toggle="tab" aria-expanded="true">Carga Basica</a></li>
-              <li class=""><a href="#tab_2-2" data-toggle="tab" aria-expanded="false">Carga Avanzada</a></li>
-              <li class=""><a href="#tab_3-3" data-toggle="tab" aria-expanded="false">Carga del Data Logger</a></li>
-              <li class="pull-left header"><i class="fa fa-puzzle-piece"></i>Detalles de la Sala</li>
-            </ul>
-            <div class="tab-content">
-              <div class="tab-pane active" id="tab_1-1">
-                <form role="form">
-                    <div class="box-body">
-                      <div class="form-group">
-                        <label>Ancho</label>
-                        <input class="form-control" placeholder="Ingrese el ancho..." type="text">
-                      </div>
-                      <div class="form-group">
-                        <label>Largo</label>
-                        <input class="form-control" placeholder="Ingrese el largo..." type="text">
-                      </div>
-                      <div class="form-group">
-                        <label>Alto</label>
-                        <input class="form-control" placeholder="Ingrese el alto..." type="text">
-                      </div>
-                      <div class="form-group">
-                        <label>Superficie Total Vidriada</label>
-                        <input class="form-control" placeholder="Ingrese la superficie vidriada..." type="text">
-                      </div>
-                      <div class="form-group">
-                        <label>Composicion del Techo</label>
-                        <select class="form-control">
-                          <option>Cubierta hormigón armado</option>
-                          <option>Entrepiso hormigón armado</option>
-                          <option>Entrepiso madera</option>
-                          <option>Cubierta de chapa</option>
-                          <option>Cubierta de tejas</option>
-                        </select>
-                      </div>
-                      <div class="form-group">
-                        <label>Composicion del piso</label>
-                        <select class="form-control">
-                          <option>Entrepiso madera</option>
-                          <option>Entrepiso hormigón armado</option>
-                          <option>Terreno natural </option>
-                        </select>
-                      </div>
-                      <div class="form-group">
-                        <label>Composicion de las paredes</label>
-                        <select class="form-control">
-                          <option>Rev + Lad. hueco + Rev</option>
-                          <option>Rev + Lad.20 cm + Rev</option>
-                          <option>Rev + Lad. 25 + Rev</option>
-                          <option>Rev + Lad. común 30 cm + Rev</option>
-                          <option>Rev + Lad. común 45 cm + Rev</option>
-                        </select>
-                      </div>
-                      <div class="form-group">
-                        <label>Composicion de las ventanas</label>
-                        <select class="form-control">
-                          <option>de hierro o chapa vidrio simple</option>
-                          <option>de madera vidrio simple</option>
-                          <option>de aluminio vidrio simple</option>
-                          <option>de aluminio c/ vidrio doble</option>
-                          <option>de PVC con vidrio simple</option>
-                          <option>de PVC con vidrio doble</option>
-                        </select>
-                      </div>
-                    </div>
-                    <!-- /.box-body -->
-
-                    <div class="box-footer">
-                      <button type="submit" class="btn btn-primary">Agregar</button>
-                    </div>
-                </form>
-
+            <div class="row">
+              <div class="col-md-4">
+                  <div class="form-group ">
+                  <label>Uso de la Sala</label>
+                  <select class="form-control select2">
+                    <option>deposito</option>
+                    <option>sala de lectura</option>
+                  </select>
+                </div>
               </div>
-
-              <div class="tab-pane" id="tab_2-2">
-                <form role="form">
-                    <div class="box-body">
-                      <div class="form-group">
-                        <label>Adosamiento</label>
-                        <input class="form-control" placeholder="Ingrese nivel de adosamiento..." type="text">
-                      </div>
-                      <div class="form-group">
-                        <label>Trasparencia</label>
-                        <input class="form-control" placeholder="Ingrese nivel de trasparencia..." type="text">
-                      </div>
-                      <div class="form-group">
-                        <label>Trasmitancia Termica Ponderada</label>
-                        <input class="form-control" placeholder="Ingrese coeficiente de trasmitancia termica ponderada..." type="text">
-                      </div>
-                    </div>
-                    <!-- /.box-body -->
-
-                    <div class="box-footer">
-                      <button type="submit" class="btn btn-primary">Agregar</button>
-                    </div>
-                </form>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Equipo de Acondicionamiento</label>
+                  <select class="form-control select2">
+                    <option>si</option>
+                    <option>no</option>
+                  </select>
+                </div>
               </div>
-              <div class="tab-pane" id="tab_3-3">
-                <form role="form">
-                    <div class="box-body">
-                      <div class="form-group">
-                        <label>Fecha Inicio</label>
-                        <div class="input-group date">
-                          <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
-                          </div>
-                          <input class="form-control pull-right" id="datepicker" type="text">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label>Fecha Finalizacion</label>
-                        <div class="input-group date">
-                          <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
-                          </div>
-                          <input class="form-control pull-right" id="datepicker" type="text">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="exampleInputFile">Registro del DataLogger</label>
-                        <input id="exampleInputFile" type="file">
-                        <p class="help-block">Seleccione el archivo comma separated file</p>
-                      </div>
-                    </div>
-                    <!-- /.box-body -->
+              <div class="col-md-4">
+                  <div class="form-group ">
+                  <label>Cantidad de Caras al Expuestas al Exterior</label>
 
-                    <div class="box-footer">
-                      <button type="submit" class="btn btn-primary">Agregar</button>
-                    </div>
-                </form>
+                  <select class="form-control select2" multiple="" data-placeholder="Select a State">
+                    <option>base</option>
+                    <option>piso</option>
+                    <option>pared 1</option>
+                    <option>pared 2</option>
+                    <option>pared 3</option>
+                    <option>pared 4</option>
+                  </select>
+                </div>
               </div>
-
-
-
             </div>
-            <!-- /.tab-content -->
-          </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Ancho</label>
+                  <input class="form-control" placeholder="Ingrese el ancho..." type="text">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Largo</label>
+                  <input class="form-control" placeholder="Ingrese el largo..." type="text">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Alto</label>
+                  <input class="form-control" placeholder="Ingrese el alto..." type="text">
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+              <label>Composicion del Techo</label>
+              <select class="form-control">
+                <option>Cubierta hormigón armado</option>
+                <option>Entrepiso hormigón armado</option>
+                <option>Entrepiso madera</option>
+                <option>Cubierta de chapa</option>
+                <option>Cubierta de tejas</option>
+              </select>
+            </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+              <label>Composicion del piso</label>
+              <select class="form-control">
+                <option>Entrepiso madera</option>
+                <option>Entrepiso hormigón armado</option>
+                <option>Terreno natural </option>
+              </select>
+            </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+              <label>Composicion de las paredes</label>
+              <select class="form-control">
+                <option>Rev + Lad. hueco + Rev</option>
+                <option>Rev + Lad.20 cm + Rev</option>
+                <option>Rev + Lad. 25 + Rev</option>
+                <option>Rev + Lad. común 30 cm + Rev</option>
+                <option>Rev + Lad. común 45 cm + Rev</option>
+              </select>
+            </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+              <label>Composicion de las ventanas</label>
+              <select class="form-control">
+                <option>de hierro o chapa vidrio simple</option>
+                <option>de madera vidrio simple</option>
+                <option>de aluminio vidrio simple</option>
+                <option>de aluminio c/ vidrio doble</option>
+                <option>de PVC con vidrio simple</option>
+                <option>de PVC con vidrio doble</option>
+              </select>
+            </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Superficie Total Vidriada <small>mt2</small></label>
+                  <input class="form-control" placeholder="Ingrese la superficie vidriada..." type="text">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group" style="overflow:hidden;">
+                  <label for="exampleInputFile">Registro del DataLogger</label>
+                  <input id="exampleInputFile" type="file">
+                  <p class="help-block">Seleccione el archivo CSV ("#";"Date";"Time, GMT-03:00";"Temp, °C";"RH, %";"DewPt, °C")</p>
+                </div>
+              </div>
+            </div>
+            <div class="box-footer">
+                <a href="{{ path('room_new') }}" type="submit" class="btn btn-primary">Agregar Otra Sala</a>
+                <a href="{{ path('homepage') }}" type="submit" class="btn btn-success">Finalizar Carga</a>
+            </div>
         </form>
       </div>
   </div>
@@ -189,15 +168,5 @@
         </li>
     </ul>
 #}
-<script type="text/javascript">
 
-$(function () {
-  //Date picker
-  $('#datepicker').datepicker({
-    autoclose: true
-  })
-
-})
-
-</script>
 {% endblock %}

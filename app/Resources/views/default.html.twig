@@ -29,30 +29,9 @@
     </li>
 {% endblock %}
 
-{% block mainSidebar %}
-
-    <div class="user-panel">
-        <div class="pull-left image">
-            <img src="{{ avatar_asset(app.user.avatar) }}" class="img-rounded" alt="Imágen del usuario">
-        </div>
-        <div class="pull-left info">
-            <p>{{ app.user.name }} {{ app.user.lastname }}</p>
-            <a href="#"><i class="fa fa-circle text-success"></i> En línea</a>
-        </div>
-    </div>
-
-    {% if system.options.show_search %}
-        {% include 'layout/search_menu.html.twig' %}
-    {% endif %}
-
-    <ul class="sidebar-menu">
-        <li class="header">MENU PRINCIPAL</li>
-        {% include 'layout/sidemenu_menu.html.twig' %}
-    </ul>
-
-{% endblock %}
-
 {% block contentWrapper %}
+<div class="container">
+
     <section class="content-header">
         <h1>
             {{ page.title }}
@@ -62,7 +41,9 @@
             {% block breadcrumb %}{% endblock %}
         </ol>
     </section>
+
     <div class="content" style="overflow:auto;">
         {% block content %}{% endblock %}
     </div>
+</div>
 {% endblock %}
