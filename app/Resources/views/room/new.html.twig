@@ -3,7 +3,7 @@
 {% set page =
     {
         "title": "Sala",
-        "subtitle": "Crear en Facultad de Ingeniaria de la UN",
+        "subtitle": "Crear en Facultad de Ingeniería de la UNLP",
     }
 %}
 
@@ -18,7 +18,7 @@
 {% block breadcrumb %}
     <li><a href="{{ path('room_index') }}"> Sala</a></li>
     <li>Crear </li>
-    <li class="active">Facultad de Ingeniaria de la UNLP</li>
+    <li class="active">Facultad de Ingeniería de la UNLP</li>
 {% endblock %}
 
 {% block content %}
@@ -34,31 +34,35 @@
                   <label>Uso de la Sala</label>
 
                   <select class="form-control ">
-                    <option>Deposito</option>
+                    <option>Depósito</option>
                     <option>Sala de Lectura</option>
+                    <option>Mixto</option>
                   </select>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="form-group">
-                  <label>Equipo de Acondicionamiento</label>
-                  <select class="form-control select2">
-                    <option>Si</option>
-                    <option>No</option>
+                  <label>Equipo de Climatización</label>
+                  <select class="form-control select">
+                    <option>Refrigeración</option>
+                    <option>Calefacción</option>
+                    <option>Ambos</option>
+                    <option>Ninguno</option>
                   </select>
                 </div>
               </div>
               <div class="col-md-4">
                   <div class="form-group ">
-                  <label>Seleccione las caras expuestas al exterior</label>
+                  <label>Seleccione las caras expuestas al exterior (considere el piso y el techo)</label>
 
-                  <select class="form-control select2" multiple="" data-placeholder="Seleccione los lados expuestos">
-                    <option disabled>Piso</option>
-                    <option>Techo</option>
-                    <option>Pared 1</option>
-                    <option>Pared 2</option>
-                    <option>Pared 3</option>
-                    <option>Pared 4</option>
+                  <select class="form-control select" >
+                    <option>0</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
                   </select>
                 </div>
               </div>
@@ -66,20 +70,20 @@
             <div class="row">
               <div class="col-md-4">
                 <div class="form-group">
-                  <label>Ancho</label>
-                  <input class="form-control" placeholder="Ingrese el ancho..." type="text">
+                  <label>Ancho (en mts)</label>
+                  <input class="form-control" placeholder="Ingrese el ancho en metros" type="text">
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="form-group">
-                  <label>Largo</label>
-                  <input class="form-control" placeholder="Ingrese el largo..." type="text">
+                  <label>Largo (en mts)</label>
+                  <input class="form-control" placeholder="Ingrese el largo en metros" type="text">
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="form-group">
-                  <label>Alto</label>
-                  <input class="form-control" placeholder="Ingrese el alto..." type="text">
+                  <label>Alto (en mts)</label>
+                  <input class="form-control" placeholder="Ingrese el alto en metros" type="text">
                 </div>
               </div>
             </div>
