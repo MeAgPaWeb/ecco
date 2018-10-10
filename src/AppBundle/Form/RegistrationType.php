@@ -6,12 +6,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-<<<<<<< HEAD
-=======
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
->>>>>>> fe279a529807d30ffbb9a2e9194b5253717164a3
 use AppBundle\Form\Type\RoleType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
