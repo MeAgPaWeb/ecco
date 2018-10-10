@@ -5,6 +5,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use AppBundle\Form\Type\RoleType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -12,12 +13,11 @@ class RegistrationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name');
-        $builder->add('lastname');
+        $builder->add('name', TextType::class, array(
+                    'label' => 'Nombre'));
+        $builder->add('lastname', TextType::class, array(
+                    'label' => 'Apellido'));
         $builder->add('avatar', FileType::class, array('mapped' => false, 'required' => false));
-        $builder->add('gender', GenderType::class, array(
-                'label' => 'Sexo'
-            ));
         if ($options["edit_roles"]){
             $builder->add('roles', RoleType::class, array(
                 'label' => 'Rol',
