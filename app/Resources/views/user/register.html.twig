@@ -41,13 +41,6 @@
         </div>
     </div>
 
-    <div class="form-group has-feedback {% if form.gender.vars.errors|length > 0 %}has-error{% endif %}">
-        {{ form_widget(form.gender) }}
-        <div class="help-block with-errors">
-            {{ form_errors(form.gender) }}
-        </div>
-    </div>
-
     <div class="form-group has-feedback row row-no-margin">
         <div class="col-xs-10 no-padding">
             <span id="avatar-button" class="btn btn-block btn-default btn-file file-input text-left">

@@ -15,9 +15,6 @@ class RegistrationType extends AbstractType
         $builder->add('name');
         $builder->add('lastname');
         $builder->add('avatar', FileType::class, array('mapped' => false, 'required' => false));
-        $builder->add('gender', GenderType::class, array(
-                'label' => 'Sexo'
-            ));
         if ($options["edit_roles"]){
             $builder->add('roles', RoleType::class, array(
                 'label' => 'Rol',
