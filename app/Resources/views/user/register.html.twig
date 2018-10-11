@@ -37,8 +37,9 @@
 
     <div class="form-group has-feedback {% if form.email.vars.errors|length > 0 %}has-error{% endif %}">
         {{ form_label(form.email) }}
-        {{ form_widget(form.email, { 'attr': {'placeholder': 'Ingrese correo electrónico'} }) }}
+        {{ form_widget(form.email) }}
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+        <span class="help-block error-email">ingrese un email valido! ej: usuario@dominio.com</span>
         <div class="help-block with-errors">
             {{ form_errors(form.email) }}
         </div>
@@ -81,6 +82,7 @@
     <div class="form-group has-feedback {% if form.plainPassword.second.vars.errors|length > 0 %}has-error{% endif %}">
         {{ form_label(form.plainPassword.second) }}
         {{ form_widget(form.plainPassword.second, { 'attr': {'placeholder': 'Repetir contraseña'} }) }}
+        <span class="help-block confirmacion-pass">las contraseñas no coinciden</span>
         <span class="glyphicon form-control-feedback"></span>
         <div class="help-block with-errors">
             {{ form_errors(form.plainPassword.second) }}
