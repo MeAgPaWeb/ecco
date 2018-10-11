@@ -3,7 +3,7 @@
 {% set page =
     {
         "title": "Sala",
-        "subtitle": "Crear en Facultad de Ingeniaria de la UN",
+        "subtitle": "Crear en Facultad de Ingeniería de la UNLP",
     }
 %}
 
@@ -21,7 +21,7 @@
 {% block breadcrumb %}
     <li><a href="{{ path('room_index') }}"> Sala</a></li>
     <li>Crear </li>
-    <li class="active">Facultad de Ingeniaria de la UNLP</li>
+    <li class="active">Facultad de Ingeniería de la UNLP</li>
 {% endblock %}
 
 {% block content %}
@@ -37,36 +37,41 @@
                   <label>Uso de la Sala</label>
 
                   <select class="form-control ">
-                    <option>Deposito</option>
+                    <option>Depósito</option>
                     <option>Sala de Lectura</option>
+                    <option>Mixto</option>
                   </select>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="form-group">
-                  <label>Equipo de Acondicionamiento</label>
-                  <select class="form-control">
-                    <option>Si</option>
-                    <option>No</option>
+                  <label>Equipo de Climatización</label>
+                  <select class="form-control select">
+                    <option>Refrigeración</option>
+                    <option>Calefacción</option>
+                    <option>Ambos</option>
+                    <option>Ninguno</option>
                   </select>
                 </div>
               </div>
               <!-- <div class="col-md-4">
                   <div class="form-group ">
-                  <label>Seleccione las caras expuestas al exterior</label>
+                  <label>Seleccione las caras expuestas al exterior (considere el piso y el techo)</label>
 
-                  <select class="form-control select2" multiple="" data-placeholder="Seleccione los lados expuestos">
-                    <option disabled>Piso</option>
-                    <option>Techo</option>
-                    <option>Pared 1</option>
-                    <option>Pared 2</option>
-                    <option>Pared 3</option>
-                    <option>Pared 4</option>
+                  <select class="form-control select" >
+                    <option>0</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
                   </select>
                 </div>
               </div> -->
             </div>
             <div class="row">
+<<<<<<< HEAD
               <div class="col-md-8">
                   <p>Piso</p>
                   <div class="row">
@@ -282,6 +287,90 @@
                     <aside class="cara cara6">Techo</aside>
                   </div><!-- termina cubo 3d -->
                 </div><!-- termina espacio 3d -->
+=======
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Ancho (en mts)</label>
+                  <input class="form-control" placeholder="Ingrese el ancho en metros" type="text">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Largo (en mts)</label>
+                  <input class="form-control" placeholder="Ingrese el largo en metros" type="text">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Alto (en mts)</label>
+                  <input class="form-control" placeholder="Ingrese el alto en metros" type="text">
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+              <label>Composición del Techo</label>
+              <select class="form-control">
+                <option>Cubierta hormigón armado</option>
+                <option>Entrepiso hormigón armado</option>
+                <option>Entrepiso madera</option>
+                <option>Cubierta de chapa</option>
+                <option>Cubierta de tejas</option>
+              </select>
+            </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+              <label>Composición del piso</label>
+              <select class="form-control">
+                <option>Entrepiso madera</option>
+                <option>Entrepiso hormigón armado</option>
+                <option>Terreno natural </option>
+              </select>
+            </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+              <label>Composición de las paredes</label>
+              <select class="form-control">
+                <option>Rev + Lad. hueco + Rev</option>
+                <option>Rev + Lad.20 cm + Rev</option>
+                <option>Rev + Lad. 25 + Rev</option>
+                <option>Rev + Lad. común 30 cm + Rev</option>
+                <option>Rev + Lad. común 45 cm + Rev</option>
+              </select>
+            </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+              <label>Composición de las ventanas</label>
+              <select class="form-control">
+                <option>de hierro o chapa vidrio simple</option>
+                <option>de madera vidrio simple</option>
+                <option>de aluminio vidrio simple</option>
+                <option>de aluminio c/ vidrio doble</option>
+                <option>de PVC con vidrio simple</option>
+                <option>de PVC con vidrio doble</option>
+              </select>
+            </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Superficie Total Vidriada <small>mt2</small></label>
+                  <input class="form-control" placeholder="Ingrese la superficie vidriada..." type="text">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group" style="overflow:hidden;">
+                  <label for="exampleInputFile">Registro del DataLogger</label>
+                  <input id="exampleInputFile" type="file">
+                  <p class="help-block">Seleccione el archivo CSV ("#";"Date";"Time, GMT-03:00";"Temp, °C";"RH, %";"DewPt, °C")</p>
+                </div>
+>>>>>>> 31147c7c0a8cb451d64db6816ffe94679b579c22
               </div>
             </div>
             <div class="box-footer">
