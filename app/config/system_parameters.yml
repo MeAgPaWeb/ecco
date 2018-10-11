@@ -4,7 +4,7 @@ parameters:
         backendTitle: <b>E.C.C.O</b>
         backendTitleMini: <b>ecco</b>
         version: 0.0.1
-        footer: Evaluación del Clima de Concervación | Validado <strong>HTML5</strong>
+        footer: Evaluación del Clima de Conservación | Validado <strong>HTML5</strong>
         options:
             show_messages: false
             show_notifications: false
