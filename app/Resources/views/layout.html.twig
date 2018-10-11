@@ -229,7 +229,11 @@
 
         {% block javascript %}
             {{ macro.javascripts(javascripts) }}
-            <script src="https://rawgit.com/RobinHerbots/Inputmask/4.x/dist/jquery.inputmask.bundle.js"></script>
+            <script src="{{asset('lib/jquery-inputmask/min/jquery.inputmask.bundle.min.js')}}"></script>
+            <script src="{{asset('lib/jquery-inputmask/min/inputmask/jquery.inputmask.min.js')}}"></script>
+            <script src="{{asset('lib/jquery-inputmask/min/inputmask/inputmask.extensions.min.js')}}"></script>
+            <script src="{{asset('lib/jquery-inputmask/min/inputmask/inputmask.date.extensions.min.js')}}"></script>
+
         {% endblock javascript %}
     </body>
 </html>

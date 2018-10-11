@@ -43,6 +43,11 @@
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbpjX6pyxmw1sKyuCxSUjHeVmtBg32k8A&callback=initMap">
     </script>
+    <script type="text/javascript">
+      $(function(){
+         $('#datemask').inputmask('0000', { 'placeholder': 'yyyy', "clearIncomplete": true });
+      });
+    </script>
 {% endblock javascript %}
 {% block breadcrumb %}
     <li><a href="{{ path('library_index') }}"> Biblioteca</a></li>
@@ -71,7 +76,7 @@
               </div>
               <div class="form-group">
                 <label>Año de Edificación</label>
-                <input class="form-control" type="text" placeholder="Año de Edificación">
+                <input class="form-control" id="datemask" type="text" data-inputmask="'alias': 'yyyy'" name="date" placeholder="yyyy">
               </div>
             </div>
             <div class="col-md-6">
