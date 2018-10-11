@@ -45,7 +45,12 @@
     </script>
     <script type="text/javascript">
       $(function(){
-         $('#datemask').inputmask('0000', { 'placeholder': 'yyyy', "clearIncomplete": true });
+         $('#datemask').inputmask("9999", {
+            postValidation: function (buffer, opts) {
+                return parseInt(buffer.join('')) <= (new Date()).getFullYear();
+            }
+        });
+
       });
     </script>
 {% endblock javascript %}
