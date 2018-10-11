@@ -15,6 +15,9 @@
     })
     </script>
 {% endblock javascript %}
+{% block stylesheet %}
+    {{ parent() }}
+{% endblock stylesheet %}
 {% block breadcrumb %}
     <li><a href="{{ path('room_index') }}"> Sala</a></li>
     <li>Crear </li>
@@ -51,7 +54,7 @@
                   </select>
                 </div>
               </div>
-              <div class="col-md-4">
+              <!-- <div class="col-md-4">
                   <div class="form-group ">
                   <label>Seleccione las caras expuestas al exterior (considere el piso y el techo)</label>
 
@@ -65,9 +68,226 @@
                     <option>6</option>
                   </select>
                 </div>
-              </div>
+              </div> -->
             </div>
             <div class="row">
+<<<<<<< HEAD
+              <div class="col-md-8">
+                  <p>Piso</p>
+                  <div class="row">
+                    <div class="col-md-2">
+                        <input class="form-control" placeholder="Ingrese el ancho en" type="text">
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control" placeholder="Ingrese el largo..." type="text">
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control" placeholder="Ingrese el alto..." type="text">
+                    </div>
+                    <div class="col-md-3">
+                      <select class="form-control"  placeholder="seleccione la composicion">
+                        <option>Entrepiso madera</option>
+                        <option>Entrepiso hormigón armado</option>
+                        <option>Terreno natural </option>
+                      </select>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox">
+                          Expuesta al exterior
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <p>Techo</p>
+                  <div class="row">
+                    <div class="col-md-2">
+                        <input class="form-control" placeholder="Ingrese el ancho en" type="text">
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control" placeholder="Ingrese el largo..." type="text">
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control" placeholder="Ingrese el alto..." type="text">
+                    </div>
+                    <div class="col-md-3">
+                      <select class="form-control" placeholder="seleccione la composicion">
+                        <option>Cubierta hormigón armado</option>
+                        <option>Entrepiso hormigón armado</option>
+                        <option>Entrepiso madera</option>
+                        <option>Cubierta de chapa</option>
+                        <option>Cubierta de tejas</option>
+                      </select>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox">
+                          Expuesta al exterior
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <p>Pared 1</p>
+                  <div class="row">
+                    <div class="col-md-2">
+                        <input class="form-control" placeholder="Ingrese el ancho en" type="text">
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control" placeholder="Ingrese el largo..." type="text">
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control" placeholder="Ingrese el alto..." type="text">
+                    </div>
+                    <div class="col-md-3">
+                      <select class="form-control" placeholder="seleccione la composicion">
+                        <option>Rev + Lad. hueco + Rev</option>
+                        <option>Rev + Lad.20 cm + Rev</option>
+                        <option>Rev + Lad. 25 + Rev</option>
+                        <option>Rev + Lad. común 30 cm + Rev</option>
+                        <option>Rev + Lad. común 45 cm + Rev</option>
+                      </select>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox">
+                          Expuesta al exterior
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <p>Pared 2</p>
+                  <div class="row">
+                    <div class="col-md-2">
+                        <input class="form-control" placeholder="Ingrese el ancho en" type="text">
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control" placeholder="Ingrese el largo..." type="text">
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control" placeholder="Ingrese el alto..." type="text">
+                    </div>
+                    <div class="col-md-3">
+                      <select class="form-control" placeholder="seleccione la composicion">
+                        <option>Rev + Lad. hueco + Rev</option>
+                        <option>Rev + Lad.20 cm + Rev</option>
+                        <option>Rev + Lad. 25 + Rev</option>
+                        <option>Rev + Lad. común 30 cm + Rev</option>
+                        <option>Rev + Lad. común 45 cm + Rev</option>
+                      </select>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox">
+                          Expuesta al exterior
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <p>Pared 3</p>
+                  <div class="row">
+                    <div class="col-md-2">
+                        <input class="form-control" placeholder="Ingrese el ancho en" type="text">
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control" placeholder="Ingrese el largo..." type="text">
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control" placeholder="Ingrese el alto..." type="text">
+                    </div>
+                    <div class="col-md-3">
+                      <select class="form-control" placeholder="seleccione la composicion">
+                        <option>Rev + Lad. hueco + Rev</option>
+                        <option>Rev + Lad.20 cm + Rev</option>
+                        <option>Rev + Lad. 25 + Rev</option>
+                        <option>Rev + Lad. común 30 cm + Rev</option>
+                        <option>Rev + Lad. común 45 cm + Rev</option>
+                      </select>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox">
+                          Expuesta al exterior
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <p>Pared 4</p>
+                  <div class="row">
+                    <div class="col-md-2">
+                        <input class="form-control" placeholder="Ingrese el ancho en" type="text">
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control" placeholder="Ingrese el largo..." type="text">
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control" placeholder="Ingrese el alto..." type="text">
+                    </div>
+                    <div class="col-md-3">
+                      <select class="form-control" placeholder="seleccione la composicion">
+                        <option>Rev + Lad. hueco + Rev</option>
+                        <option>Rev + Lad.20 cm + Rev</option>
+                        <option>Rev + Lad. 25 + Rev</option>
+                        <option>Rev + Lad. común 30 cm + Rev</option>
+                        <option>Rev + Lad. común 45 cm + Rev</option>
+                      </select>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox">
+                          Expuesta al exterior
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <p>Otros datos</p>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Superficie Total Vidriada <small>mt2</small></label>
+                        <input class="form-control" placeholder="Ingrese la superficie vidriada..." type="text">
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Composición de las ventanas</label>
+                        <select class="form-control">
+                          <option>de hierro o chapa vidrio simple</option>
+                          <option>de madera vidrio simple</option>
+                          <option>de aluminio vidrio simple</option>
+                          <option>de aluminio c/ vidrio doble</option>
+                          <option>de PVC con vidrio simple</option>
+                          <option>de PVC con vidrio doble</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group" style="overflow:hidden;">
+                        <label for="exampleInputFile">Registro del DataLogger</label>
+                        <input id="exampleInputFile" type="file">
+                        <p class="help-block">Seleccione el archivo CSV ("#";"Date";"Time, GMT-03:00";"Temp, °C";"RH, %";"DewPt, °C")</p>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+              <div class="col-md-4">
+                <div class="espacio3D">
+                  <div class="cubo3D">
+                    <div class="base"></div>
+                    <aside class="cara cara1">Pared 1</aside>
+                    <aside class="cara cara2">Pared 3</aside>
+                    <aside class="cara cara3">Pared 2</aside>
+                    <aside class="cara cara4">Pared 4</aside>
+                    <aside class="cara cara5">Piso</aside>
+                    <aside class="cara cara6">Techo</aside>
+                  </div><!-- termina cubo 3d -->
+                </div><!-- termina espacio 3d -->
+=======
               <div class="col-md-4">
                 <div class="form-group">
                   <label>Ancho (en mts)</label>
@@ -150,6 +370,7 @@
                   <input id="exampleInputFile" type="file">
                   <p class="help-block">Seleccione el archivo CSV ("#";"Date";"Time, GMT-03:00";"Temp, °C";"RH, %";"DewPt, °C")</p>
                 </div>
+>>>>>>> 31147c7c0a8cb451d64db6816ffe94679b579c22
               </div>
             </div>
             <div class="box-footer">

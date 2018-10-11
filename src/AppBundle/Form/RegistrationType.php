@@ -22,7 +22,7 @@ class RegistrationType extends AbstractType
                     'label' => 'Apellido*'));
         $builder->add('avatar', FileType::class, array('mapped' => false, 'required' => false));
         $builder
-            ->add('email', EmailType::class, array('label' => 'Email*'))
+            ->add('email', TextType::class, array('label' => 'Email*', 'attr' => array('class' => 'email')))
             ->add('username', null, array('label' => 'Nombre de usuario*'))
             ->add('plainPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,
@@ -32,8 +32,8 @@ class RegistrationType extends AbstractType
                         'autocomplete' => 'new-password',
                     ),
                 ),
-                'first_options' => array('label' => 'Contraseña*'),
-                'second_options' => array('label' => 'Repetir contraseña*'),
+                'first_options' => array('label' => 'Contraseña*', 'attr' => array('class' => 'pass')),
+                'second_options' => array('label' => 'Repetir contraseña*', 'attr' => array('class' => 'pass pass2')),
                 'invalid_message' => 'Las contraseñas no coinciden',
             ))
         ;

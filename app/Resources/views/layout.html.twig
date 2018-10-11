@@ -89,6 +89,82 @@
 
         <title>{{ system.title }} | {{ page.title }}</title>
         {% block stylesheet %}
+            <style media="screen">
+            div.espacio3D {
+              width: 300px;
+              height: 300px;
+              margin: 3em auto 0 auto;
+              position: relative;
+              perspective-origin: center -50%;
+              perspective: 500px;
+              transform: scale(0.45);
+            }
+
+            div.cubo3D {
+              width: 100%;
+              height: 100%;
+              position: absolute;
+              transform-style: preserve-3d;
+              transform: translateZ(-50px);
+              animation-name: gira;
+              animation-duration: 6000ms;
+              animation-iteration-count: infinite;
+            }
+
+            div.base {
+              position: absolute;
+              width: 150px;
+              height: 150px;
+              background-color: rgba(0,0,0,0.15);
+              transform: translateX(75px) translateY(75px) rotateX(90deg) translateZ(-200px);
+              box-shadow: 0 0 50px 100px rgba(0,0,0,0.15);
+            }
+            aside.cara {
+              position: absolute;
+              width: 298px;
+              height: 298px;
+              background-color: rgba(255,150,0,0.25);
+              border: 1px solid rgba(255,150,0,0.75);
+              color: #08f;
+              font-size: 3em;
+              text-align: center;
+              line-height: 298px;
+              box-shadow: 0px 0px 5px rgba(255,150,0,0.75);
+            }
+
+            aside.cara1 { /* Frente */
+              transform: translateZ(150px);
+            }
+
+            aside.cara2 { /* Atrás */
+              transform: rotateY(180deg) translateZ(150px);
+            }
+
+            aside.cara3 { /* Izquierda */
+              transform: rotateY(-90deg) translateZ(150px);
+            }
+
+            aside.cara4 { /* derecha */
+              transform: rotateY(90deg) translateZ(150px);
+            }
+
+            aside.cara5 { /* abajo */
+              transform: rotateX(-90deg) translateZ(150px);
+            }
+
+            aside.cara6 { /* arriba */
+              transform: rotateX(90deg) translateZ(150px);
+            }
+
+            @keyframes gira {
+              0% {
+                transform: translateZ(-150px) rotateY(0deg);
+              }
+              100% {
+                transform: translateZ(-150px) rotateY(360deg);
+              }
+            }
+            </style>
             {{ macro.stylesheets(stylesheets) }}
         {% endblock stylesheet %}
         <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('favicon/apple-icon-57x57.png')}}">
@@ -153,6 +229,7 @@
 
         {% block javascript %}
             {{ macro.javascripts(javascripts) }}
+            <script src="https://rawgit.com/RobinHerbots/Inputmask/4.x/dist/jquery.inputmask.bundle.js"></script>
         {% endblock javascript %}
     </body>
 </html>
