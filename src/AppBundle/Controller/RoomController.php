@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Room;
+use AppBundle\Entity\Library;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
@@ -38,7 +39,7 @@ class RoomController extends Controller
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request)
-    {
+    {var_dump($request);die;
         $room = new Room();
         $form = $this->createForm('AppBundle\Form\RoomType', $room);
         $form->handleRequest($request);

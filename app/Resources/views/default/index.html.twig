@@ -43,14 +43,15 @@
   <!-- ./col -->
 </div>
 <div class="row">
+  {% for library in libraries %}
     <div class="col-md-6">
       <!-- Widget: user widget style 1 -->
       <div class="box box-widget widget-user">
         <!-- Add the bg color to the header using any of the bg-* classes -->
         <a href="#">
           <div class="widget-user-header bg-aqua-active">
-            <h3 class="widget-user-username">Facultad de Arquitectura - UNLP</h3>
-            <h5 class="widget-user-desc">Calle 47 162, La Plata, Pcia de Buenos Aires</h5>
+            <h3 class="widget-user-username">{{ library.name }}</h3>
+            <h5 class="widget-user-desc">{{ library.address }}</h5>
           </div>
         </a>
 
@@ -108,6 +109,7 @@
       </div>
       <!-- /.widget-user -->
     </div>
+  {% endfor %}
     <!-- /.col -->
 </div>
 {% endblock %}

@@ -24,18 +24,18 @@ class Library
     private $id;
 
     /**
-     * @var float
+     * @var string
      *
-     * @ORM\Column(name="latitude", type="float")
+     * @ORM\Column(name="address", type="string")
      */
-    private $latitude;
-
+    private $address;
+    
     /**
-     * @var float
+     * @var string
      *
-     * @ORM\Column(name="longitude", type="float")
+     * @ORM\Column(name="name", type="string")
      */
-    private $longitude;
+    private $name;
 
     /**
      * @var int
@@ -54,7 +54,6 @@ class Library
         $this->rooms = new ArrayCollection();
     }
 
-
     /**
      * Get id.
      *
@@ -66,51 +65,51 @@ class Library
     }
 
     /**
-     * Set latitude.
+     * Set address.
      *
-     * @param float $latitude
+     * @param string $address
      *
      * @return Library
      */
-    public function setLatitude($latitude)
+    public function setAddress($address)
     {
-        $this->latitude = $latitude;
+        $this->address = $address;
 
         return $this;
     }
 
     /**
-     * Get latitude.
+     * Get address.
      *
-     * @return float
+     * @return string
      */
-    public function getLatitude()
+    public function getAddress()
     {
-        return $this->latitude;
+        return $this->address;
     }
 
     /**
-     * Set longitude.
+     * Set name.
      *
-     * @param float $longitude
+     * @param string $name
      *
      * @return Library
      */
-    public function setLongitude($longitude)
+    public function setName($name)
     {
-        $this->longitude = $longitude;
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get longitude.
+     * Get name.
      *
-     * @return float
+     * @return string
      */
-    public function getLongitude()
+    public function getName()
     {
-        return $this->longitude;
+        return $this->name;
     }
 
     /**
@@ -171,5 +170,10 @@ class Library
     public function getRooms()
     {
         return $this->rooms;
+    }
+    
+    public function __toString()
+    {
+        return $this->name;
     }
 }

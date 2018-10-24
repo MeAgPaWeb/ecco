@@ -39,16 +39,16 @@ class LibraryController extends Controller
      */
     public function newAction(Request $request)
     {
+        $router=$request->request->get('router');
         $library = new Library();
         $form = $this->createForm('AppBundle\Form\LibraryType', $library);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($library);
             $em->flush();
 
-            return $this->redirectToRoute('library_show', array('id' => $library->getId()));
+            return $this->redirectToRoute($router, array('request' => $request));
         }
 
         return $this->render('library/new.html.twig', array(

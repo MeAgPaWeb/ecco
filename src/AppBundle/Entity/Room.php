@@ -23,88 +23,82 @@ class Room
     private $id;
 
     /**
-     * @var float|null
+     * @var string|null
      *
-     * @ORM\Column(name="backing", type="float", nullable=true)
+     * @ORM\Column(name="use", type="string", nullable=true)
      */
-    private $backing;
-
+    private $use;
+    
     /**
-     * @var int|null
+     * @var integer|null
      *
-     * @ORM\Column(name="transparency", type="integer", nullable=true)
+     * @ORM\Column(name="exposed_faces", type="integer", nullable=true)
      */
-    private $transparency;
-
+    private $exposedFaces;
+    
     /**
-     * @var float|null
+     * @var string|null
      *
-     * @ORM\Column(name="thermalTransmittance", type="float", nullable=true)
+     * @ORM\Column(name="conditioning", type="string", nullable=true)
      */
-    private $thermalTransmittance;
-
+    private $conditioning;
+    
     /**
      * @var float|null
      *
      * @ORM\Column(name="width", type="float", nullable=true)
      */
     private $width;
-
+    
     /**
      * @var float|null
      *
      * @ORM\Column(name="high", type="float", nullable=true)
      */
     private $high;
-
+    
     /**
      * @var float|null
      *
-     * @ORM\Column(name="lenght", type="float",nullable=true)
+     * @ORM\Column(name="length", type="float", nullable=true)
      */
-    private $lenght;
-
+    private $length;
+    
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="roof_composition", type="string", nullable=true)
+     */
+    private $roofComposition;
+    
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="floor_composition", type="string", nullable=true)
+     */
+    private $floorComposition;
+    
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="wall_composition", type="string", nullable=true)
+     */
+    private $wallComposition;
+    
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="window_composition", type="string", nullable=true)
+     */
+    private $windowComposition;
+    
     /**
      * @var float|null
      *
-     * @ORM\Column(name="glazedSurface", type="float", nullable=true)
+     * @ORM\Column(name="glazed_surface", type="float", nullable=true)
      */
     private $glazedSurface;
 
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="floor", type="string", length=255, nullable=true)
-     */
-    private $floor;
-
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="walls", type="string", length=255, nullable=true)
-     */
-    private $walls;
-
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="windows", type="string", length=255, nullable=true)
-     */
-    private $windows;
-
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="uses", type="string", length=255, nullable=true)
-     */
-    private $uses;
-
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="conditionerEquipment", type="string", length=255, nullable=true)
-     */
-    private $conditionerEquipment;
 
     /**
      * @ORM\ManyToOne(targetEntity="Library", inversedBy="room")
@@ -123,75 +117,75 @@ class Room
     }
 
     /**
-     * Set backing.
+     * Set use.
      *
-     * @param float|null $backing
+     * @param string|null $use
      *
      * @return Room
      */
-    public function setBacking($backing = null)
+    public function setUse($use = null)
     {
-        $this->backing = $backing;
+        $this->use = $use;
 
         return $this;
     }
 
     /**
-     * Get backing.
+     * Get use.
      *
-     * @return float|null
+     * @return string|null
      */
-    public function getBacking()
+    public function getUse()
     {
-        return $this->backing;
+        return $this->use;
     }
 
     /**
-     * Set transparency.
+     * Set exposedFaces.
      *
-     * @param int|null $transparency
+     * @param int|null $exposedFaces
      *
      * @return Room
      */
-    public function setTransparency($transparency = null)
+    public function setExposedFaces($exposedFaces = null)
     {
-        $this->transparency = $transparency;
+        $this->exposedFaces = $exposedFaces;
 
         return $this;
     }
 
     /**
-     * Get transparency.
+     * Get exposedFaces.
      *
      * @return int|null
      */
-    public function getTransparency()
+    public function getExposedFaces()
     {
-        return $this->transparency;
+        return $this->exposedFaces;
     }
 
     /**
-     * Set thermalTransmittance.
+     * Set conditioning.
      *
-     * @param float|null $thermalTransmittance
+     * @param string|null $conditioning
      *
      * @return Room
      */
-    public function setThermalTransmittance($thermalTransmittance = null)
+    public function setConditioning($conditioning = null)
     {
-        $this->thermalTransmittance = $thermalTransmittance;
+        $this->conditioning = $conditioning;
 
         return $this;
     }
 
     /**
-     * Get thermalTransmittance.
+     * Get conditioning.
      *
-     * @return float|null
+     * @return string|null
      */
-    public function getThermalTransmittance()
+    public function getConditioning()
     {
-        return $this->thermalTransmittance;
+        return $this->conditioning;
     }
 
     /**
@@ -221,11 +215,11 @@ class Room
     /**
      * Set high.
      *
-     * @param float $high
+     * @param float|null $high
      *
      * @return Room
      */
-    public function setHigh($high)
+    public function setHigh($high = null)
     {
         $this->high = $high;
 
@@ -235,7 +229,7 @@ class Room
     /**
      * Get high.
      *
-     * @return float
+     * @return float|null
      */
     public function getHigh()
     {
@@ -243,27 +237,123 @@ class Room
     }
 
     /**
-     * Set lenght.
+     * Set length.
      *
-     * @param float $lenght
+     * @param float|null $length
      *
      * @return Room
      */
-    public function setLenght($lenght)
+    public function setLength($length = null)
     {
-        $this->lenght = $lenght;
+        $this->length = $length;
 
         return $this;
     }
 
     /**
-     * Get lenght.
+     * Get length.
      *
-     * @return float
+     * @return float|null
      */
-    public function getLenght()
+    public function getLength()
     {
-        return $this->lenght;
+        return $this->length;
+    }
+
+    /**
+     * Set roofComposition.
+     *
+     * @param string|null $roofComposition
+     *
+     * @return Room
+     */
+    public function setRoofComposition($roofComposition = null)
+    {
+        $this->roofComposition = $roofComposition;
+
+        return $this;
+    }
+
+    /**
+     * Get roofComposition.
+     *
+     * @return string|null
+     */
+    public function getRoofComposition()
+    {
+        return $this->roofComposition;
+    }
+
+    /**
+     * Set floorComposition.
+     *
+     * @param string|null $floorComposition
+     *
+     * @return Room
+     */
+    public function setFloorComposition($floorComposition = null)
+    {
+        $this->floorComposition = $floorComposition;
+
+        return $this;
+    }
+
+    /**
+     * Get floorComposition.
+     *
+     * @return string|null
+     */
+    public function getFloorComposition()
+    {
+        return $this->floorComposition;
+    }
+
+    /**
+     * Set wallComposition.
+     *
+     * @param string|null $wallComposition
+     *
+     * @return Room
+     */
+    public function setWallComposition($wallComposition = null)
+    {
+        $this->wallComposition = $wallComposition;
+
+        return $this;
+    }
+
+    /**
+     * Get wallComposition.
+     *
+     * @return string|null
+     */
+    public function getWallComposition()
+    {
+        return $this->wallComposition;
+    }
+
+    /**
+     * Set windowComposition.
+     *
+     * @param string|null $windowComposition
+     *
+     * @return Room
+     */
+    public function setWindowComposition($windowComposition = null)
+    {
+        $this->windowComposition = $windowComposition;
+
+        return $this;
+    }
+
+    /**
+     * Get windowComposition.
+     *
+     * @return string|null
+     */
+    public function getWindowComposition()
+    {
+        return $this->windowComposition;
     }
 
     /**
@@ -288,126 +378,6 @@ class Room
     public function getGlazedSurface()
     {
         return $this->glazedSurface;
-    }
-
-    /**
-     * Set floor.
-     *
-     * @param string|null $floor
-     *
-     * @return Room
-     */
-    public function setFloor($floor = null)
-    {
-        $this->floor = $floor;
-
-        return $this;
-    }
-
-    /**
-     * Get floor.
-     *
-     * @return string|null
-     */
-    public function getFloor()
-    {
-        return $this->floor;
-    }
-
-    /**
-     * Set walls.
-     *
-     * @param string|null $walls
-     *
-     * @return Room
-     */
-    public function setWalls($walls = null)
-    {
-        $this->walls = $walls;
-
-        return $this;
-    }
-
-    /**
-     * Get walls.
-     *
-     * @return string|null
-     */
-    public function getWalls()
-    {
-        return $this->walls;
-    }
-
-    /**
-     * Set windows.
-     *
-     * @param string|null $windows
-     *
-     * @return Room
-     */
-    public function setWindows($windows = null)
-    {
-        $this->windows = $windows;
-
-        return $this;
-    }
-
-    /**
-     * Get windows.
-     *
-     * @return string|null
-     */
-    public function getWindows()
-    {
-        return $this->windows;
-    }
-
-    /**
-     * Set uses.
-     *
-     * @param string|null $uses
-     *
-     * @return Room
-     */
-    public function setUses($uses = null)
-    {
-        $this->uses = $uses;
-
-        return $this;
-    }
-
-    /**
-     * Get uses.
-     *
-     * @return string|null
-     */
-    public function getUses()
-    {
-        return $this->uses;
-    }
-
-    /**
-     * Set conditionerEquipment.
-     *
-     * @param string|null $conditionerEquipment
-     *
-     * @return Room
-     */
-    public function setConditionerEquipment($conditionerEquipment = null)
-    {
-        $this->conditionerEquipment = $conditionerEquipment;
-
-        return $this;
-    }
-
-    /**
-     * Get conditionerEquipment.
-     *
-     * @return string|null
-     */
-    public function getConditionerEquipment()
-    {
-        return $this->conditionerEquipment;
     }
 
     /**
