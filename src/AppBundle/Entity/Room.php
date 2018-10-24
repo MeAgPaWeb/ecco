@@ -101,7 +101,7 @@ class Room
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="Library", inversedBy="room")
+     * @ORM\ManyToOne(targetEntity="Library", inversedBy="rooms")
      * @ORM\JoinColumn(name="library_id", referencedColumnName="id")
      */
     private $library;

@@ -6,6 +6,16 @@
         "subtitle": "Crear en nueva sala",
     }
 %}
+{% block javascript %}
+  <script>
+  document.getElementById("agregar").addEventListener("click", function(){
+    document.getElementById("router").value = "room_new";
+  });
+  document.getElementById("finalizar").addEventListener("click", function(){
+    document.getElementById("router").value = "homepage";
+  });
+</script>
+{% endblock javascript %}
 {% block breadcrumb %}
     <li><a href="{{ path('room_index') }}"> Sala</a></li>
     <li>Crear </li>
@@ -102,8 +112,9 @@
               </div>
             </div>
             <div class="box-footer">
-                <a href="{{ path('room_new') }}" type="submit" class="btn btn-primary">Agregar Otra Sala</a>
-                <a href="{{ path('homepage') }}" type="submit" class="btn btn-success">Finalizar Carga</a>
+                <input  id="agregar" class="btn btn-primary" type="submit" value="Agregar Otra Sala" />
+                <input  id="finalizar" class="btn btn-success" type="submit" value="Finalizar Carga" />
+                <input  id="router" name="router" type="hidden" value="" />
             </div>
         {{ form_end(form) }}
       </div>

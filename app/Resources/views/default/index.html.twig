@@ -92,7 +92,7 @@
             <a class="btn btn-app">
               <i class="fa fa-remove"></i> Eliminar
             </a>
-            <a class="btn btn-app" href="{{ path('room_new') }}">
+            <a class="btn btn-app" href="{{ path('room_new', { 'library': library.id }) }}">
               <i class="fa fa-plus"></i> Sala
             </a>
             <a class="btn btn-app" href="{{ path('room_index') }}">

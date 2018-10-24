@@ -48,7 +48,7 @@ class LibraryController extends Controller
             $em->persist($library);
             $em->flush();
 
-            return $this->redirectToRoute($router, array('request' => $request));
+            return $this->redirectToRoute($router, array('request' => $request,'library' => $library->getId()));
         }
 
         return $this->render('library/new.html.twig', array(
