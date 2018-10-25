@@ -17,7 +17,7 @@ parameters:
         avatar: avatars
         advertising: advertisings
         history_content: contents
-        note_content: contents
+        rooms_images: contents/rooms
         poll_content: contents
 
     httpCache:
