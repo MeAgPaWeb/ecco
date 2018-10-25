@@ -10,38 +10,38 @@
 {% block javascript %}
     {{ parent() }}
     <script type="text/javascript">
-        function initMap() {
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 3,
-          mapTypeControl: false,
-          center: {lat: -34.896375, lng: -57.941920900000014}
-        });
-        var geocoder = new google.maps.Geocoder();
+    function initMap() {
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 3,
+      mapTypeControl: false,
+      center: {lat: -34.896375, lng: -57.941920900000014}
+    });
+    var geocoder = new google.maps.Geocoder();
 
-        document.getElementById('location_on').addEventListener('click', function() {
-          geocodeAddress(geocoder, map);
-        });
-      }
-
-      function geocodeAddress(geocoder, resultsMap) {
-        var address = document.getElementById('appbundle_library_address').value;
-        geocoder.geocode({'address': address}, function(results, status) {
-          if (status === 'OK') {
-            resultsMap.setCenter(results[0].geometry.location);
-            resultsMap.setZoom(16);
-            console.log('lat:'+results[0].geometry.location.lat()+' | lng:'+results[0].geometry.location.lng());
-            var marker = new google.maps.Marker({
-              map: resultsMap,
-              position: results[0].geometry.location
-            });
-          } else {
-            alert('No se pudo encontrar la ubicación por la siguiente razón: ' + status);
-          }
-        });
-      }
+    document.getElementById('location_on').addEventListener('click', function() {
+      geocodeAddress(geocoder, map);
+    });
+    $('#appbundle_library_address').change(function(){
+      console.log('entrooo');
+      var address = $(this).val();
+      geocoder.geocode({'address': address}, function(results, status) {
+        if (status === 'OK') {
+          map.setCenter(results[0].geometry.location);
+          map.setZoom(16);
+          console.log('lat:'+results[0].geometry.location.lat()+' | lng:'+results[0].geometry.location.lng());
+          var marker = new google.maps.Marker({
+            map: map,
+            position: results[0].geometry.location
+          });
+        } else {
+          alert('No se pudo encontrar la ubicación por la siguiente razón: ' + status);
+        }
+      });
+    });
+  }
     </script>
     <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBAt-uoBS9piEKc7moB8kesBZ7pzXnxxfM&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAGQU_QnF4HiBg14sk8sD2pOF17WyhkwPo&callback=initMap">
     </script>
     <script type="text/javascript">
       $(function(){
@@ -54,12 +54,10 @@
       });
     </script>
     <script>
-    document.getElementById("agregar").addEventListener("click", function(){
-      document.getElementById("route").value = "room_new";
-    });
-    document.getElementById("finalizar").addEventListener("click", function(){
-      document.getElementById("route").value = "homepage";
-    });
+      $('input.btn').click(function(){
+        $('#load').show();
+        $('#route').val($(this).attr('data'));
+      });
     </script>
 {% endblock javascript %}
 {% block breadcrumb %}
@@ -99,8 +97,8 @@
             </div>
           </div>
           <div class="box-footer">
-              <input  id="agregar" class="btn btn-primary" type="submit" value="Guardar y Agregar una Sala" />
-              <input  id="finalizar" class="btn btn-success" type="submit" value="Finalizar Edicion" />
+              <input  data="room_new" class="btn btn-primary" type="submit" value="Guardar y Agregar una Sala" />
+              <input  data="homepage" class="btn btn-success" type="submit" value="Finalizar Edicion" />
               <input  id="route" name="route" type="hidden" value="" />
           </div>
         </div>
