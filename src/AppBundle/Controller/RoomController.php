@@ -21,14 +21,14 @@ class RoomController extends Controller
     /**
      * Lists all room entities.
      *
-     * @Route("/", name="room_index")
+     * @Route("/{library}", name="room_index")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction(Request $request, Library $library)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $rooms = $em->getRepository('AppBundle:Room')->findAll();
+        $rooms = $em->getRepository('AppBundle:Room')->findByLibrary($library);
 
         return $this->render('room/index.html.twig', array(
             'rooms' => $rooms,

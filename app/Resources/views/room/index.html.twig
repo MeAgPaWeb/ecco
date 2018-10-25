@@ -8,7 +8,7 @@
 %}
 
 {% block breadcrumb %}
-    <li><a href="{{ path('room_index') }}"><i class="fa fa-dashboard"></i> Salas</a></li>
+    <li><a href="#"><i class="fa fa-dashboard"></i> Salas</a></li>
     <li class="active">Listado</li>
 {% endblock %}
 
@@ -28,53 +28,31 @@
 
 {% block thead %}
 <tr>
-    <th>#</th>
-    <th>Adosamiento</th>
-    <th>Trasparencia</th>
-    <th>Trasmitancia Termica</th>
     <th>Ancho</th>
-    <th>Largo</th>
     <th>Alto</th>
-    <th>Superficie Vidriada</th>
-    <th>Techo</th>
-    <th>Piso</th>
-    <th>Paredes</th>
-    <th>Ventanas</th>
+    <th>Largo</th>
+    <th>Sup. Vidriada</th>
     <th></th>
 </tr>
 {% endblock %}
 {% block tfoot %}
-  <tr>
-      <th>#</th>
-      <th>Adosamiento</th>
-      <th>Trasparencia</th>
-      <th>Trasmitancia Termica</th>
-      <th>Ancho</th>
-      <th>Largo</th>
-      <th>Alto</th>
-      <th>Superficie Vidriada</th>
-      <th>Techo</th>
-      <th>Piso</th>
-      <th>Paredes</th>
-      <th>Ventanas</th>
-      <th></th>
-  </tr>
+<tr>
+    <th>Ancho</th>
+    <th>Alto</th>
+    <th>Largo</th>
+    <th>Sup. Vidriada</th>
+    <th></th>
+</tr>
 {% endblock %}
 {% block tbody %}
   {% for room in rooms %}
       <tr>
-          <td><a href="{{ path('room_show', { 'id': room.id }) }}">{{ room.id }}</a></td>
           <td>{{ room.width }}</td>
           <td>{{ room.high }}</td>
           <td>{{ room.length }}</td>
           <td>{{ room.glazedSurface }}</td>
-          <td>{{ room.floorComposition }}</td>
-          <td>{{ room.wallComposition }}</td>
-          <td>{{ room.windowComposition }}</td>
-          <td>{{ room.use }}</td>
-          <td>{{ room.conditioning }}</td>
           <td class="table-operations">
-            <a href="{{ path('room_show', { 'id': room.id }) }}" title="Ver detalle"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a>&nbsp;&nbsp;
+            <!-- <a href="{{ path('room_show', { 'id': room.id }) }}" title="Ver detalle"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a>&nbsp;&nbsp; -->
             <a href="{{ path('room_edit', { 'id': room.id }) }}" title="Editar"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
           </td>
       </tr>

@@ -67,7 +67,7 @@
             <!-- /.col -->
             <div class="col-sm-4 border-right">
               <div class="description-block">
-                <h5 class="description-header">{{library.cant}}</h5>
+                <h5 class="description-header">12000</h5>
                 <span class="description-text">Registros</span>
               </div>
               <!-- /.description-block -->
@@ -95,7 +95,7 @@
             <a class="btn btn-app" href="{{ path('room_new', { 'library': library.id }) }}">
               <i class="fa fa-plus"></i> Sala
             </a>
-            <a class="btn btn-app" href="{{ path('room_index') }}">
+            <a class="btn btn-app" href="{{ path('room_index', { 'library': library.id }) }}">
               <i class="fa fa-list"></i> Salas
             </a>
             <a class="btn btn-app">
