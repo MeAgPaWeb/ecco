@@ -28,6 +28,35 @@ class Room
      * @ORM\Column(name="b_use", type="string", nullable=true)
      */
     private $use;
+    
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="b_backing", type="string", nullable=true)
+     */
+    private $backing;
+    
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="b_transparency", type="string", nullable=true)
+     */
+    private $transparency;
+    
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="b_thermal_transmittance", type="string", nullable=true)
+     */
+    private $thermalTransmittance;
+    
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="b_dough", type="string", nullable=true)
+     */
+    private $dough;
+
 
     /**
      * @var integer|null
@@ -104,13 +133,38 @@ class Room
      * @ORM\ManyToOne(targetEntity="Library", inversedBy="rooms")
      * @ORM\JoinColumn(name="b_library_id", referencedColumnName="id")
      */
-    private $library;
+    private $library;  
+    
+    
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="b_name", type="string", nullable=true)
+     */
+    private $name;
 
     /**
      * @ORM\OneToMany(targetEntity="DataLogger", mappedBy="room")
      */
     private $dataLoggers;
-
+    
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="b_enabled", type="boolean")
+     */
+    private $enabled;
+    
+    public function __construct()
+    {
+        $this->dataLoggers = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->enabled=true;
+    }
+    
+    public function __toString()
+    {
+      return $this->name;
+    }
     /**
      * Get id.
      *
@@ -408,13 +462,6 @@ class Room
     {
         return $this->library;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->dataLoggers = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Add dataLogger.
@@ -450,5 +497,149 @@ class Room
     public function getDataLoggers()
     {
         return $this->dataLoggers;
+    }
+
+    /**
+     * Set name.
+     *
+     * @param string|null $name
+     *
+     * @return Room
+     */
+    public function setName($name = null)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name.
+     *
+     * @return string|null
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set enabled.
+     *
+     * @param bool $enabled
+     *
+     * @return Room
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    /**
+     * Get enabled.
+     *
+     * @return bool
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * Set backing.
+     *
+     * @param string|null $backing
+     *
+     * @return Room
+     */
+    public function setBacking($backing = null)
+    {
+        $this->backing = $backing;
+
+        return $this;
+    }
+
+    /**
+     * Get backing.
+     *
+     * @return string|null
+     */
+    public function getBacking()
+    {
+        return $this->backing;
+    }
+
+    /**
+     * Set transparency.
+     *
+     * @param string|null $transparency
+     *
+     * @return Room
+     */
+    public function setTransparency($transparency = null)
+    {
+        $this->transparency = $transparency;
+
+        return $this;
+    }
+
+    /**
+     * Get transparency.
+     *
+     * @return string|null
+     */
+    public function getTransparency()
+    {
+        return $this->transparency;
+    }
+
+    /**
+     * Set thermalTransmittance.
+     *
+     * @param string|null $thermalTransmittance
+     *
+     * @return Room
+     */
+    public function setThermalTransmittance($thermalTransmittance = null)
+    {
+        $this->thermalTransmittance = $thermalTransmittance;
+
+        return $this;
+    }
+
+    /**
+     * Get thermalTransmittance.
+     *
+     * @return string|null
+     */
+    public function getThermalTransmittance()
+    {
+        return $this->thermalTransmittance;
+    }
+
+    /**
+     * Set dough.
+     *
+     * @param string|null $dough
+     *
+     * @return Room
+     */
+    public function setDough($dough = null)
+    {
+        $this->dough = $dough;
+
+        return $this;
+    }
+
+    /**
+     * Get dough.
+     *
+     * @return string|null
+     */
+    public function getDough()
+    {
+        return $this->dough;
     }
 }

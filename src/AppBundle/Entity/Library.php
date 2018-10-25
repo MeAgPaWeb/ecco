@@ -29,7 +29,7 @@ class Library
      * @ORM\Column(name="address", type="string")
      */
     private $address;
-    
+
     /**
      * @var string
      *
@@ -49,9 +49,45 @@ class Library
      */
     private $rooms;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="enabled", type="boolean")
+     */
+    private $enabled;
+
+    /**
+     * Many Libraries have Many followers.
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="following")
+     */
+    private $followers;
+
+    /**
+     * @var \AppBundle\Entity\User
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $owner;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="colour", type="string")
+     */
+    private $colour;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="position", type="string")
+     */
+    private $position;
+
     public function __construct()
     {
         $this->rooms = new ArrayCollection();
+        $this->followers = new ArrayCollection();
+        $this->enabled=true;
     }
 
     /**
@@ -171,9 +207,141 @@ class Library
     {
         return $this->rooms;
     }
-    
+
     public function __toString()
     {
         return $this->name;
+    }
+
+    /**
+     * Set enabled.
+     *
+     * @param bool $enabled
+     *
+     * @return Library
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    /**
+     * Get enabled.
+     *
+     * @return bool
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * Add follower.
+     *
+     * @param \AppBundle\Entity\User $follower
+     *
+     * @return Library
+     */
+    public function addFollower(\AppBundle\Entity\User $follower)
+    {
+        $this->followers[] = $follower;
+
+        return $this;
+    }
+
+    /**
+     * Remove follower.
+     *
+     * @param \AppBundle\Entity\User $follower
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeFollower(\AppBundle\Entity\User $follower)
+    {
+        return $this->followers->removeElement($follower);
+    }
+
+    /**
+     * Get followers.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFollowers()
+    {
+        return $this->followers;
+    }
+
+    /**
+     * Set owner.
+     *
+     * @param \AppBundle\Entity\User|null $owner
+     *
+     * @return Library
+     */
+    public function setOwner(\AppBundle\Entity\User $owner = null)
+    {
+        $this->owner = $owner;
+
+        return $this;
+    }
+
+    /**
+     * Get owner.
+     *
+     * @return \AppBundle\Entity\User|null
+     */
+    public function getOwner()
+    {
+        return $this->owner;
+    }
+
+    /**
+     * Set colour.
+     *
+     * @param string $colour
+     *
+     * @return Library
+     */
+    public function setColour($colour)
+    {
+        $this->colour = $colour;
+
+        return $this;
+    }
+
+    /**
+     * Get colour.
+     *
+     * @return string
+     */
+    public function getColour()
+    {
+        return $this->colour;
+    }
+
+    /**
+     * Set position.
+     *
+     * @param string $position
+     *
+     * @return Library
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    /**
+     * Get position.
+     *
+     * @return string
+     */
+    public function getPosition()
+    {
+        return $this->position;
     }
 }

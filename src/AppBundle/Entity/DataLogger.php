@@ -61,6 +61,18 @@ class DataLogger
      * @ORM\JoinColumn(name="room_id", referencedColumnName="id")
      */
     private $room;
+    
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="enabled", type="boolean")
+     */
+    private $enabled;
+    
+    public function __construct()
+    {
+        $this->enabled=true;
+    }
 
 
 
@@ -241,5 +253,29 @@ class DataLogger
     public function getRoom()
     {
         return $this->room;
+    }
+
+    /**
+     * Set enabled.
+     *
+     * @param bool $enabled
+     *
+     * @return DataLogger
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    /**
+     * Get enabled.
+     *
+     * @return bool
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
     }
 }

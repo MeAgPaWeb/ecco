@@ -62,10 +62,17 @@ class User extends BaseUser
      * @ORM\Column(type="string", nullable=true)
      */
     protected $gender;
+    /**
+     * Many Users have Many libraries following.
+     * @ORM\ManyToMany(targetEntity="Library", inversedBy="followers")
+     * @ORM\JoinTable(name="followers_following")
+     */
+    protected $following;
 
     public function __construct($configurations = null){
         parent::__construct();
         $this->registeredAt = time();
+        $this->following = new \Doctrine\Common\Collections\ArrayCollection();
         //$this->comments = new \Doctrine\Common\Collections\ArrayCollection();
         //$this->editions = new \Doctrine\Common\Collections\ArrayCollection();
     }
@@ -186,4 +193,40 @@ class User extends BaseUser
         return $this;
     }
 
+
+    /**
+     * Add following.
+     *
+     * @param \AppBundle\Entity\Library $following
+     *
+     * @return User
+     */
+    public function addFollowing(\AppBundle\Entity\Library $following)
+    {
+        $this->following[] = $following;
+
+        return $this;
+    }
+
+    /**
+     * Remove following.
+     *
+     * @param \AppBundle\Entity\Library $following
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeFollowing(\AppBundle\Entity\Library $following)
+    {
+        return $this->following->removeElement($following);
+    }
+
+    /**
+     * Get following.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFollowing()
+    {
+        return $this->following;
+    }
 }
