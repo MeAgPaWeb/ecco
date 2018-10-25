@@ -25,86 +25,87 @@ class Room
     /**
      * @var string|null
      *
-     * @ORM\Column(name="use", type="string", nullable=true)
+     * @ORM\Column(name="b_use", type="string", nullable=true)
      */
     private $use;
-    
+
     /**
      * @var integer|null
      *
-     * @ORM\Column(name="exposed_faces", type="integer", nullable=true)
+     * @ORM\Column(name="b_exposed_faces", type="integer", nullable=true)
      */
     private $exposedFaces;
-    
+
     /**
      * @var string|null
      *
-     * @ORM\Column(name="conditioning", type="string", nullable=true)
+     * @ORM\Column(name="b_conditioning", type="string", nullable=true)
      */
     private $conditioning;
-    
+
     /**
      * @var float|null
      *
-     * @ORM\Column(name="width", type="float", nullable=true)
+     * @ORM\Column(name="b_width", type="float", nullable=true)
      */
     private $width;
-    
+
     /**
      * @var float|null
      *
-     * @ORM\Column(name="high", type="float", nullable=true)
+     * @ORM\Column(name="b_high", type="float", nullable=true)
      */
     private $high;
-    
+
     /**
      * @var float|null
      *
-     * @ORM\Column(name="length", type="float", nullable=true)
+     * @ORM\Column(name="b_length", type="float", nullable=true)
      */
     private $length;
-    
+
     /**
      * @var string|null
      *
-     * @ORM\Column(name="roof_composition", type="string", nullable=true)
+     * @ORM\Column(name="b_roof_composition", type="string", nullable=true)
      */
     private $roofComposition;
-    
+
     /**
      * @var string|null
      *
-     * @ORM\Column(name="floor_composition", type="string", nullable=true)
+     * @ORM\Column(name="b_floor_composition", type="string", nullable=true)
      */
     private $floorComposition;
-    
+
     /**
      * @var string|null
      *
-     * @ORM\Column(name="wall_composition", type="string", nullable=true)
+     * @ORM\Column(name="b_wall_composition", type="string", nullable=true)
      */
     private $wallComposition;
-    
+
     /**
      * @var string|null
      *
-     * @ORM\Column(name="window_composition", type="string", nullable=true)
+     * @ORM\Column(name="b_window_composition", type="string", nullable=true)
      */
     private $windowComposition;
-    
+
     /**
      * @var float|null
      *
-     * @ORM\Column(name="glazed_surface", type="float", nullable=true)
+     * @ORM\Column(name="b_glazed_surface", type="float", nullable=true)
      */
     private $glazedSurface;
 
 
     /**
      * @ORM\ManyToOne(targetEntity="Library", inversedBy="rooms")
-     * @ORM\JoinColumn(name="library_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="b_library_id", referencedColumnName="id")
      */
     private $library;
+
 
     /**
      * Get id.

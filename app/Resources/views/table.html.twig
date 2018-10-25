@@ -40,13 +40,6 @@
                         </table>
                     </div>
                 </div>
-                {% if no_new_button is defined %}
-                    {% block new_block %}{% endblock %}
-                {% else %}
-                    <div class="box-body">
-                        <a class="btn btn-success btn-flat" href="{{ path(new.route) }}"><span class="glyphicon glyphicon-plus"></span> {{ new.title }}</a>
-                    </div>
-                {% endif %}
             </div>
         </div>
     </div>

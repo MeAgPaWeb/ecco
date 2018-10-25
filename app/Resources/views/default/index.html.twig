@@ -59,7 +59,7 @@
           <div class="row">
             <div class="col-sm-4 border-right">
               <div class="description-block">
-                <h5 class="description-header">2</h5>
+                <h5 class="description-header">{{library.rooms|length }}</h5>
                 <span class="description-text">Salas</span>
               </div>
               <!-- /.description-block -->
@@ -92,7 +92,7 @@
             <a class="btn btn-app">
               <i class="fa fa-remove"></i> Eliminar
             </a>
-            <a class="btn btn-app" href="{{ path('room_new', { 'id_library': library.id }) }}">
+            <a class="btn btn-app" href="{{ path('room_new', { 'library': library.id }) }}">
               <i class="fa fa-plus"></i> Sala
             </a>
             <a class="btn btn-app" href="{{ path('room_index') }}">

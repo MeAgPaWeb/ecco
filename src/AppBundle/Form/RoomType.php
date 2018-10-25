@@ -48,12 +48,12 @@ class RoomType extends AbstractType
               ->add('width',null, array(
                 'label' => 'Ancho',
                 'attr' => array(
-                  'placeholder'  => 'Ingrese el ancho')
+                  'placeholder'  => 'Ingrese el valor en metros')
               ))
               ->add('length',null, array(
                 'label' => 'Largo',
                 'attr' => array(
-                  'placeholder'  => 'Ingrese el largo')
+                  'placeholder'  => 'Ingrese el valor en metros')
               ))
               ->add('high',null, array(
                 'label' => 'Alto',
@@ -102,7 +102,7 @@ class RoomType extends AbstractType
               ->add('glazedSurface',null, array(
                 'label' => 'Superficie Total Vidriada',
                 'attr' => array(
-                  'placeholder'  => 'Ingrese la superficie vidriada')
+                  'placeholder'  => 'Ingrese el valor en m2')
               ));
     }/**
      * {@inheritdoc}

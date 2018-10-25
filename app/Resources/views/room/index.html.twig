@@ -64,18 +64,15 @@
   {% for room in rooms %}
       <tr>
           <td><a href="{{ path('room_show', { 'id': room.id }) }}">{{ room.id }}</a></td>
-          <td>{{ room.backing }}</td>
-          <td>{{ room.transparency }}</td>
-          <td>{{ room.thermalTransmittance }}</td>
           <td>{{ room.width }}</td>
           <td>{{ room.high }}</td>
-          <td>{{ room.lenght }}</td>
+          <td>{{ room.length }}</td>
           <td>{{ room.glazedSurface }}</td>
-          <td>{{ room.floor }}</td>
-          <td>{{ room.walls }}</td>
-          <td>{{ room.windows }}</td>
-          <td>{{ room.uses }}</td>
-          <td>{{ room.conditionerEquipment }}</td>
+          <td>{{ room.floorComposition }}</td>
+          <td>{{ room.wallComposition }}</td>
+          <td>{{ room.windowComposition }}</td>
+          <td>{{ room.use }}</td>
+          <td>{{ room.conditioning }}</td>
           <td class="table-operations">
             <a href="{{ path('room_show', { 'id': room.id }) }}" title="Ver detalle"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a>&nbsp;&nbsp;
             <a href="{{ path('room_edit', { 'id': room.id }) }}" title="Editar"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
