@@ -57,7 +57,7 @@ class DataLogger
     private $dewpt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Room", inversedBy="data_logger")
+     * @ORM\ManyToOne(targetEntity="Room", inversedBy="dataLoggers")
      * @ORM\JoinColumn(name="room_id", referencedColumnName="id")
      */
     private $room;

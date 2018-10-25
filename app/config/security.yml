@@ -19,7 +19,7 @@ security:
                 csrf_token_generator: security.csrf.token_manager
                 login_path: /login
                 check_path: /login_check
-                always_use_default_target_path: false
+                always_use_default_target_path: true
                 default_target_path:            /
                 # if you are using Symfony < 2.8, use the following config instead:
                 # csrf_provider: form.csrf_provider
@@ -30,6 +30,7 @@ security:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/Boxes, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/user/, role: ROLE_ADMIN }
         - { path: ^/app/, role: IS_AUTHENTICATED_FULLY }
         - { path: ^/, role: IS_AUTHENTICATED_FULLY }

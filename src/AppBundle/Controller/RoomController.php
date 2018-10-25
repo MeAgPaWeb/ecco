@@ -55,6 +55,7 @@ class RoomController extends Controller
             $library->addRoom($room);
             $em->persist($library);
             $em->flush(); //se rompe acá wachon!!!
+            $this->loadDataAction($request, $room);
 
             return $this->redirectToRoute($route, array('request' => $request, 'library' => $library->getId()));
         }
@@ -96,6 +97,7 @@ class RoomController extends Controller
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
+            $this->loadDataAction($request, $room);
 
             return $this->redirectToRoute('room_edit', array('id' => $room->getId()));
         }
@@ -163,6 +165,9 @@ class RoomController extends Controller
           $data->setRh($activesheet[$j][4]);
           $data->setDewpt($activesheet[$j][5]);
           $em->persist($data);
+          // $em->flush();
+          $room->addDataLogger($data);
+          $em->persist($room);
           $j++;
         }
         $em->flush();
