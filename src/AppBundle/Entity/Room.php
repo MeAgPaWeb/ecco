@@ -106,6 +106,10 @@ class Room
      */
     private $library;
 
+    /**
+     * @ORM\OneToMany(targetEntity="DataLogger", mappedBy="room")
+     */
+    private $DatasLogers;
 
     /**
      * Get id.
@@ -403,5 +407,48 @@ class Room
     public function getLibrary()
     {
         return $this->library;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->DatasLogers = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add datasLoger.
+     *
+     * @param \AppBundle\Entity\DataLogger $datasLoger
+     *
+     * @return Room
+     */
+    public function addDatasLoger(\AppBundle\Entity\DataLogger $datasLoger)
+    {
+        $this->DatasLogers[] = $datasLoger;
+
+        return $this;
+    }
+
+    /**
+     * Remove datasLoger.
+     *
+     * @param \AppBundle\Entity\DataLogger $datasLoger
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeDatasLoger(\AppBundle\Entity\DataLogger $datasLoger)
+    {
+        return $this->DatasLogers->removeElement($datasLoger);
+    }
+
+    /**
+     * Get datasLogers.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDatasLogers()
+    {
+        return $this->DatasLogers;
     }
 }

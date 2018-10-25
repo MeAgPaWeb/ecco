@@ -3,7 +3,10 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Room;
+use AppBundle\Entity\DataLogger;
 use AppBundle\Entity\Library;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
@@ -52,6 +55,7 @@ class RoomController extends Controller
             $library->addRoom($room);
             $em->persist($library);
             $em->flush(); //se rompe acá wachon!!!
+            $this->loadDataAction($request, $room);
 
             return $this->redirectToRoute($router, array('request' => $request,'library' => $library->getId()));
         }
@@ -138,5 +142,32 @@ class RoomController extends Controller
             ->setMethod('DELETE')
             ->getForm()
         ;
+    }
+
+
+    public function loadDataAction(Request $request, Room $room){
+      $file = $request->files->get('upload');
+      $name = $file->getFilename();
+      $url =  $file->getRealPath();
+      $em = $this->getDoctrine()->getManager();
+      if ($file->isValid()) {
+        $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject($url);
+        $phpExcelObject->setActiveSheetIndex(0);
+        $activesheet = $phpExcelObject->getActiveSheet()->toArray();
+        $j=5;
+        while (isset($activesheet[$j][0])) {
+          $data = new DataLogger();
+          $data->setNumber($activesheet[$j][0]);
+          $data->setRoom($room);
+          $data->setDate(\DateTime::createFromFormat( "d/m/Y H:i:s A", $activesheet[$j][1]." ".$activesheet[$j][2]));
+          $data->setTemperature($activesheet[$j][3]);
+          $data->setRh($activesheet[$j][4]);
+          $data->setDewpt($activesheet[$j][5]);
+          $em->persist($data);
+          $j++;
+        }
+        $em->flush();
+        return true;
+      }
     }
 }

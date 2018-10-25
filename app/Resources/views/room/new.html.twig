@@ -28,23 +28,23 @@
         <h3 class="box-title">Creando una sala </h3>
       </div>
       <div class="box-body">
-          {{ form_start(form) }}
+          {{ form_start(form, { 'attr': {'enctype': 'multipart/form-data'} }) }}
             <div class="row">
               <div class="col-md-4">
                   <div class="form-group ">
-                    {{ form_label(form.use) }}                    
+                    {{ form_label(form.use) }}
                     {{ form_widget(form.use) }}
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="form-group">
-                  {{ form_label(form.conditioning) }}                    
+                  {{ form_label(form.conditioning) }}
                   {{ form_widget(form.conditioning) }}
                 </div>
               </div>
               <div class="col-md-4">
                   <div class="form-group ">
-                    {{ form_label(form.exposedFaces) }}                    
+                    {{ form_label(form.exposedFaces) }}
                     {{ form_widget(form.exposedFaces) }}
                 </div>
               </div>
@@ -52,19 +52,19 @@
             <div class="row">
               <div class="col-md-4">
                 <div class="form-group">
-                  {{ form_label(form.width) }}                    
+                  {{ form_label(form.width) }}
                   {{ form_widget(form.width) }}
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="form-group">
-                  {{ form_label(form.length) }}                    
+                  {{ form_label(form.length) }}
                   {{ form_widget(form.length) }}
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="form-group">
-                  {{ form_label(form.high) }}                    
+                  {{ form_label(form.high) }}
                   {{ form_widget(form.high) }}
                 </div>
               </div>
@@ -73,25 +73,25 @@
             <div class="row">
               <div class="col-md-3">
                 <div class="form-group">
-                  {{ form_label(form.roofComposition) }}                    
+                  {{ form_label(form.roofComposition) }}
                   {{ form_widget(form.roofComposition) }}
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="form-group">
-                  {{ form_label(form.floorComposition) }}                    
+                  {{ form_label(form.floorComposition) }}
                   {{ form_widget(form.floorComposition) }}
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="form-group">
-                  {{ form_label(form.wallComposition) }}                    
+                  {{ form_label(form.wallComposition) }}
                   {{ form_widget(form.wallComposition) }}
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="form-group">
-                  {{ form_label(form.windowComposition) }}                    
+                  {{ form_label(form.windowComposition) }}
                   {{ form_widget(form.windowComposition) }}
                 </div>
               </div>
@@ -99,14 +99,14 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
-                  {{ form_label(form.glazedSurface) }}                    
+                  {{ form_label(form.glazedSurface) }}
                   {{ form_widget(form.glazedSurface) }}
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group" style="overflow:hidden;">
                   <label for="exampleInputFile">Registro del DataLogger</label>
-                  <input id="exampleInputFile" type="file">
+                  <input id="exampleInputFile" name="upload" type="file">
                   <p class="help-block">Seleccione el archivo CSV ("#";"Date";"Time, GMT-03:00";"Temp, °C";"RH, %";"DewPt, °C")</p>
                 </div>
               </div>

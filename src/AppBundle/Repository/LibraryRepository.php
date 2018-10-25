@@ -1,7 +1,8 @@
 <?php
 
 namespace AppBundle\Repository;
-
+use AppBundle\Entity\Room;
+use AppBundle\Entity\DataLogger;
 /**
  * LibraryRepository
  *
@@ -10,4 +11,13 @@ namespace AppBundle\Repository;
  */
 class LibraryRepository extends \Doctrine\ORM\EntityRepository
 {
+
+  public function getLibraryHome()
+  {
+      return $this->createQueryBuilder('l')
+      ->select('l', 'count(rooms.id) as cant')
+      ->leftJoin('l.rooms', 'rooms')
+      ->getQuery()
+      ->getResult();
+  }
 }

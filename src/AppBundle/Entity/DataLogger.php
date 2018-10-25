@@ -15,25 +15,54 @@ class DataLogger
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="id", type="integer" , nullable=true)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
-     * @var \DateTime
+     * @var int|null
      *
-     * @ORM\Column(name="startDate", type="datetime")
+     * @ORM\Column(name="number", type="integer" , nullable=true)
      */
-    private $startDate;
+    private $number;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="endDate", type="datetime")
+     * @ORM\Column(name="date", type="date")
      */
-    private $endDate;
+    private $date;
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="temperature", type="integer" , nullable=true)
+     */
+    private $temperature;
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="rh", type="integer" , nullable=true)
+     */
+    private $rh;
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="dewpt", type="integer" , nullable=true)
+     */
+    private $dewpt;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Room", inversedBy="data_logger")
+     * @ORM\JoinColumn(name="room_id", referencedColumnName="id")
+     */
+    private $room;
+
+
 
 
     /**
@@ -47,50 +76,170 @@ class DataLogger
     }
 
     /**
-     * Set startDate.
+     * Set number.
      *
-     * @param \DateTime $startDate
+     * @param int|null $number
      *
      * @return DataLogger
      */
-    public function setStartDate($startDate)
+    public function setNumber($number = null)
     {
-        $this->startDate = $startDate;
+        $this->number = $number;
 
         return $this;
     }
 
     /**
-     * Get startDate.
+     * Get number.
      *
-     * @return \DateTime
+     * @return int|null
      */
-    public function getStartDate()
+    public function getNumber()
     {
-        return $this->startDate;
+        return $this->number;
     }
 
     /**
-     * Set endDate.
+     * Set date.
      *
-     * @param \DateTime $endDate
+     * @param \DateTime $date
      *
      * @return DataLogger
      */
-    public function setEndDate($endDate)
+    public function setDate($date)
     {
-        $this->endDate = $endDate;
+        $this->date = $date;
 
         return $this;
     }
 
     /**
-     * Get endDate.
+     * Get date.
      *
      * @return \DateTime
      */
-    public function getEndDate()
+    public function getDate()
     {
-        return $this->endDate;
+        return $this->date;
+    }
+
+    /**
+     * Set time.
+     *
+     * @param \DateTime $time
+     *
+     * @return DataLogger
+     */
+    public function setTime($time)
+    {
+        $this->time = $time;
+
+        return $this;
+    }
+
+    /**
+     * Get time.
+     *
+     * @return \DateTime
+     */
+    public function getTime()
+    {
+        return $this->time;
+    }
+
+    /**
+     * Set temperature.
+     *
+     * @param int $temperature
+     *
+     * @return DataLogger
+     */
+    public function setTemperature($temperature)
+    {
+        $this->temperature = $temperature;
+
+        return $this;
+    }
+
+    /**
+     * Get temperature.
+     *
+     * @return integer
+     */
+    public function getTemperature()
+    {
+        return $this->temperature;
+    }
+
+    /**
+     * Set rh.
+     *
+     * @param int $rh
+     *
+     * @return DataLogger
+     */
+    public function setRh($rh)
+    {
+        $this->rh = $rh;
+
+        return $this;
+    }
+
+    /**
+     * Get rh.
+     *
+     * @return integer
+     */
+    public function getRh()
+    {
+        return $this->rh;
+    }
+
+    /**
+     * Set dewpt.
+     *
+     * @param int $dewpt
+     *
+     * @return DataLogger
+     */
+    public function setDewpt($dewpt)
+    {
+        $this->dewpt = $dewpt;
+
+        return $this;
+    }
+
+    /**
+     * Get dewpt.
+     *
+     * @return integer
+     */
+    public function getDewpt()
+    {
+        return $this->dewpt;
+    }
+
+    /**
+     * Set room.
+     *
+     * @param \AppBundle\Entity\Room|null $room
+     *
+     * @return DataLogger
+     */
+    public function setRoom(\AppBundle\Entity\Room $room = null)
+    {
+        $this->room = $room;
+
+        return $this;
+    }
+
+    /**
+     * Get room.
+     *
+     * @return \AppBundle\Entity\Room|null
+     */
+    public function getRoom()
+    {
+        return $this->room;
     }
 }
