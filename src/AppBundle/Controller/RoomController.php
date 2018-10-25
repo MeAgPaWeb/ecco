@@ -43,7 +43,7 @@ class RoomController extends Controller
      */
     public function newAction(Request $request, Library $library)
     {
-        $router=$request->request->get('router');
+        $route=$request->request->get('route');
         $room = new Room();
         $form = $this->createForm('AppBundle\Form\RoomType', $room);
         $form->handleRequest($request);
@@ -55,9 +55,8 @@ class RoomController extends Controller
             $library->addRoom($room);
             $em->persist($library);
             $em->flush(); //se rompe acá wachon!!!
-            $this->loadDataAction($request, $room);
 
-            return $this->redirectToRoute($router, array('request' => $request,'library' => $library->getId()));
+            return $this->redirectToRoute($route, array('request' => $request, 'library' => $library->getId()));
         }
 
         return $this->render('room/new.html.twig', array(

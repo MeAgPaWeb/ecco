@@ -55,10 +55,10 @@
     </script>
     <script>
     document.getElementById("agregar").addEventListener("click", function(){
-      document.getElementById("router").value = "room_new";
+      document.getElementById("route").value = "room_new";
     });
     document.getElementById("finalizar").addEventListener("click", function(){
-      document.getElementById("router").value = "homepage";
+      document.getElementById("route").value = "homepage";
     });
     </script>
 {% endblock javascript %}
@@ -101,7 +101,7 @@
           <div class="box-footer">
               <input  id="agregar" class="btn btn-primary" type="submit" value="Agregar una Sala" />
               <input  id="finalizar" class="btn btn-success" type="submit" value="Finalizar Carga" />
-              <input  id="router" name="router" type="hidden" value="" />
+              <input  id="route" name="route" type="hidden" value="" />
           </div>
         </div>
       {{ form_end(form) }}
