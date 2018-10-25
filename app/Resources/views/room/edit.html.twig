@@ -1,33 +1,119 @@
 {% extends 'default.html.twig' %}
-{% form_theme form 'form/fields.html.twig' %}
+{% form_theme edit_form 'form/fields.html.twig' %}
 {% set page =
     {
         "title": "Sala",
         "subtitle": "Editar",
     }
 %}
-
+{% block javascript %}
+  <script>
+  document.getElementById("guardar").addEventListener("click", function(){
+    document.getElementById("router").value = "room_index";
+  });
+</script>
+{% endblock javascript %}
 {% block breadcrumb %}
-    <li><a href="{{ path('room_index') }}"><i class="fa fa-dashboard"></i> Sala</a></li>
-    <li class="active">Editar</li>
+    <li><a href="{{ path('room_index') }}"> Sala</a></li>
+    <li>Crear </li>
+    <li class="active">Editando sala</li>
 {% endblock %}
 
 {% block content %}
-    <h1>Room edit</h1>
+  <div class="box box-primary">
+      <div class="box-header with-border">
+        <h3 class="box-title">Editanto sala</h3>
+      </div>
+      <div class="box-body">
+          {{ form_start(edit_form) }}
+            <div class="row">
+              <div class="col-md-4">
+                  <div class="form-group ">
+                    {{ form_label(edit_form.use) }}
+                    {{ form_widget(edit_form.use) }}
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  {{ form_label(edit_form.conditioning) }}
+                  {{ form_widget(edit_form.conditioning) }}
+                </div>
+              </div>
+              <div class="col-md-4">
+                  <div class="form-group ">
+                    {{ form_label(edit_form.exposedFaces) }}
+                    {{ form_widget(edit_form.exposedFaces) }}
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  {{ form_label(edit_form.width) }}
+                  {{ form_widget(edit_form.width) }}
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  {{ form_label(edit_form.length) }}
+                  {{ form_widget(edit_form.length) }}
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  {{ form_label(edit_form.high) }}
+                  {{ form_widget(edit_form.high) }}
+                </div>
+              </div>
+            </div>
 
-    {{ form_start(edit_form) }}
-        {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
-    {{ form_end(edit_form) }}
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  {{ form_label(edit_form.roofComposition) }}
+                  {{ form_widget(edit_form.roofComposition) }}
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  {{ form_label(edit_form.floorComposition) }}
+                  {{ form_widget(edit_form.floorComposition) }}
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  {{ form_label(edit_form.wallComposition) }}
+                  {{ form_widget(edit_form.wallComposition) }}
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  {{ form_label(edit_form.windowComposition) }}
+                  {{ form_widget(edit_form.windowComposition) }}
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  {{ form_label(edit_form.glazedSurface) }}
+                  {{ form_widget(edit_form.glazedSurface) }}
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group" style="overflow:hidden;">
+                  <label for="exampleInputFile">Registro del DataLogger</label>
+                  <input id="exampleInputFile" type="file">
+                  <p class="help-block">Seleccione el archivo CSV ("#";"Date";"Time, GMT-03:00";"Temp, °C";"RH, %";"DewPt, °C")</p>
+                </div>
+              </div>
+            </div>
+            <div class="box-footer">
+                <input  id="guardar" class="btn btn-primary" type="submit" value="guardar" />
+                <input  id="router" name="router" type="hidden" value="" />
+            </div>
+        {{ form_end(edit_form) }}
+      </div>
+  </div>
 
-    <ul>
-        <li>
-            <a href="{{ path('room_index') }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
 {% endblock %}

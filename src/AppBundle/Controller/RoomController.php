@@ -47,18 +47,19 @@ class RoomController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $_library = $em->getRepository('AppBundle:Library')->find($library);
-            $room->setLibrary($_library);
+            $room->setLibrary($library);
             $em->persist($room);
+            $library->addRoom($room);
+            $em->persist($library);
             $em->flush(); //se rompe acá wachon!!!
 
-            return $this->redirectToRoute($router, array('request' => $request,'library' => $_library->getId()));
+            return $this->redirectToRoute($router, array('request' => $request,'library' => $library->getId()));
         }
 
         return $this->render('room/new.html.twig', array(
             'room' => $room,
             'form' => $form->createView(),
-            
+
         ));
     }
 
