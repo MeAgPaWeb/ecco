@@ -35,24 +35,24 @@ class RoomController extends Controller
     /**
      * Creates a new room entity.
      *
-     * @Route("/{library}/new", name="room_new")
+     * @Route("/{id_library}/new", name="room_new")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request, Library $library)
+    public function newAction(Request $request, Library $id_library)
     {
-        $router=$request->request->get('router');
+        $route=$request->request->get('route');
         $room = new Room();
         $form = $this->createForm('AppBundle\Form\RoomType', $room);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $_library = $em->getRepository('AppBundle:Library')->find($library);
-            $room->setLibrary($_library);
+            $library = $em->getRepository('AppBundle:Library')->find($id_library);
+            $room->setLibrary($library);
             $em->persist($room);
             $em->flush(); //se rompe acá wachon!!!
 
-            return $this->redirectToRoute($router, array('request' => $request,'library' => $_library->getId()));
+            return $this->redirectToRoute($route, array('request' => $request,'id_library' => $library->getId()));
         }
 
         return $this->render('room/new.html.twig', array(
