@@ -9,10 +9,13 @@
 {% block javascript %}
 {{parent()}}
 <script>
-$('input.btn').click(function(){
-  $('#load').show();
-  $('#route').val($(this).attr('data'));
-});
+  $('input.btn').click(function(){
+    $('#load').show();
+    $('#route').val($(this).attr('data'));
+  });
+  $('.select2').select2({
+    placeholder: 'Seleccione una opción'
+  });
 </script>
 {% endblock javascript %}
 {% block breadcrumb %}
@@ -29,77 +32,119 @@ $('input.btn').click(function(){
       <div class="box-body">
           {{ form_start(edit_form, { 'attr': {'enctype': 'multipart/form-data'} }) }}
             <div class="row">
-              <div class="col-md-4">
-                  <div class="form-group ">
+              <div class="col-md-3">
+                  <div class="form-group has-feedback{% if edit_form.name.vars.errors | length %} has-error{% endif %}">
+                    {{ form_label(edit_form.name) }}
+                    {{ form_widget(edit_form.name) }}
+                    <div class="help-block with-errors">
+                        {{ form_errors(edit_form.name) }}
+                    </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                  <div class="form-group has-feedback{% if edit_form.use.vars.errors | length %} has-error{% endif %}">
                     {{ form_label(edit_form.use) }}
                     {{ form_widget(edit_form.use) }}
+                    <div class="help-block with-errors">
+                        {{ form_errors(edit_form.use) }}
+                    </div>
                 </div>
               </div>
-              <div class="col-md-4">
-                <div class="form-group">
+              <div class="col-md-3">
+                <div class="form-group has-feedback{% if edit_form.conditioning.vars.errors | length %} has-error{% endif %}">
                   {{ form_label(edit_form.conditioning) }}
                   {{ form_widget(edit_form.conditioning) }}
+                  <div class="help-block with-errors">
+                      {{ form_errors(edit_form.conditioning) }}
+                  </div>
                 </div>
               </div>
-              <div class="col-md-4">
-                  <div class="form-group ">
+              <div class="col-md-3">
+                  <div class="form-group has-feedback{% if edit_form.exposedFaces.vars.errors | length %} has-error{% endif %}">
                     {{ form_label(edit_form.exposedFaces) }}
                     {{ form_widget(edit_form.exposedFaces) }}
+                    <div class="help-block with-errors">
+                        {{ form_errors(edit_form.exposedFaces) }}
+                    </div>
                 </div>
               </div>
             </div>
             <div class="row">
-              <div class="col-md-4">
-                <div class="form-group">
+              <div class="col-md-3">
+                <div class="form-group has-feedback{% if edit_form.name.vars.errors | length %} has-error{% endif %}">
                   {{ form_label(edit_form.width) }}
                   {{ form_widget(edit_form.width) }}
+                  <div class="help-block with-errors">
+                      {{ form_errors(edit_form.width) }}
+                  </div>
                 </div>
               </div>
               <div class="col-md-4">
-                <div class="form-group">
+                <div class="form-group has-feedback{% if edit_form.length.vars.errors | length %} has-error{% endif %}">
                   {{ form_label(edit_form.length) }}
                   {{ form_widget(edit_form.length) }}
+                  <div class="help-block with-errors">
+                      {{ form_errors(edit_form.length) }}
+                  </div>
                 </div>
               </div>
               <div class="col-md-4">
-                <div class="form-group">
+                <div class="form-group has-feedback{% if edit_form.high.vars.errors | length %} has-error{% endif %}">
                   {{ form_label(edit_form.high) }}
                   {{ form_widget(edit_form.high) }}
+                  <div class="help-block with-errors">
+                      {{ form_errors(edit_form.high) }}
+                  </div>
                 </div>
               </div>
             </div>
 
             <div class="row">
               <div class="col-md-3">
-                <div class="form-group">
+                <div class="form-group has-feedback{% if edit_form.roofComposition.vars.errors | length %} has-error{% endif %}">
                   {{ form_label(edit_form.roofComposition) }}
                   {{ form_widget(edit_form.roofComposition) }}
+                  <div class="help-block with-errors">
+                      {{ form_errors(edit_form.roofComposition) }}
+                  </div>
                 </div>
               </div>
               <div class="col-md-3">
-                <div class="form-group">
+                <div class="form-group has-feedback{% if edit_form.floorComposition.vars.errors | length %} has-error{% endif %}">
                   {{ form_label(edit_form.floorComposition) }}
                   {{ form_widget(edit_form.floorComposition) }}
+                  <div class="help-block with-errors">
+                      {{ form_errors(edit_form.floorComposition) }}
+                  </div>
                 </div>
               </div>
               <div class="col-md-3">
-                <div class="form-group">
+                <div class="form-group has-feedback{% if edit_form.wallComposition.vars.errors | length %} has-error{% endif %}">
                   {{ form_label(edit_form.wallComposition) }}
                   {{ form_widget(edit_form.wallComposition) }}
+                  <div class="help-block with-errors">
+                      {{ form_errors(edit_form.wallComposition) }}
+                  </div>
                 </div>
               </div>
               <div class="col-md-3">
-                <div class="form-group">
+                <div class="form-group has-feedback{% if edit_form.windowComposition.vars.errors | length %} has-error{% endif %}">
                   {{ form_label(edit_form.windowComposition) }}
                   {{ form_widget(edit_form.windowComposition) }}
+                  <div class="help-block with-errors">
+                      {{ form_errors(edit_form.windowComposition) }}
+                  </div>
                 </div>
               </div>
             </div>
             <div class="row">
               <div class="col-md-6">
-                <div class="form-group">
+                <div class="form-group has-feedback{% if edit_form.glazedSurface.vars.errors | length %} has-error{% endif %}">
                   {{ form_label(edit_form.glazedSurface) }}
                   {{ form_widget(edit_form.glazedSurface) }}
+                  <div class="help-block with-errors">
+                      {{ form_errors(edit_form.glazedSurface) }}
+                  </div>
                 </div>
               </div>
               <div class="col-md-6">

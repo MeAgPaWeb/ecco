@@ -179,30 +179,33 @@ class RoomController extends Controller
      */
     public function loadDataAction(Request $request, Room $room){
       $file = $request->files->get('upload');
-      $name = $file->getFilename();
-      $url =  $file->getRealPath();
-      $em = $this->getDoctrine()->getManager();
-      if ($file->isValid()) {
-        $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject($url);
-        $phpExcelObject->setActiveSheetIndex(0);
-        $activesheet = $phpExcelObject->getActiveSheet()->toArray();
-        $j=5;
-        while (isset($activesheet[$j][0])) {
-          $data = new DataLogger();
-          $data->setNumber($activesheet[$j][0]);
-          $data->setRoom($room);
-          $data->setDate(\DateTime::createFromFormat( "d/m/Y H:i:s A", $activesheet[$j][1]." ".$activesheet[$j][2]));
-          $data->setTemperature($activesheet[$j][3]);
-          $data->setRh($activesheet[$j][4]);
-          $data->setDewpt($activesheet[$j][5]);
-          $em->persist($data);
-          // $em->flush();
-          $room->addDataLogger($data);
-          $em->persist($room);
-          $j++;
+      if($file){
+        $name = $file->getFilename();
+        $url =  $file->getRealPath();
+        $em = $this->getDoctrine()->getManager();
+        if ($file->isValid()) {
+          $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject($url);
+          $phpExcelObject->setActiveSheetIndex(0);
+          $activesheet = $phpExcelObject->getActiveSheet()->toArray();
+          $j=5;
+          while (isset($activesheet[$j][0])) {
+            $data = new DataLogger();
+            $data->setNumber($activesheet[$j][0]);
+            $data->setRoom($room);
+            $data->setDate(\DateTime::createFromFormat( "d/m/Y H:i:s A", $activesheet[$j][1]." ".$activesheet[$j][2]));
+            $data->setTemperature($activesheet[$j][3]);
+            $data->setRh($activesheet[$j][4]);
+            $data->setDewpt($activesheet[$j][5]);
+            $em->persist($data);
+            // $em->flush();
+            $room->addDataLogger($data);
+            $em->persist($room);
+            $j++;
+          }
+          $em->flush();
+          return true;
         }
-        $em->flush();
-        return true;
-      }
+      }else
+        return false;
     }
 }
