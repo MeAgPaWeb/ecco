@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Room
@@ -24,7 +25,7 @@ class Room
 
     /**
      * @var string|null
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="b_use", type="string", nullable=true)
      */
     private $use;
@@ -60,70 +61,70 @@ class Room
 
     /**
      * @var integer|null
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="b_exposed_faces", type="integer", nullable=true)
      */
     private $exposedFaces;
 
     /**
      * @var string|null
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="b_conditioning", type="string", nullable=true)
      */
     private $conditioning;
 
     /**
      * @var float|null
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="b_width", type="float", nullable=true)
      */
     private $width;
 
     /**
      * @var float|null
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="b_high", type="float", nullable=true)
      */
     private $high;
 
     /**
      * @var float|null
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="b_length", type="float", nullable=true)
      */
     private $length;
 
     /**
      * @var string|null
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="b_roof_composition", type="string", nullable=true)
      */
     private $roofComposition;
 
     /**
      * @var string|null
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="b_floor_composition", type="string", nullable=true)
      */
     private $floorComposition;
 
     /**
      * @var string|null
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="b_wall_composition", type="string", nullable=true)
      */
     private $wallComposition;
 
     /**
      * @var string|null
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="b_window_composition", type="string", nullable=true)
      */
     private $windowComposition;
 
     /**
      * @var float|null
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="b_glazed_surface", type="float", nullable=true)
      */
     private $glazedSurface;
@@ -138,7 +139,7 @@ class Room
     
     /**
      * @var string|null
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="b_name", type="string", nullable=true)
      */
     private $name;

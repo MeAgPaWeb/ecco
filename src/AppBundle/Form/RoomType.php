@@ -16,7 +16,12 @@ class RoomType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-      $builder->add('use',ChoiceType::class, array(
+      $builder->add('name',null, array(
+                    'label' => 'Nombre de la sala',
+                    'attr' => array(
+                      'placeholder'  => 'Ingrese el nombre de la sala')
+                  ))
+              ->add('use',ChoiceType::class, array(
                 'label' => 'Uso de la Sala',
                 'choices' => array(
                   'Depósito'  => 'Depósito',

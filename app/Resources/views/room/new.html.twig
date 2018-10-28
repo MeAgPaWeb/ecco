@@ -29,77 +29,119 @@
       <div class="box-body">
           {{ form_start(form, { 'attr': {'enctype': 'multipart/form-data'} }) }}
             <div class="row">
-              <div class="col-md-4">
-                  <div class="form-group ">
+              <div class="col-md-3">
+                  <div class="form-group has-feedback{% if form.name.vars.errors | length %} has-error{% endif %}">
+                    {{ form_label(form.name) }}
+                    {{ form_widget(form.name) }}
+                    <div class="help-block with-errors">
+                        {{ form_errors(form.name) }}
+                    </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                  <div class="form-group has-feedback{% if form.use.vars.errors | length %} has-error{% endif %}">
                     {{ form_label(form.use) }}
                     {{ form_widget(form.use) }}
+                    <div class="help-block with-errors">
+                        {{ form_errors(form.use) }}
+                    </div>
                 </div>
               </div>
-              <div class="col-md-4">
-                <div class="form-group">
+              <div class="col-md-3">
+                <div class="form-group has-feedback{% if form.conditioning.vars.errors | length %} has-error{% endif %}">
                   {{ form_label(form.conditioning) }}
                   {{ form_widget(form.conditioning) }}
+                  <div class="help-block with-errors">
+                      {{ form_errors(form.conditioning) }}
+                  </div>
                 </div>
               </div>
-              <div class="col-md-4">
-                  <div class="form-group ">
+              <div class="col-md-3">
+                  <div class="form-group has-feedback{% if form.exposedFaces.vars.errors | length %} has-error{% endif %}">
                     {{ form_label(form.exposedFaces) }}
                     {{ form_widget(form.exposedFaces) }}
+                    <div class="help-block with-errors">
+                        {{ form_errors(form.exposedFaces) }}
+                    </div>
                 </div>
               </div>
             </div>
             <div class="row">
               <div class="col-md-4">
-                <div class="form-group">
+                <div class="form-group has-feedback{% if form.width.vars.errors | length %} has-error{% endif %}">
                   {{ form_label(form.width) }}
                   {{ form_widget(form.width) }}
+                  <div class="help-block with-errors">
+                      {{ form_errors(form.width) }}
+                  </div>
                 </div>
               </div>
               <div class="col-md-4">
-                <div class="form-group">
+                <div class="form-group has-feedback{% if form.length.vars.errors | length %} has-error{% endif %}">
                   {{ form_label(form.length) }}
                   {{ form_widget(form.length) }}
+                  <div class="help-block with-errors">
+                      {{ form_errors(form.length) }}
+                  </div>
                 </div>
               </div>
               <div class="col-md-4">
-                <div class="form-group">
+                <div class="form-group has-feedback{% if form.high.vars.errors | length %} has-error{% endif %}">
                   {{ form_label(form.high) }}
                   {{ form_widget(form.high) }}
+                  <div class="help-block with-errors">
+                      {{ form_errors(form.high) }}
+                  </div>
                 </div>
               </div>
             </div>
 
             <div class="row">
               <div class="col-md-3">
-                <div class="form-group">
+                <div class="form-group has-feedback{% if form.roofComposition.vars.errors | length %} has-error{% endif %}">
                   {{ form_label(form.roofComposition) }}
                   {{ form_widget(form.roofComposition) }}
+                  <div class="help-block with-errors">
+                      {{ form_errors(form.roofComposition) }}
+                  </div>
                 </div>
               </div>
               <div class="col-md-3">
-                <div class="form-group">
+                <div class="form-group has-feedback{% if form.floorComposition.vars.errors | length %} has-error{% endif %}">
                   {{ form_label(form.floorComposition) }}
                   {{ form_widget(form.floorComposition) }}
+                  <div class="help-block with-errors">
+                      {{ form_errors(form.floorComposition) }}
+                  </div>
                 </div>
               </div>
               <div class="col-md-3">
-                <div class="form-group">
+                <div class="form-group has-feedback{% if form.wallComposition.vars.errors | length %} has-error{% endif %}">
                   {{ form_label(form.wallComposition) }}
                   {{ form_widget(form.wallComposition) }}
+                  <div class="help-block with-errors">
+                      {{ form_errors(form.wallComposition) }}
+                  </div>
                 </div>
               </div>
               <div class="col-md-3">
-                <div class="form-group">
+                <div class="form-group has-feedback{% if form.windowComposition.vars.errors | length %} has-error{% endif %}">
                   {{ form_label(form.windowComposition) }}
                   {{ form_widget(form.windowComposition) }}
+                  <div class="help-block with-errors">
+                      {{ form_errors(form.windowComposition) }}
+                  </div>
                 </div>
               </div>
             </div>
             <div class="row">
               <div class="col-md-6">
-                <div class="form-group">
+                <div class="form-group has-feedback{% if form.glazedSurface.vars.errors | length %} has-error{% endif %}">
                   {{ form_label(form.glazedSurface) }}
                   {{ form_widget(form.glazedSurface) }}
+                  <div class="help-block with-errors">
+                      {{ form_errors(form.glazedSurface) }}
+                  </div>
                 </div>
               </div>
               <div class="col-md-6">
