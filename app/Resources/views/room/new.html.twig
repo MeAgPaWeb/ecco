@@ -13,6 +13,9 @@
       $('#load').show();
       $('#route').val($(this).attr('data'));
     });
+    $('.select2').select2({
+      placeholder: 'Seleccione una opción'
+    });
   </script>
 {% endblock javascript %}
 {% block breadcrumb %}

@@ -23,23 +23,30 @@ class RoomType extends AbstractType
                   ))
               ->add('use',ChoiceType::class, array(
                 'label' => 'Uso de la Sala',
+                'placeholder'  => true,
                 'choices' => array(
                   'Depósito'  => 'Depósito',
                   'Sala de Lectura'  => 'Sala de Lectura',
                   'Mixto'  => 'Mixto',
-                  )
+                ),
+                'attr' => array(
+                  'class'  => 'select2')
               ))
               ->add('conditioning',ChoiceType::class, array(
                 'label' => 'Equipo de Climatización',
+                'placeholder'  => true,
                 'choices' => array(
                   'Refrigeración'  => 'Refrigeración',
                   'Calefacción'  => 'Calefacción',
                   'Ambos'  => 'Ambos',
                   'Ninguno'  => 'Ninguno',
-                  )
+                  ),
+                  'attr' => array(
+                    'class'  => 'select2')
               ))
               ->add('exposedFaces',ChoiceType::class, array(
                 'label' => 'Seleccione las caras expuestas al exterior (considere el piso y el techo)',
+                'placeholder'  => true,
                 'choices' => array(
                   '0'  => '0',
                   '1'  => '1',
@@ -48,7 +55,9 @@ class RoomType extends AbstractType
                   '4'  => '4',
                   '5'  => '5',
                   '6'  => '6',
-                  )
+                  ),
+                  'attr' => array(
+                    'class'  => 'select2')
               ))
               ->add('width',null, array(
                 'label' => 'Ancho',
@@ -67,34 +76,44 @@ class RoomType extends AbstractType
               ))
               ->add('roofComposition',ChoiceType::class, array(
                 'label' => 'Composición del Techo',
+                'placeholder'  => true,
                 'choices' => array(
                   'Cubierta hormigón armado'  => 'Cubierta hormigón armado',
                   'Entrepiso hormigón armado'  => 'Entrepiso hormigón armado',
                   'Entrepiso madera'  => 'Entrepiso madera',
                   'Cubierta de chapa'  => 'Cubierta de chapa',
                   'Cubierta de tejas'  => 'Cubierta de tejas',
-                  )
+                  ),
+                  'attr' => array(
+                    'class'  => 'select2')
               ))
               ->add('floorComposition',ChoiceType::class, array(
                 'label' => 'Composición del Piso',
+                'placeholder'  => true,
                 'choices' => array(
                   'Entrepiso madera'  => 'Entrepiso madera',
                   'Entrepiso hormigón armado'  => 'Entrepiso hormigón armado',
                   'Terreno natural'  => 'Terreno natural',
-                  )
+                  ),
+                  'attr' => array(
+                    'class'  => 'select2')
               ))
               ->add('wallComposition',ChoiceType::class, array(
                 'label' => 'Composición de las paredes',
+                'placeholder'  => true,
                 'choices' => array(
                   'Rev + Lad. hueco + Rev'  => 'Rev + Lad. hueco + Rev',
                   'Rev + Lad.20 cm + Rev'  => 'Rev + Lad.20 cm + Rev',
                   'Rev + Lad. 25 + Rev'  => 'Rev + Lad. 25 + Rev',
                   'Rev + Lad. común 30 cm + Rev'  => 'Rev + Lad. común 30 cm + Rev',
                   'Rev + Lad. común 45 cm + Rev'  => 'Rev + Lad. común 45 cm + Rev',
-                  )
+                  ),
+                  'attr' => array(
+                    'class'  => 'select2')
               ))
               ->add('windowComposition',ChoiceType::class, array(
                 'label' => 'Composición de las ventanas',
+                'placeholder'  => true,
                 'choices' => array(
                   'de hierro o chapa vidrio simple'  => 'de hierro o chapa vidrio simple',
                   'de madera vidrio simple'  => 'de madera vidrio simple',
@@ -102,7 +121,9 @@ class RoomType extends AbstractType
                   'de aluminio c/ vidrio doble'  => 'de aluminio c/ vidrio doble',
                   'de PVC con vidrio simple'  => 'de PVC con vidrio simple',
                   'de PVC con vidrio doble'  => 'de PVC con vidrio doble',
-                  )
+                  ),
+                  'attr' => array(
+                    'class'  => 'select2')
               ))
               ->add('glazedSurface',null, array(
                 'label' => 'Superficie Total Vidriada',
