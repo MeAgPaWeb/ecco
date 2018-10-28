@@ -9,7 +9,9 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Room controller.
@@ -32,9 +34,33 @@ class RoomController extends Controller
 
         return $this->render('room/index.html.twig', array(
             'rooms' => $rooms,
+            'library' => $library
         ));
     }
-
+    /**
+     * get  all library entities.
+     *
+     * @Route("/api/list", name="api_library_list")
+     * @Method("GET")
+     */
+    public function apiListAction(Request $request)
+    {
+        if ($request->request->get('library')) {
+          $em = $this->getDoctrine()->getManager();
+          $library = $em->getRepository('AppBundle:Library')->findOneById($request->request->get('library'));
+          $rooms = $em->getRepository('AppBundle:Room')->findByLibrary($library);
+          $data=array();
+          foreach ($rooms as $room) {
+            $data[$room->getId()] = $room->getName();
+          }
+          $response = new Response();
+          $response->setContent(json_encode($data));
+          $response->headers->set('Content-Type', 'application/json');
+        }else {
+          $response = false;
+        }
+        return $response;
+    }
     /**
      * Creates a new room entity.
      *
@@ -145,7 +171,12 @@ class RoomController extends Controller
         ;
     }
 
-
+    /**
+     * Displays a form to edit an existing room entity.
+     *
+     * @Route("/{id}/load", name="room_load")
+     * @Method({"GET", "POST"})
+     */
     public function loadDataAction(Request $request, Room $room){
       $file = $request->files->get('upload');
       $name = $file->getFilename();

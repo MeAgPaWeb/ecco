@@ -5,7 +5,9 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Library;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Library controller.
@@ -31,6 +33,21 @@ class LibraryController extends Controller
         ));
     }
 
+    /**
+     * get  all library entities.
+     *
+     * @Route("/api/list", name="api_library_list")
+     * @Method("GET")
+     */
+    public function apiListAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $libraries = $em->getRepository('AppBundle:Library')->findAll();
+        $response = new Response();
+        $response->setContent(json_encode($libraries));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+    }
     /**
      * Creates a new library entity.
      *

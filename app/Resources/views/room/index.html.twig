@@ -21,14 +21,14 @@
 
 {% set new =
     {
-        "route": "room_new",
+        "route": path("room_new", {'library': library.id}),
         "title": "Nueva Sala"
     }
 %}
 
 {% block thead %}
 <tr>
-    <th>Ancho</th>
+    <th>Nombre</th>
     <th>Alto</th>
     <th>Largo</th>
     <th>Sup. Vidriada</th>
@@ -37,7 +37,7 @@
 {% endblock %}
 {% block tfoot %}
 <tr>
-    <th>Ancho</th>
+    <th>Nombre</th>
     <th>Alto</th>
     <th>Largo</th>
     <th>Sup. Vidriada</th>
@@ -47,12 +47,12 @@
 {% block tbody %}
   {% for room in rooms %}
       <tr>
-          <td>{{ room.width }}</td>
+          <td>{{ room.name }}</td>
           <td>{{ room.high }}</td>
           <td>{{ room.length }}</td>
           <td>{{ room.glazedSurface }}</td>
           <td class="table-operations">
-            <!-- <a href="{{ path('room_show', { 'id': room.id }) }}" title="Ver detalle"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a>&nbsp;&nbsp; -->
+            <a href="{{ path('room_load', { 'id': room.id }) }}" title="Cargar Datos"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a>
             <a href="{{ path('room_edit', { 'id': room.id }) }}" title="Editar"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
           </td>
       </tr>

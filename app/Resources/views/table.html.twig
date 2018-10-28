@@ -29,6 +29,13 @@
                     <div class="dataTables_wrapper form-inline dt-bootstrap">
                         <table id="table" class="table {% block classTable %} dataTable {% endblock %} table-bordered table-hover">
                             <thead>
+                              {% if no_new_button is defined %}
+                                  {% block new_block %}{% endblock %}
+                              {% else %}
+                                  <div class="box-body ">
+                                      <a class="btn btn-success btn-flat" href="{{ new.route }}"><span class="glyphicon glyphicon-plus"></span> {{ new.title }}</a>
+                                  </div>
+                              {% endif %}
                                 {% block thead %}{% endblock %}
                             </thead>
                             <tbody>

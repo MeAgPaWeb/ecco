@@ -33,7 +33,7 @@
         <th>Longitud</th>
         <th>Años</th>
         <th>Autor</th>
-        <th></th>
+        <th>agregar sala</th>
     </tr>
 {% endblock %}
 {% block tfoot %}
@@ -54,7 +54,7 @@
           <td>{{ library.longitude }}</td>
           <td>{{ library.age }}</td>
           <td class="table-operations">
-              <a href="{{ path('library_show', { 'id': library.id }) }}" title="Ver detalle"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a>&nbsp;&nbsp;
+              <a href="{{ path('room_new', { 'library': library.id }) }}" title="Agregar Sala"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a>&nbsp;&nbsp;
               <a href="{{ path('library_edit', { 'id': library.id }) }}" title="Editar"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
           </td>
       </tr>
