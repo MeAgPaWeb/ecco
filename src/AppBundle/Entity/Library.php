@@ -93,6 +93,7 @@ class Library
         $this->rooms = new ArrayCollection();
         $this->followers = new ArrayCollection();
         $this->enabled=true;
+        $this->position=true;
     }
 
     /**

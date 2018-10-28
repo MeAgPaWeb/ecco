@@ -62,6 +62,7 @@ class LibraryController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $library->setOwner($this->getUser());
             $em->persist($library);
             $em->flush();
 

@@ -5,7 +5,7 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class LibraryType extends AbstractType
 {
@@ -28,6 +28,14 @@ class LibraryType extends AbstractType
                   'label' => 'Año de Edificación',
                   'attr' => array(
                     'placeholder'  => 'yyyy')
+                ))
+                ->add('position',HiddenType::class,array())
+                ->add('colour',null,array(
+                  'label' => 'Color de Identificación',
+                  'attr' => array(
+                    'placeholder'  => '#00000',
+                    'value'  => '#22c0dd',
+                    'class' => 'my-colorpicker1 colorpicker-element')
                 ));
     }/**
      * {@inheritdoc}

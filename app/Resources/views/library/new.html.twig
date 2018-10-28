@@ -29,6 +29,7 @@
               map.setCenter(results[0].geometry.location);
               map.setZoom(16);
               console.log('lat:'+results[0].geometry.location.lat()+' | lng:'+results[0].geometry.location.lng());
+              $('#appbundle_library_position').val(results[0].geometry.location);
               var marker = new google.maps.Marker({
                 map: map,
                 position: results[0].geometry.location
@@ -100,6 +101,13 @@
                 {{ form_widget(form.age) }}
                 <div class="help-block with-errors">
                     {{ form_errors(form.age) }}
+                </div>
+              </div>
+              <div class="form-group has-feedback{% if form.colour.vars.errors | length %} has-error{% endif %}">
+                {{ form_label(form.colour) }}
+                {{ form_widget(form.colour) }}
+                <div class="help-block with-errors">
+                    {{ form_errors(form.colour) }}
                 </div>
               </div>
             </div>
