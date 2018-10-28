@@ -34,14 +34,14 @@ class Library
     /**
      * @var string
      * @Assert\NotBlank()
-     * @ORM\Column(name="name", type="string")
+     * @ORM\Column(name="name", type="string", unique=true, nullable=false)
      */
     private $name;
 
     /**
      * @var int
      * @Assert\NotBlank()
-     * @ORM\Column(name="age", type="integer")
+     * @ORM\Column(name="age", type="integer", nullable=false)
      * @Assert\Length(
      *      max = 4,
      *      min = 4,
@@ -57,7 +57,7 @@ class Library
     /**
      * @var bool
      *
-     * @ORM\Column(name="enabled", type="boolean")
+     * @ORM\Column(name="enabled", type="boolean", nullable=false)
      */
     private $enabled;
 

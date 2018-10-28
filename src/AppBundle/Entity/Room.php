@@ -26,35 +26,35 @@ class Room
     /**
      * @var string|null
      * @Assert\NotBlank()
-     * @ORM\Column(name="b_use", type="string", nullable=true)
+     * @ORM\Column(name="b_use", type="string", nullable=false)
      */
     private $use;
     
     /**
      * @var string|null
      *
-     * @ORM\Column(name="b_backing", type="string", nullable=true)
+     * @ORM\Column(name="b_backing", type="string", nullable=false)
      */
     private $backing;
     
     /**
      * @var string|null
      *
-     * @ORM\Column(name="b_transparency", type="string", nullable=true)
+     * @ORM\Column(name="b_transparency", type="string", nullable=false)
      */
     private $transparency;
     
     /**
      * @var string|null
      *
-     * @ORM\Column(name="b_thermal_transmittance", type="string", nullable=true)
+     * @ORM\Column(name="b_thermal_transmittance", type="string", nullable=false)
      */
     private $thermalTransmittance;
     
     /**
      * @var string|null
      *
-     * @ORM\Column(name="b_dough", type="string", nullable=true)
+     * @ORM\Column(name="b_dough", type="string", nullable=false)
      */
     private $dough;
 
@@ -62,70 +62,70 @@ class Room
     /**
      * @var integer|null
      * @Assert\NotBlank()
-     * @ORM\Column(name="b_exposed_faces", type="integer", nullable=true)
+     * @ORM\Column(name="b_exposed_faces", type="integer", nullable=false)
      */
     private $exposedFaces;
 
     /**
      * @var string|null
      * @Assert\NotBlank()
-     * @ORM\Column(name="b_conditioning", type="string", nullable=true)
+     * @ORM\Column(name="b_conditioning", type="string", nullable=false)
      */
     private $conditioning;
 
     /**
      * @var float|null
      * @Assert\NotBlank()
-     * @ORM\Column(name="b_width", type="float", nullable=true)
+     * @ORM\Column(name="b_width", type="float", nullable=false)
      */
     private $width;
 
     /**
      * @var float|null
      * @Assert\NotBlank()
-     * @ORM\Column(name="b_high", type="float", nullable=true)
+     * @ORM\Column(name="b_high", type="float", nullable=false)
      */
     private $high;
 
     /**
      * @var float|null
      * @Assert\NotBlank()
-     * @ORM\Column(name="b_length", type="float", nullable=true)
+     * @ORM\Column(name="b_length", type="float", nullable=false)
      */
     private $length;
 
     /**
      * @var string|null
      * @Assert\NotBlank()
-     * @ORM\Column(name="b_roof_composition", type="string", nullable=true)
+     * @ORM\Column(name="b_roof_composition", type="string", nullable=false)
      */
     private $roofComposition;
 
     /**
      * @var string|null
      * @Assert\NotBlank()
-     * @ORM\Column(name="b_floor_composition", type="string", nullable=true)
+     * @ORM\Column(name="b_floor_composition", type="string", nullable=false)
      */
     private $floorComposition;
 
     /**
      * @var string|null
      * @Assert\NotBlank()
-     * @ORM\Column(name="b_wall_composition", type="string", nullable=true)
+     * @ORM\Column(name="b_wall_composition", type="string", nullable=false)
      */
     private $wallComposition;
 
     /**
      * @var string|null
      * @Assert\NotBlank()
-     * @ORM\Column(name="b_window_composition", type="string", nullable=true)
+     * @ORM\Column(name="b_window_composition", type="string", nullable=false)
      */
     private $windowComposition;
 
     /**
      * @var float|null
      * @Assert\NotBlank()
-     * @ORM\Column(name="b_glazed_surface", type="float", nullable=true)
+     * @ORM\Column(name="b_glazed_surface", type="float", nullable=false)
      */
     private $glazedSurface;
 
@@ -140,7 +140,7 @@ class Room
     /**
      * @var string|null
      * @Assert\NotBlank()
-     * @ORM\Column(name="b_name", type="string", nullable=true)
+     * @ORM\Column(name="b_name", type="string", nullable=false, unique=true)
      */
     private $name;
 
@@ -152,7 +152,7 @@ class Room
     /**
      * @var bool
      *
-     * @ORM\Column(name="b_enabled", type="boolean")
+     * @ORM\Column(name="b_enabled", type="boolean", nullable=false)
      */
     private $enabled;
     
