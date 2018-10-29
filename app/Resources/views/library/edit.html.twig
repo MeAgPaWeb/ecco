@@ -11,10 +11,11 @@
     {{ parent() }}
     <script type="text/javascript">
     function initMap() {
+    var position = $.parseJSON($('#appbundle_library_position').val());
     var map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 3,
+      zoom: 16,
       mapTypeControl: false,
-      center: {lat: -34.896375, lng: -57.941920900000014}
+      center: {lat: position["lat"], lng: position["lng"]}
     });
     var geocoder = new google.maps.Geocoder();
 
@@ -22,14 +23,13 @@
       geocodeAddress(geocoder, map);
     });
     $('#appbundle_library_address').change(function(){
-      console.log('entrooo');
       var address = $(this).val();
       geocoder.geocode({'address': address}, function(results, status) {
         if (status === 'OK') {
           map.setCenter(results[0].geometry.location);
           map.setZoom(16);
           console.log('lat:'+results[0].geometry.location.lat()+' | lng:'+results[0].geometry.location.lng());
-          $('#appbundle_library_position').val(results[0].geometry.location);
+          $('#appbundle_library_position').val('{"lat": '+results[0].geometry.location.lat()+', "lng": '+results[0].geometry.location.lng()+'}');
           var marker = new google.maps.Marker({
             map: map,
             position: results[0].geometry.location

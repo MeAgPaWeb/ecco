@@ -29,7 +29,7 @@
               map.setCenter(results[0].geometry.location);
               map.setZoom(16);
               console.log('lat:'+results[0].geometry.location.lat()+' | lng:'+results[0].geometry.location.lng());
-              $('#appbundle_library_position').val(results[0].geometry.location);
+              $('#appbundle_library_position').val('{"lat": '+results[0].geometry.location.lat()+', "lng": '+results[0].geometry.location.lng()+'}');
               var marker = new google.maps.Marker({
                 map: map,
                 position: results[0].geometry.location
