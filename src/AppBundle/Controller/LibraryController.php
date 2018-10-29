@@ -83,11 +83,9 @@ class LibraryController extends Controller
      */
     public function showAction(Library $library)
     {
-        $deleteForm = $this->createDeleteForm($library);
 
         return $this->render('library/show.html.twig', array(
             'library' => $library,
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -119,36 +117,16 @@ class LibraryController extends Controller
     /**
      * Deletes a library entity.
      *
-     * @Route("/{id}", name="library_delete")
-     * @Method("DELETE")
+     * @Route("/{id}/delete", name="library_delete")
+     * @Method("GET")
      */
-    public function deleteAction(Request $request, Library $library)
+    public function deleteAction(Library $library)
     {
-        $form = $this->createDeleteForm($library);
-        $form->handleRequest($request);
+        $em = $this->getDoctrine()->getManager();
+        $library->setEnabled(false);
+        $em->persist($library);
+        $em->flush();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($library);
-            $em->flush();
-        }
-
-        return $this->redirectToRoute('library_index');
-    }
-
-    /**
-     * Creates a form to delete a library entity.
-     *
-     * @param Library $library The library entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(Library $library)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('library_delete', array('id' => $library->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
+        return $this->redirectToRoute('homepage');
     }
 }

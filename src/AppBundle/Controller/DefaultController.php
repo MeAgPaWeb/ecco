@@ -15,7 +15,7 @@ class DefaultController extends Controller
     {
       $em = $this->getDoctrine()->getManager();
 
-      $libraries = $em->getRepository('AppBundle:Library')->findByOwner($this->getUser());
+      $libraries = $em->getRepository('AppBundle:Library')->findBy(array('owner' => $this->getUser(), 'enabled' => true));
 
       return $this->render('default/index.html.twig', array(
           'libraries' => $libraries,
