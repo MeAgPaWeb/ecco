@@ -34,8 +34,8 @@ class LibraryType extends AbstractType
                   'label' => 'Color de Identificación',
                   'attr' => array(
                     'placeholder'  => '#00000',
-                    'value'  => '#22c0dd',
-                    'class' => 'my-colorpicker1 colorpicker-element')
+                    'empty_data'  => '#22c0dd',
+                    'class' => 'form-control my-colorpicker1 colorpicker-element')
                 ));
     }/**
      * {@inheritdoc}

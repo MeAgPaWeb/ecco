@@ -97,7 +97,7 @@ class LibraryController extends Controller
      */
     public function editAction(Request $request, Library $library)
     {
-        $deleteForm = $this->createDeleteForm($library);
+        //$deleteForm = $this->createDeleteForm($library);
         $editForm = $this->createForm('AppBundle\Form\LibraryType', $library);
         $editForm->handleRequest($request);
 
@@ -110,7 +110,7 @@ class LibraryController extends Controller
         return $this->render('library/edit.html.twig', array(
             'library' => $library,
             'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            //'delete_form' => $deleteForm->createView(),
         ));
     }
 
