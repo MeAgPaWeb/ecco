@@ -4,17 +4,12 @@
 
 {% set page =
     {
-        "title": "Recuperar contraseña",
+        "title": "Confirmacion de Email",
         "preclass": "login"
     }
 %}
 
 {% block content %}
-
-    <div class="row">
-        <div class="col-xs-8"></div>
-        <div class="col-xs-4">
-            <a class="btn btn-primary btn-block btn-flat" href="{{ path('fos_user_security_login') }}">Ingresar</a>
-        </div>
-    </div>
+  <p>revise su casilla de email para confirmar y terminar el alta de usuario</p>
+  <a class="btn btn-primary btn-block btn-flat" href="{{ path('fos_user_security_login') }}">Ingresar</a>
 {% endblock %}

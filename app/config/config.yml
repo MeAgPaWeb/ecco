@@ -90,6 +90,7 @@ fos_user:
     registration:
       confirmation:
         enabled: true
+        template:  'user/check_email.html.twig'
       form:
         type: AppBundle\Form\RegistrationType
 
