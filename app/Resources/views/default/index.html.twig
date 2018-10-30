@@ -111,7 +111,7 @@
             <a class="btn btn-app" href="{{ path('room_index', { 'library': library.id }) }}">
               <i class="fa fa-list"></i> Salas
             </a>
-            <a class="btn btn-app">
+            <a class="btn btn-app" data-toggle="modal" data-target="#modal-default{{library.id}}">
               <span class="badge bg-green">1</span>
               <i class="fa fa-users"></i> Seguidores
             </a>
@@ -120,10 +120,10 @@
             </a>
         </div>
       </div>
-      <!-- /.widget-user -->
+      <!-- /.Modal Eliminar -->
       <div class="modal modal-danger fade" id="modal-danger{{library.id}}">
-         <div class="modal-dialog">
-           <div class="modal-content">
+        <div class="modal-dialog">
+          <div class="modal-content">
              <div class="modal-header">
                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                  <span aria-hidden="true">&times;</span></button>
@@ -136,11 +136,31 @@
                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cerrar</button>
                <a class="btn btn-outline" href="{{ path('library_delete', { 'id': library.id }) }}">Eliminar</a>
              </div>
-           </div>
-           <!-- /.modal-content -->
-         </div>
-         <!-- /.modal-dialog -->
-       </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.Fin Modal eliminar -->
+      
+      <!-- /.Modal seguidores -->
+      <div class="modal fade" id="modal-default{{library.id}}">
+        <div class="modal-dialog">
+          <div class="modal-content">
+             <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                 <span aria-hidden="true">&times;</span></button>
+               <h4 class="modal-title">Encabezado</h4>
+             </div>
+             <div class="modal-body">
+               <p>Contenido</p>
+             </div>
+             <div class="modal-footer">
+               <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cerrar</button>
+               <a class="btn btn-outline" href="#">Eliminar</a>
+             </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.Fin Modal seguidores --> 
     </div>
   {% endfor %}
     <!-- /.col -->
