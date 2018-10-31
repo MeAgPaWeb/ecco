@@ -62,12 +62,6 @@ class Library
     private $enabled;
 
     /**
-     * Many Libraries have Many followers.
-     * @ORM\ManyToMany(targetEntity="User", mappedBy="following")
-     */
-    private $followers;
-
-    /**
      * @var \AppBundle\Entity\User
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
@@ -87,6 +81,12 @@ class Library
      * @ORM\Column(name="position", type="string")
      */
     private $position;
+
+    /**
+     * One Library has Many Follow-up Solicitations.
+     * @ORM\OneToMany(targetEntity="Solicitation", mappedBy="library")
+     */
+    private $followers;
 
     public function __construct()
     {
@@ -244,42 +244,6 @@ class Library
     }
 
     /**
-     * Add follower.
-     *
-     * @param \AppBundle\Entity\User $follower
-     *
-     * @return Library
-     */
-    public function addFollower(\AppBundle\Entity\User $follower)
-    {
-        $this->followers[] = $follower;
-
-        return $this;
-    }
-
-    /**
-     * Remove follower.
-     *
-     * @param \AppBundle\Entity\User $follower
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removeFollower(\AppBundle\Entity\User $follower)
-    {
-        return $this->followers->removeElement($follower);
-    }
-
-    /**
-     * Get followers.
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getFollowers()
-    {
-        return $this->followers;
-    }
-
-    /**
      * Set owner.
      *
      * @param \AppBundle\Entity\User|null $owner
@@ -349,5 +313,41 @@ class Library
     public function getPosition()
     {
         return $this->position;
+    }
+
+    /**
+     * Add follower.
+     *
+     * @param \AppBundle\Entity\Solicitation $follower
+     *
+     * @return Library
+     */
+    public function addFollower(\AppBundle\Entity\Solicitation $follower)
+    {
+        $this->followers[] = $follower;
+
+        return $this;
+    }
+
+    /**
+     * Remove follower.
+     *
+     * @param \AppBundle\Entity\Solicitation $follower
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeFollower(\AppBundle\Entity\Solicitation $follower)
+    {
+        return $this->followers->removeElement($follower);
+    }
+
+    /**
+     * Get followers.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFollowers()
+    {
+        return $this->followers;
     }
 }

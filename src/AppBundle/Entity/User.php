@@ -62,17 +62,17 @@ class User extends BaseUser
      * @ORM\Column(type="string", nullable=true)
      */
     protected $gender;
+    
     /**
-     * Many Users have Many libraries following.
-     * @ORM\ManyToMany(targetEntity="Library", inversedBy="followers")
-     * @ORM\JoinTable(name="followers_following")
+     * One User has Many Follow-up Solicitations.
+     * @ORM\OneToMany(targetEntity="Solicitation", mappedBy="user")
      */
-    protected $following;
+    private $followings;
 
     public function __construct($configurations = null){
         parent::__construct();
         $this->registeredAt = time();
-        $this->following = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->followings = new \Doctrine\Common\Collections\ArrayCollection();
         //$this->comments = new \Doctrine\Common\Collections\ArrayCollection();
         //$this->editions = new \Doctrine\Common\Collections\ArrayCollection();
     }
@@ -193,17 +193,16 @@ class User extends BaseUser
         return $this;
     }
 
-
     /**
      * Add following.
      *
-     * @param \AppBundle\Entity\Library $following
+     * @param \AppBundle\Entity\Solicitation $following
      *
      * @return User
      */
-    public function addFollowing(\AppBundle\Entity\Library $following)
+    public function addFollowing(\AppBundle\Entity\Solicitation $following)
     {
-        $this->following[] = $following;
+        $this->followings[] = $following;
 
         return $this;
     }
@@ -211,22 +210,22 @@ class User extends BaseUser
     /**
      * Remove following.
      *
-     * @param \AppBundle\Entity\Library $following
+     * @param \AppBundle\Entity\Solicitation $following
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeFollowing(\AppBundle\Entity\Library $following)
+    public function removeFollowing(\AppBundle\Entity\Solicitation $following)
     {
-        return $this->following->removeElement($following);
+        return $this->followings->removeElement($following);
     }
 
     /**
-     * Get following.
+     * Get followings.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getFollowing()
+    public function getFollowings()
     {
-        return $this->following;
+        return $this->followings;
     }
 }
