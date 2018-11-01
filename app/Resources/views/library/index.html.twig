@@ -88,6 +88,7 @@
 %}
 
 {% block content %}
+    <a class="btn btn-primary btn-flat" href="{{path('homepage')}}"><span class="glyphicon glyphicon-menu-left"></span>Volver</a>
     <div class="row">
         <div class="col-xs-6">
             <div class="box box-primary">
@@ -106,7 +107,7 @@
                               <tr>
                                   <th>#</th>
                                   <th>Nombre</th>
-                                  <th>Año</th>
+                                  <th>Direccion</th>
                                   <th>Acciones</th>
                               </tr>
                             </thead>
@@ -115,7 +116,7 @@
                                   <tr>
                                       <td><a href="{{ path('library_show', { 'id': library.id }) }}">{{ library.id }}</a></td>
                                       <td>{{ library.name }}</td>
-                                      <td>{{ library.age }}</td>
+                                      <td>{{ library.address }}</td>
                                       <td class="table-operations">
                                           <a href="{{ path('room_new', { 'library': library.id }) }}" title="Agregar Sala"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a>&nbsp;&nbsp;
                                           <a href="{{ path('library_edit', { 'id': library.id }) }}" title="Editar"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
@@ -127,7 +128,7 @@
                               <tr>
                                   <th>#</th>
                                   <th>Nombre</th>
-                                  <th>Año</th>
+                                  <th>Direccion</th>
                                   <th>Acciones</th>
                               </tr>
                             </tfoot>

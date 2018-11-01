@@ -34,6 +34,24 @@ class LibraryController extends Controller
     }
 
     /**
+     * Lists all library entities.
+     *
+     * @Route("/{id}/log", name="library_log")
+     * @Method("GET")
+     */
+    public function statisticAction(Library $library)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $libraries = $em->getRepository('AppBundle:Library')->findAll();
+
+        return $this->render('library/statistics.html.twig', array(
+            'libraries' => $libraries,
+            'library' => $library
+        ));
+    }
+
+    /**
      * get  all library entities.
      *
      * @Route("/api/list", name="api_library_list")
