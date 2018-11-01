@@ -33,28 +33,28 @@ class Room
     /**
      * @var string|"0"
      *
-     * @ORM\Column(name="backing", type="string", nullable=true)
+     * @ORM\Column(name="backing", type="float", nullable=true)
      */
     private $backing;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="b_transparency", type="string", nullable=false)
+     * @ORM\Column(name="b_transparency", type="float", nullable=true)
      */
     private $transparency;
 
     /**
      * @var string|"0"
      *
-     * @ORM\Column(name="b_thermal_transmittance", type="string", nullable=false)
+     * @ORM\Column(name="b_thermal_transmittance", type="float", nullable=true)
      */
     private $thermalTransmittance;
 
     /**
      * @var string|"0"
      *
-     * @ORM\Column(name="b_dough", type="string", nullable=false)
+     * @ORM\Column(name="b_dough", type="float", nullable=false)
      */
     private $dough;
 
@@ -159,6 +159,10 @@ class Room
     public function __construct()
     {
         $this->dataLoggers = new \Doctrine\Common\Collections\ArrayCollection();
+		$this->backing = 0.0;
+		$this->transparency = 0.0;
+		$this->thermalTransmittance = 0.0;
+		$this->dough = 0.0;
         $this->enabled=true;
     }
 

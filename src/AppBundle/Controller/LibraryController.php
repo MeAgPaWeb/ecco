@@ -146,7 +146,6 @@ class LibraryController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $library->setEnabled(false);
-        $library->removeFollower($this->getUser());
         $em->persist($library);
         $em->flush();
 
