@@ -29,30 +29,30 @@ class Room
      * @ORM\Column(name="b_use", type="string", nullable=false)
      */
     private $use;
-    
+
     /**
-     * @var string|null
+     * @var string|"0"
      *
-     * @ORM\Column(name="b_backing", type="string", nullable=false)
+     * @ORM\Column(name="backing", type="string", nullable=true)
      */
     private $backing;
-    
+
     /**
      * @var string|null
      *
      * @ORM\Column(name="b_transparency", type="string", nullable=false)
      */
     private $transparency;
-    
+
     /**
-     * @var string|null
+     * @var string|"0"
      *
      * @ORM\Column(name="b_thermal_transmittance", type="string", nullable=false)
      */
     private $thermalTransmittance;
-    
+
     /**
-     * @var string|null
+     * @var string|"0"
      *
      * @ORM\Column(name="b_dough", type="string", nullable=false)
      */
@@ -134,9 +134,9 @@ class Room
      * @ORM\ManyToOne(targetEntity="Library", inversedBy="rooms")
      * @ORM\JoinColumn(name="b_library_id", referencedColumnName="id")
      */
-    private $library;  
-    
-    
+    private $library;
+
+
     /**
      * @var string|null
      * @Assert\NotBlank()
@@ -148,20 +148,20 @@ class Room
      * @ORM\OneToMany(targetEntity="DataLogger", mappedBy="room")
      */
     private $dataLoggers;
-    
+
     /**
      * @var bool
      *
      * @ORM\Column(name="b_enabled", type="boolean", nullable=false)
      */
     private $enabled;
-    
+
     public function __construct()
     {
         $this->dataLoggers = new \Doctrine\Common\Collections\ArrayCollection();
         $this->enabled=true;
     }
-    
+
     public function __toString()
     {
       return $this->name;
@@ -551,11 +551,11 @@ class Room
     /**
      * Set backing.
      *
-     * @param string|null $backing
+     * @param string|"0" $backing
      *
      * @return Room
      */
-    public function setBacking($backing = null)
+    public function setBacking($backing = "0")
     {
         $this->backing = $backing;
 
@@ -565,7 +565,7 @@ class Room
     /**
      * Get backing.
      *
-     * @return string|null
+     * @return string|"0"
      */
     public function getBacking()
     {
@@ -579,7 +579,7 @@ class Room
      *
      * @return Room
      */
-    public function setTransparency($transparency = null)
+    public function setTransparency($transparency = "0")
     {
         $this->transparency = $transparency;
 
@@ -589,7 +589,7 @@ class Room
     /**
      * Get transparency.
      *
-     * @return string|null
+     * @return string|"0"
      */
     public function getTransparency()
     {
@@ -599,11 +599,11 @@ class Room
     /**
      * Set thermalTransmittance.
      *
-     * @param string|null $thermalTransmittance
+     * @param string|"0" $thermalTransmittance
      *
      * @return Room
      */
-    public function setThermalTransmittance($thermalTransmittance = null)
+    public function setThermalTransmittance($thermalTransmittance = "0")
     {
         $this->thermalTransmittance = $thermalTransmittance;
 
@@ -613,7 +613,7 @@ class Room
     /**
      * Get thermalTransmittance.
      *
-     * @return string|null
+     * @return string|"0"
      */
     public function getThermalTransmittance()
     {

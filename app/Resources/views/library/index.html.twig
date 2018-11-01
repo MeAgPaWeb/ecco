@@ -6,7 +6,68 @@
         "subtitle": "Listado",
     }
 %}
+{% block javascript %}
+    {{ parent() }}
 
+    <script type="text/javascript">
+      function initMap() {
+        // var position = $.parseJSON($('#appbundle_library_position').val());
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 13,
+          mapTypeControl: false,
+        });
+        //
+        // var marker = new google.maps.Marker({
+        //   map: map,
+        //   position: position
+        // });
+        var locations = [];
+          {% for library in libraries %}
+            var position = '{{library.position|raw}}';
+            console.log(position);
+            locations.push(['{{library.name}}', JSON.parse(position), {{library.id}}]);
+          {% endfor %}
+        var bounds = new google.maps.LatLngBounds();
+        var infowindow = new google.maps.InfoWindow();
+
+        for (i = 0; i < locations.length; i++) {
+          var marker = new google.maps.Marker({
+            position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+            map: map
+          });
+
+          //extend the bounds to include each marker's position
+          bounds.extend(marker.position);
+
+          google.maps.event.addListener(marker, 'click', (function(marker, i) {
+            return function() {
+              infowindow.setContent(locations[i][0]);
+              infowindow.open(map, marker);
+            }
+          })(marker, i));
+        }
+
+        //now fit the map to the newly inclusive bounds
+        map.fitBounds(bounds);
+
+        //(optional) restore the zoom level after the map is done scaling
+        var listener = google.maps.event.addListener(map, "idle", function () {
+            map.setZoom(3);
+            google.maps.event.removeListener(listener);
+        });
+      }
+
+      $(document).ready(function(){
+        $('#table').DataTable( {
+            ordering: true
+        } );
+      });
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAGQU_QnF4HiBg14sk8sD2pOF17WyhkwPo&callback=initMap">
+    </script>
+
+{% endblock javascript %}
 {% block breadcrumb %}
     <li><a href="{{ path('library_index') }}"><i class="fa fa-dashboard"></i> Bibliotecas</a></li>
     <li class="active">Listado</li>
@@ -26,32 +87,79 @@
     }
 %}
 
+{% block content %}
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="box box-primary">
+                <div class="box-body">
+                  <div id="map" style="width: 100%; min-height: 500px"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="box box-primary">
+                <div class="box-body">
+                    <h4>Bibliotecas</h4>
+                    <div class="dataTables_wrapper form-inline dt-bootstrap">
+                        <table id="table" class="table {% block classTable %} dataTable {% endblock %} table-bordered table-hover">
+                            <thead>
+                              <tr>
+                                  <th>#</th>
+                                  <th>Nombre</th>
+                                  <th>Año</th>
+                                  <th>Acciones</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {% for library in libraries %}
+                                  <tr>
+                                      <td><a href="{{ path('library_show', { 'id': library.id }) }}">{{ library.id }}</a></td>
+                                      <td>{{ library.name }}</td>
+                                      <td>{{ library.age }}</td>
+                                      <td class="table-operations">
+                                          <a href="{{ path('room_new', { 'library': library.id }) }}" title="Agregar Sala"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a>&nbsp;&nbsp;
+                                          <a href="{{ path('library_edit', { 'id': library.id }) }}" title="Editar"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                                      </td>
+                                  </tr>
+                              {% endfor %}
+                            </tbody>
+                            <tfoot>
+                              <tr>
+                                  <th>#</th>
+                                  <th>Nombre</th>
+                                  <th>Año</th>
+                                  <th>Acciones</th>
+                              </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{#
 {% block thead %}
     <tr>
         <th>#</th>
-        <th>Latitud</th>
-        <th>Longitud</th>
-        <th>Años</th>
-        <th>Autor</th>
-        <th>agregar sala</th>
+        <th>Nombre</th>
+        <th>Año</th>
+        <th>Acciones</th>
     </tr>
 {% endblock %}
 {% block tfoot %}
   <tr>
       <th>#</th>
-      <th>Latitud</th>
-      <th>Longitud</th>
-      <th>Años</th>
-      <th>Autor</th>
-      <th></th>
+      <th>Nombre</th>
+      <th>Año</th>
+      <th>Acciones</th>
   </tr>
 {% endblock %}
 {% block tbody %}
   {% for library in libraries %}
       <tr>
           <td><a href="{{ path('library_show', { 'id': library.id }) }}">{{ library.id }}</a></td>
-          <td>{{ library.latitude }}</td>
-          <td>{{ library.longitude }}</td>
+          <td>{{ library.name }}</td>
           <td>{{ library.age }}</td>
           <td class="table-operations">
               <a href="{{ path('room_new', { 'library': library.id }) }}" title="Agregar Sala"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a>&nbsp;&nbsp;
@@ -60,3 +168,4 @@
       </tr>
   {% endfor %}
 {% endblock %}
+#}
