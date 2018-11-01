@@ -148,10 +148,42 @@
              <div class="modal-header">
                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                  <span aria-hidden="true">&times;</span></button>
-               <h4 class="modal-title">Encabezado</h4>
+               <h4 class="modal-title">Ver seguidores</h4>
              </div>
-             <div class="modal-body">
-               <p>Contenido</p>
+             <div class="modal-body table-responsive no-padding">
+              <table class="table table-hover">
+                <tbody><tr>
+                  <th>Usuario</th>
+                  <th>Estado</th>
+                  <th>Acción</th>
+                </tr>
+                {% for follower in library.followers %}
+                <tr>
+                  {% if follower.state != 'canceled' %}
+                    <td>{{follower.user}}</td>
+                    <td>
+                      <span class="label {% if follower.state == 'pending' %}
+                                            label-warning
+                                         {% else %}
+                                            label-success
+                                         {% endif %}
+                                         ">{{follower.state}}
+                      </span>
+                    </td>
+                    <td>
+                      {% if follower.state == 'pending' %}
+                        <a href="#">
+                          <span class="glyphicon glyphicon-ok text-success" aria-hidden="true">Aceptar</span>
+                        </a>
+                      {% endif %}
+                      <a href="#">
+                        <span class="glyphicon glyphicon-remove text-danger" aria-hidden="true">Rechazar</span>
+                      </a>
+                    </td>
+                  {% endif %}
+                </tr>
+                {% endfor %}
+              </tbody></table>
              </div>
              <div class="modal-footer">
                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cerrar</button>
