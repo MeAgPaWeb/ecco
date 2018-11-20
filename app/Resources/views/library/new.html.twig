@@ -6,6 +6,21 @@
         "subtitle": "Crear",
     }
 %}
+{% if stylesheets is not defined %}
+    {% set stylesheets = [] %}
+{% endif %}
+
+{% if javascripts is not defined %}
+    {% set javascripts = [] %}
+{% endif %}
+
+{% set stylesheets = [
+                        'lib/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css',
+                     ] | merge(stylesheets) %}
+
+{% set javascripts = [
+                        'lib/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js'
+                     ] | merge(javascripts) %}
 
 {% block javascript %}
     {{ parent() }}
@@ -22,7 +37,6 @@
           geocodeAddress(geocoder, map);
         });
         $('#appbundle_library_address').change(function(){
-          console.log('entrooo');
           var address = $(this).val();
           geocoder.geocode({'address': address}, function(results, status) {
             if (status === 'OK') {
@@ -39,6 +53,7 @@
             }
           });
         });
+        $('.my-colorpicker1').colorpicker();
       }
 
 
@@ -48,7 +63,7 @@
     </script>
     <script type="text/javascript">
       $(function(){
-         $('#datemask').inputmask("9999", {
+         $('#appbundle_library_age').inputmask("9999", {
             postValidation: function (buffer, opts) {
                 return parseInt(buffer.join('')) <= (new Date()).getFullYear();
             }

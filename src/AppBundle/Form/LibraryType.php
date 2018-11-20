@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class LibraryType extends AbstractType
 {
@@ -24,7 +25,7 @@ class LibraryType extends AbstractType
                   'attr' => array(
                     'placeholder'  => 'Calle, Número, Ciudad, Provincia, País')
                 ))
-                ->add('age',null,array(
+                ->add('age',TextType::class,array(
                   'label' => 'Año de Edificación',
                   'attr' => array(
                     'placeholder'  => 'yyyy')
