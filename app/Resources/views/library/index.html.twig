@@ -24,7 +24,6 @@
         var locations = [];
           {% for library in libraries %}
             var position = '{{library.position|raw}}';
-            console.log(position);
             locations.push(['{{library.name}}', JSON.parse(position), {{library.id}}]);
           {% endfor %}
         var bounds = new google.maps.LatLngBounds();
@@ -54,6 +53,11 @@
         var listener = google.maps.event.addListener(map, "idle", function () {
             map.setZoom(3);
             google.maps.event.removeListener(listener);
+        });
+
+        $('.library-item').click(function(){
+          map.setCenter(JSON.parse($(this).attr('id-position')));
+          map.setZoom(17);
         });
       }
 
@@ -105,7 +109,6 @@
                         <table id="table" class="table {% block classTable %} dataTable {% endblock %} table-bordered table-hover">
                             <thead>
                               <tr>
-                                  <th>#</th>
                                   <th>Nombre</th>
                                   <th>Direccion</th>
                                   <th>Acciones</th>
@@ -114,19 +117,16 @@
                             <tbody>
                               {% for library in libraries %}
                                   <tr>
-                                      <td><a href="{{ path('library_show', { 'id': library.id }) }}">{{ library.id }}</a></td>
-                                      <td>{{ library.name }}</td>
+                                      <td class="library-item" id-position='{{library.position}}' role="button">{{ library.name }}</td>
                                       <td>{{ library.address }}</td>
                                       <td class="table-operations">
-                                          <a href="{{ path('room_new', { 'library': library.id }) }}" title="Agregar Sala"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a>&nbsp;&nbsp;
-                                          <a href="{{ path('library_edit', { 'id': library.id }) }}" title="Editar"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                                          <a href="#" title="Editar"><span class="fa fa-sign-in" aria-hidden="true"></span> solicitar acceso</a>
                                       </td>
                                   </tr>
                               {% endfor %}
                             </tbody>
                             <tfoot>
                               <tr>
-                                  <th>#</th>
                                   <th>Nombre</th>
                                   <th>Direccion</th>
                                   <th>Acciones</th>

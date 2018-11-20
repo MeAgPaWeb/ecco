@@ -140,7 +140,7 @@
         </div>
       </div>
       <!-- /.Fin Modal eliminar -->
-      
+
       <!-- /.Modal seguidores -->
       <div class="modal fade" id="modal-default{{library.id}}">
         <div class="modal-dialog">
@@ -192,7 +192,7 @@
           </div>
         </div>
       </div>
-      <!-- /.Fin Modal seguidores --> 
+      <!-- /.Fin Modal seguidores -->
     </div>
   {% endfor %}
     <!-- /.col -->
@@ -228,7 +228,7 @@
           <option>vacio</option>
         </select>
         <span class="input-group-addon" style="padding:0px;">
-          <a href="#" disabled>
+          <a href="#" id="add-sala" disabled>
               <i class="fa fa-plus" style="padding: 8px 18px;background-color: #3c8dbc;margin: 0;color: #fff;"></i>
             </a>
           </span>
@@ -243,6 +243,7 @@
           })
           .done(function( data ) {
             var $el = $("#rooms");
+            $('#add-sala').attr('href', '/room/'+id+'/new')
             $el.empty(); // remove old options
             $.each(data, function(key,value) {
               $el.append($("<option></option>")
