@@ -153,6 +153,7 @@
              <div class="modal-body table-responsive no-padding">
               <table class="table table-hover">
                 <tbody><tr>
+                  <th hidden>#</th>
                   <th>Usuario</th>
                   <th>Estado</th>
                   <th>Acción</th>
@@ -160,6 +161,7 @@
                 {% for follower in library.followers %}
                 <tr>
                   {% if follower.state != 'canceled' %}
+                    <td hidden>{{follower.id}}</td>
                     <td>{{follower.user}}</td>
                     <td>
                       <span class="label {% if follower.state == 'pending' %}

@@ -10,6 +10,18 @@
     {{ parent() }}
 
     <script type="text/javascript">
+    $( "#target" ).click(function() {
+      alert( "Handler for .click() called." );
+    });
+    // 
+    //     $.ajax({
+    //   method: "POST",
+    //   url: "some.php",
+    //   data: { name: "John", location: "Boston" }
+    // })
+    //   .done(function( msg ) {
+    //     alert( "Data Saved: " + msg );
+    //   });
       function initMap() {
         // var position = $.parseJSON($('#appbundle_library_position').val());
         var map = new google.maps.Map(document.getElementById('map'), {
