@@ -13,7 +13,7 @@
     $( "#target" ).click(function() {
       alert( "Handler for .click() called." );
     });
-    // 
+    //
     //     $.ajax({
     //   method: "POST",
     //   url: "some.php",
@@ -132,7 +132,28 @@
                                       <td class="library-item" id-position='{{library.position}}' role="button">{{ library.name }}</td>
                                       <td>{{ library.address }}</td>
                                       <td class="table-operations">
-                                          <a href="#" title="solicitar acceso"><span class="fa fa-sign-in" aria-hidden="true"></span> solicitar acceso</a>
+                                        {% if library.owner.id == app.user.id %}
+                                          <span class="label label-primary">Creador</span>
+                                        {% else %}
+
+                                          {% set sendSolicitud = true %}
+                                          {% for solicitud in solicitudes %}
+                                              {% if solicitud.library == library %}
+                                                {% set sendSolicitud = false %}
+                                                {% if solicitud.state == "pending" %}
+                                                  <span class="label label-warning">Pendiente</span>
+                                                {% elseif solicitud.state == "canceled" %}
+                                                  <span class="label label-danger">Cancelado</span>
+                                                {% elseif solicitud.state == "accepted" %}
+                                                  <span class="label label-success">Aceptada</span>
+                                                {% endif %}
+                                              {% endif %}
+                                          {% endfor %}
+                                          {% if sendSolicitud %}
+                                            <a href="{{ path('ajax_following_managment', {'library': library.id}) }}" title="solicitar acceso"><span class="fa fa-sign-in" aria-hidden="true"></span> solicitar acceso</a>
+                                          {% endif %}
+
+                                        {% endif %}
                                       </td>
                                   </tr>
                               {% endfor %}

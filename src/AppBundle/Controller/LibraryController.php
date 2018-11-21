@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Library;
+use AppBundle\Entity\Solicitation;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -27,9 +28,11 @@ class LibraryController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $libraries = $em->getRepository('AppBundle:Library')->findAll();
+        $solicitudes = $em->getRepository('AppBundle:Solicitation')->findBy(array('user' => $this->getUser()));
 
         return $this->render('library/index.html.twig', array(
             'libraries' => $libraries,
+            'solicitudes' =>$solicitudes
         ));
     }
 

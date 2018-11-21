@@ -2,7 +2,9 @@
 
 namespace AppBundle\Repository;
 use AppBundle\Entity\Room;
-use AppBundle\Entity\DataLogger;
+use AppBundle\Entity\Solicitation;
+use AppBundle\Entity\User;
+
 /**
  * LibraryRepository
  *
@@ -20,4 +22,16 @@ class LibraryRepository extends \Doctrine\ORM\EntityRepository
       ->getQuery()
       ->getResult();
   }
+
+  public function getLibrarysForUser($user)
+  {
+      return $this->createQueryBuilder('l')
+      ->select('l.id', 's.state')
+      ->leftJoin('AppBundle:Solicitation', 's',  'WITH',  's.library = l.id')
+      ->where('s.user = :user')
+      ->setParameter('user', $user)
+      ->getQuery()
+      ->getResult();
+  }
+
 }
