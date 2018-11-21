@@ -13,6 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+
 /**
  * Room controller.
  *
@@ -203,9 +204,16 @@ class RoomController extends Controller
             $j++;
           }
           $em->flush();
+          if ($request->request->get('ajax')) {
+            return new Response(json_encode(true));
+          }
           return true;
         }
-      }else
+      }else{
+        if ($request->request->get('ajax')) {
+          return new Response(json_encode(false));
+        }
         return false;
+      }
     }
 }
