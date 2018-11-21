@@ -148,10 +148,10 @@ class UserController extends Controller
     /**
      * Finds and displays a User entity.
      *
-     * @Route("/{id}/{visitors}", defaults={"visitors": 0, "id":null }, name="user_show")
+     * @Route("/{id}", defaults={"id":null }, name="user_show")
      * @Method({"GET", "POST"})
      */
-    public function showAction(Request $request, User $user = null, $visitors = null)
+    public function showAction(Request $request, User $user = null)
     {
         if ($user == null) {
           $user = $this->getUser();
@@ -253,8 +253,7 @@ class UserController extends Controller
             'user'             => $user,
             'msj'             => $msj,
             'error'            => $error,
-            'active_tab'       => $active_tab,
-            'visitors'         => $visitors
+            'active_tab'       => $active_tab
         );
         if ($user === $this->getUser()) {
           $params['profile'] = true;

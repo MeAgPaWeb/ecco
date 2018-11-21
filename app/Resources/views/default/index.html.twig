@@ -160,7 +160,7 @@
                 {% for follower in library.followers %}
                 <tr>
                   {% if follower.state != 'canceled' %}
-                    <td>{{follower.user}}</td>
+                    <td><a href="{{ path('user_show', {'id': follower.user}) }}"></a> {{follower.user}}</td>
                     <td>
                       <span class="label {% if follower.state == 'pending' %}
                                             label-warning
