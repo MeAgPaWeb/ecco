@@ -140,7 +140,7 @@ class Room
     /**
      * @var string|null
      * @Assert\NotBlank()
-     * @ORM\Column(name="b_name", type="string", nullable=false, unique=true)
+     * @ORM\Column(name="b_name", type="string", nullable=false, unique=false)
      */
     private $name;
 

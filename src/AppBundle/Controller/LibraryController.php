@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Library;
+use AppBundle\Entity\Solicitation;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -27,9 +28,11 @@ class LibraryController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $libraries = $em->getRepository('AppBundle:Library')->findAll();
+        $solicitudes = $em->getRepository('AppBundle:Solicitation')->findBy(array('user' => $this->getUser()));
 
         return $this->render('library/index.html.twig', array(
             'libraries' => $libraries,
+            'solicitudes' =>$solicitudes
         ));
     }
 
@@ -81,12 +84,16 @@ class LibraryController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $library->setOwner($this->getUser());
-            //$library->addFollower($this->getUser());
+            ///$library->addFollower($this->getUser());
+            //$em->persist($library);
+
+            ///$this->getUser()->addFollowing($library);
+            //$em->persist($this->getUser());
+
+
             $em->persist($library);
             $em->flush();
-            //$this->getUser()->addFollowing($library);
-            $em->persist($this->getUser());
-            $em->flush();
+
 
             return $this->redirectToRoute($route, array('request' => $request,'library' => $library->getId()));
         }
