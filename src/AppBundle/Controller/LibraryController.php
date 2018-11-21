@@ -81,10 +81,10 @@ class LibraryController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $library->setOwner($this->getUser());
-            $library->addFollower($this->getUser());
+            //$library->addFollower($this->getUser());
             $em->persist($library);
             $em->flush();
-            $this->getUser()->addFollowing($library);
+            //$this->getUser()->addFollowing($library);
             $em->persist($this->getUser());
             $em->flush();
 
