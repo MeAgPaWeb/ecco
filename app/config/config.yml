@@ -93,7 +93,9 @@ fos_user:
         template:  'user/check_email.html.twig'
       form:
         type: AppBundle\Form\RegistrationType
-
+    profile:
+      form:
+        type: AppBundle\Form\ProfileType
 assetic:
     node:  '%node_path%'
     debug:          '%kernel.debug%'
