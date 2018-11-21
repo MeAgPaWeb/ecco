@@ -39,6 +39,11 @@ services:
         public: true
         tags: ['controller.service_arguments']
 
+    EmailHandler:
+        class:        AppBundle\Service\EmailHandler
+        arguments:    ["@service_container"]
+
+
     # app.form.type.role:
     #     class: AppBundle\Form\Type\RoleType
     #     arguments:
