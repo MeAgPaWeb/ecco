@@ -23,16 +23,14 @@ use AppBundle\Entity\Library;
 class AjaxController extends Controller
 {
     /** Para aceptar o cancelar solicitudes
-     * @Route("/follower_managment/{action}", name="ajax_follower_managment")
-     * @Method({"GET", "POST"})
+     * @Route("/follower_managment", name="ajax_follower_managment")
+     * @Method({"POST"})
      */
-    public function ajaxFollowerManagmentAction($action = null)
+    public function ajaxFollowerManagmentAction(Request $request)
     {
         $request = Request::createFromGlobals();
         $id = $request->request->get('_follower');
-        if (!$action) {
-          $action = $request->request->get('_action');
-        }
+        $action = $request->request->get('_action');
         $em = $this->getDoctrine()->getManager();
         $follower = $em->getRepository('AppBundle:Solicitation')->find($id);
         if ($action == 'accepted'){
@@ -40,19 +38,14 @@ class AjaxController extends Controller
         }elseif($action == 'canceled'){
           $follower->changeToCanceled();
         }else{
-          $response = array("code" => 200, "success" => false, "data" => $action);
+          $response = array("code" => 200, "success" => false, "action" => $action);
           return new Response(json_encode($response));
         }
         $em->persist($follower);
         $em->flush();
-        if($request->request->get('_ajax')){
-          $response = array("code" => 200, "success" => true, "data" => $action);
-          return new Response(json_encode($response));
-        }else{
-          // return $this->redirectToRoute('library_index');
-          return $this->redirect($this->generateUrl('library_index'));
+        $response = array("code" => 200, "success" => true, "action" => $action);
+        return new Response(json_encode($response));
 
-        }
         //Acá debería enviar el email notificando si se acepto o se rechazó la solicitud al $follower->getUser()
     }
 

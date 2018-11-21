@@ -161,25 +161,25 @@
                 {% for follower in library.followers %}
                 <tr>
                   {% if follower.state != 'canceled' %}
-                    <td hidden>{{follower.id}}</td>s
+                    <td hidden>{{follower.id}}</td>
                     <td><a href="{{ path('user_show', {'id': follower.user}) }}"></a> {{follower.user}}</td>
                     <td>
-                      <span class="label {% if follower.state == 'pending' %}
-                                            label-warning
-                                         {% else %}
-                                            label-success
-                                         {% endif %}
-                                         ">{{follower.state}}
-                      </span>
+                       {% if follower.state == 'pending' %}
+                          <span class="label label-warning" id="state_{{library.id}}"> Pendiente<span>
+                        {% elseif follower.state == 'accepted'%}
+                           <span class="label label-success" id="state_{{library.id}}"> Aceptado<span>
+                        {% else %}
+                          <span class="label label-danger" id="state_{{library.id}}"> Cancelado<span>
+                        {% endif %}
                     </td>
                     <td>
                       {% if follower.state == 'pending' %}
-                        <a href="#">
-                          <span class="glyphicon glyphicon-ok text-success" aria-hidden="true">Aceptar</span>
+                        <a href="#" class="ajax" library-id="{{library.id}}" action="accepted">
+                          <span class="glyphicon glyphicon-ok text-success" id="action_{{library.id}}" aria-hidden="true">Aceptar</span>
                         </a>
                       {% endif %}
-                      <a href="#">
-                        <span class="glyphicon glyphicon-remove text-danger" aria-hidden="true">Rechazar</span>
+                      <a href="#" class="ajax"  library-id="{{library.id}}" action="canceled">
+                        <span class="glyphicon glyphicon-remove text-danger" aria-hidden="true">Cancelar</span>
                       </a>
                     </td>
                   {% endif %}
@@ -254,6 +254,46 @@
               $el.removeAttr("disabled");
             });
           })
+
+          $('.ajax').click(function(){
+            var action = $(this).attr('action');
+            var id = $(this).attr('library-id');
+            var elemn = $(this);
+            r=true;
+            if($('#state_'+id).hasClass('label-danger')){
+              var r = confirm("Estas seguro que deseas cancelar definitivamente");
+            }
+            if (r) {  
+              $.ajax({
+                method: "POST",
+                url: "{{ path('ajax_follower_managment') }}",
+                dataType: "json",
+                data: { _follower: {{app.user.id}}, _ajax: true , _action: action}
+              })
+              .done(function( data ) {
+                console.log(data.success);
+                console.log(data.action);
+                if (data.success) {
+                  $('#state_'+id).removeClass('label-warning');
+                  if (data.action == "accepted") {
+                    $('#state_'+id).addClass('label-success');
+                      $('#state_'+id).html('Aceptado');
+                  }else if(data.action == "canceled") {
+                    if($('#state_'+id).hasClass('label-danger')){
+                      $('#state_'+id).parent().parent().remove()
+                    }else{
+                      $('#state_'+id).addClass('label-danger');
+                      $('#state_'+id).html('Cancelado');
+                    }
+                  }
+                  $('#action_'+id).remove();
+                }else{
+                  alert('no se pudo procesar la solicitud');
+                }
+              });
+
+            }
+          });
 
         </script>
       </div>
