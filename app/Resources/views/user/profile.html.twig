@@ -1,8 +1,8 @@
-{% extends 'user/layout.html.twig' %}
+{% extends 'default.html.twig' %}
 {% set page =
     {
-        "title": "Recuperar contraseña",
-        "preclass": "login"
+        "title": "Perfil ",
+        "subtitle": "Usuario"
     }
 %}
 
@@ -20,14 +20,22 @@
                       'js/User.js',
                       'js/User.ready.js'
                      ] %}
-{% set active_tab = "personal" %}
+{% if active_tab is not defined %}
+  {% set active_tab = "bibliotecas" %}
+{% endif %}
 {% block javascript %}
     {{ parent() }}
     <script>
         var original_avatar = "{{ avatar_asset(user.avatar) }}";
-        var activeTab = "personal";
+        var activeTab = "bibliotecas";
         var profilePage = true;
+        if (msj) {
+          $(document).ready(function(){
+            $("#msj").delay(2000).hide(1000);
+          });
+        }
     </script>
+
 {% endblock %}
 
 {% block breadcrumb %}
@@ -64,10 +72,6 @@
                                     <th>Correo electrónico</th>
                                     <td>{{ user.email }}</td>
                                 </tr>
-                                <tr>
-                                    <th>Sexo</th>
-                                    <td>{{ user.gender | gender }}</td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -84,7 +88,13 @@
                                 <tr>
                                     <th>Roles</th>
                                     <td>
-                                        {{ user.roles | role }}
+                                      {% if is_granted('ROLE_ADMIN') %}
+                                          Administrator
+                                      {% elseif is_granted('ROLE_USER') %}
+                                          Usuario
+                                      {% else %}
+                                          Anonymous
+                                      {% endif %}
                                     </td>
                                 </tr>
                                 <tr>
@@ -102,78 +112,141 @@
             </div>
         </div>
         <div class="col-md-8">
+
+            {% if msj %}
+              <div id="msj" class="callout callout-success">
+                <h4>Atencion!</h4>
+                <p>{{msj}}</p>
+              </div>
+            {% endif %}
             <div id="profile-tabs" class="nav-tabs-custom">
 
                 <ul class="nav nav-tabs">
+                  <li {% if active_tab == "bibliotecas" %}class="active"{% endif %}><a aria-expanded="false" href="#bibliotecas" data-toggle="tab">Resumen</a></li>
+                  {% if profile %}
                     <li {% if active_tab == "personal" %}class="active"{% endif %}><a aria-expanded="false" href="#personal" data-toggle="tab">Datos personales</a></li>
 
-                    <li {% if active_tab == "account" %}class="active"{% endif %}><a aria-expanded="false" href="#account" data-toggle="tab">Datos de la cuenta</a></li>
+                    <li {% if active_tab == "account" %}class="active"{% endif %}><a aria-expanded="false" href="#account" data-toggle="tab">Cambiar Constraseña</a></li>
+                  {% endif %}
                 </ul>
 
                 <div class="tab-content">
 
-
-                    <div class="tab-pane {% if active_tab == "personal" %}active{% endif %}" id="personal">
-                            {{ form_start(form, { 'action': path('backend_profile_show') }) }}
-                            {# form_start(form, { 'action': path('user_show', { 'id': user.id, 'visitors': visitors}) }) #}
+                    <div class="tab-pane {% if active_tab == "bibliotecas" %}active{% endif %}" id="bibliotecas">
                         <div class="row">
-			                <div class="col-md-9 col-xs-9">
-		                        <div class="form-group{% if form.name.vars.errors|length > 0 %} has-error{% endif %}">
-                                    {{ form_label(form.name, "Nombre") }}
-                                    {{ form_widget(form.name, {"attr": {"placeholder": "Ingrese el nombre"}}) }}
-                                    <div class="help-block with-errors">
-                                        {{ form_errors(form.name) }}
+                            <div class="col-md-12">
+                                <div class="box">
+                                    <div class="box-header">
+                                      <h3 class="box-title">Bibliotecas Propias</h3>
                                     </div>
+                                    <!-- /.box-header -->
+                                    <div class="box-body no-padding">
+                                      {% if libraries|length > 0 %}
+                                      <table class="table table-striped">
+                                          <tbody>
+                                              <tr>
+                                              <th style="width: 10px">#</th>
+                                              <th>Nombre</th>
+                                              <th>Direccion</th>
+                                              <th style="width: 40px">Accion</th>
+                                            </tr>
+                                            {% for library in libraries %}
+                                              <tr>
+                                                <td>{{ library.id }}</td>
+                                                <td>{{ library.name}}</td>
+                                                <td>{{ library.address}}</td>
+                                                <td>
+                                                  <a href="#" title="Solicitar acceso"><span class="fa fa-sign-in" aria-hidden="true"></span></a>
+                                                </td>
+                                              </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                      </table>
+                                      {% else %}
+                                          <p>no posee librerias cargadas</p>
+                                      {% endif %}
+                                    </div>
+                                    <!-- /.box-body -->
                                 </div>
+                          </div>
+                          <div class="col-md-12">
+                            <div class="box">
+                              <div class="box-header">
+                                <h3 class="box-title">Bibliotecas como seguidor</h3>
+                              </div>
+                              <!-- /.box-header -->
+                              <div class="box-body no-padding">
+                                {% if libraries_follows|length > 0 %}
+                                <table class="table table-striped">
+                                    <tbody>
+                                        <tr>
+                                        <th style="width: 10px">#</th>
+                                        <th>Nombre</th>
+                                        <th>Direccion</th>
+                                      </tr>
+                                      {% for library in libraries_follows %}
+                                        <tr>
+                                          <td>{{ library.id }}</td>
+                                          <td>{{ library.name}}</td>
+                                          <td>{{ library.address}}</td>
+                                        </tr>
+                                      {% endfor %}
+                                  </tbody>
+                                </table>
+                                {% else %}
+                                    <p>no posee librerias seguidas</p>
+                                {% endif %}
+                              </div>
+                              <!-- /.box-body -->
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                    {% if profile %}
+                    <div class="tab-pane {% if active_tab == "personal" %}active{% endif %}" id="personal">
 
-                                <div class="form-group{% if form.lastname.vars.errors|length > 0 %} has-error{% endif %}">
-                                    {{ form_label(form.lastname, "Apellido") }}
-                                    {{ form_widget(form.lastname, {"attr": {"placeholder": "Ingrese el apellido"}}) }}
-                                    <div class="help-block with-errors">
-                                        {{ form_errors(form.lastname) }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-xs-3">
-                                <div class="form-group user_avatar_form_group{% if form.avatar.vars.errors|length > 0 %} has-error{% endif %}">
-                                    {{ form_label(form.lastname, "Imágen avatar") }}
-                                    <div class="user-avatar-preview" id="user_avatar_preview">
-                                        <div id="avatar_edit" class="avatar-edit">
-                                            <span id="avatar_edit_icon" class="glyphicon glyphicon-camera"></span>
-                                        </div>
-                                    </div>
-                                    {{ form_widget(form.avatar, {'id': 'form_user_avatar'} ) }}
-                                    <div class="help-block with-errors">
-                                        {{ form_errors(form.avatar) }}
-                                        {% if error %}
-                                            {{ error }}
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group{% if form.email.vars.errors|length > 0 %} has-error{% endif %}">
-                            {{ form_label(form.email, "Correo electrónico", {"label_attr": {"class": "control-label"}}) }}
-                            {{ form_widget(form.email, {"type":"text", "attr": {"placeholder": "Ingrese un nuevo correo electrónico"}}) }}
-                            <div class="help-block with-errors">
-                                {{ form_errors(form.email) }}
-                            </div>
-                        </div>
-
-                        <div class="form-group{% if form.gender.vars.errors|length > 0 %} has-error{% endif %}">
-                            <label for="form_user_gender">Sexo</label>
-                            {{ form_widget(form.gender, {'id': 'form_user_gender'}) }}
-                            <div class="help-block with-errors">
-                                {{ form_errors(form.gender) }}
-                            </div>
+                            {#{ form_start(form, { 'action': path('backend_profile_show') }) }#}
+                            {{ form_start(form, { 'action': path('user_show', { 'id': user.id}) }) }}
+                        <div class="row">
+			                    <div class="col-md-12">
+  		                        <div class="form-group{% if form.name.vars.errors|length > 0 %} has-error{% endif %}">
+                                  {{ form_label(form.name, "Nombre") }}
+                                  {{ form_widget(form.name, {"attr": {"placeholder": "Ingrese el nombre"}}) }}
+                                  <div class="help-block with-errors">
+                                      {{ form_errors(form.name) }}
+                                  </div>
+                              </div>
+                              <div class="form-group{% if form.lastname.vars.errors|length > 0 %} has-error{% endif %}">
+                                  {{ form_label(form.lastname, "Apellido") }}
+                                  {{ form_widget(form.lastname, {"attr": {"placeholder": "Ingrese el apellido"}}) }}
+                                  <div class="help-block with-errors">
+                                      {{ form_errors(form.lastname) }}
+                                  </div>
+                              </div>
+                              <div class="form-group{% if form.email.vars.errors|length > 0 %} has-error{% endif %}">
+                                  {{ form_label(form.email, "Correo electrónico", {"label_attr": {"class": "control-label"}}) }}
+                                  {{ form_widget(form.email, {"type":"text", "attr": {"placeholder": "Ingrese un nuevo correo electrónico"}}) }}
+                                  <div class="help-block with-errors">
+                                      {{ form_errors(form.email) }}
+                                  </div>
+                              </div>
+                          </div>
                         </div>
 
                         <hr>
-                        <div class="form-group{% if form.current_password.vars.errors|length > 0 %} has-error{% endif %}">
-                            {{ form_label(form.current_password, "Confirmar contraseña", {"label_attr": {"class": "control-label"}}) }}
-                            {{ form_widget(form.current_password, {"type":"password", "attr": {"placeholder": "Ingrese su contraseña actual"}}) }}
+                        <div class="form-group user_avatar_form_group{% if form.avatar.vars.errors|length > 0 %} has-error{% endif %}">
+                            {{ form_label(form.lastname, "Imágen avatar") }}
+                            <div class="user-avatar-preview" id="user_avatar_preview">
+                                <div id="avatar_edit" class="avatar-edit">
+                                    <span id="avatar_edit_icon" class="glyphicon glyphicon-camera"></span>
+                                </div>
+                            </div>
+                            {{ form_widget(form.avatar, {'id': 'form_user_avatar'} ) }}
                             <div class="help-block with-errors">
-                                {{ form_errors(form.current_password) }}
+                                {{ form_errors(form.avatar) }}
+                                {% if error %}
+                                    {{ error }}
+                                {% endif %}
                             </div>
                         </div>
 
@@ -185,11 +258,13 @@
                         <button type="reset" id="personal_reset" class="btn btn-default" value="Reset"> Restablecer</button>
                         <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Guardar</button>
                         {{ form_end(form) }}
+
                     </div>
 
 
                     <div class="tab-pane {% if active_tab == "account" %}active{% endif %}" id="account">
-                            {{ form_start(pass_form, { 'action': path('backend_profile_show') }) }}
+                      {% if pass_form is defined %}
+                            {{ form_start(form, { 'action': path('user_show', { 'id': user.id}) }) }}
 
                             <div class="form-group{% if pass_form.plainPassword["first"].vars.errors|length > 0 %} has-error{% endif %}">
                                 {{ form_label(pass_form.plainPassword["first"], null, {"label_attr": {"class": "control-label"}}) }}
@@ -222,7 +297,9 @@
                             <button type="submit" class="btn btn-success pull-right"><span class="glyphicon glyphicon-floppy-disk"></span> Guardar</button>
 
                             {{ form_end(pass_form) }}
+                            {% endif %}
                     </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -232,12 +309,12 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-body">
-                    {% if visitors %}
+                    {# if visitors %}
                         {% set user_path = path('user_visitors') %}
                     {% else %}
                         {% set user_path = path('user_index') %}
-                    {% endif %}
-                    <a class="btn btn-default" href="{{ user_path }}"><span class="glyphicon glyphicon-chevron-left"></span> Volver</a>
+                    {% endif #}
+                    <a class="btn btn-default" href="{{ path('homepage') }}"><span class="glyphicon glyphicon-chevron-left"></span> Volver</a>
                 </div>
             </div>
         </div>
