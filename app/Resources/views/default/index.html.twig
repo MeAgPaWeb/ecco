@@ -160,7 +160,7 @@
                 {% for follower in library.followers %}
                 <tr>
                   {% if follower.state != 'canceled' %}
-                    <td>{{follower.user}}</td>
+                    <td><a href="{{ path('user_show', {'id': follower.user}) }}"></a> {{follower.user}}</td>
                     <td>
                       <span class="label {% if follower.state == 'pending' %}
                                             label-warning
@@ -223,41 +223,41 @@
     </div>
     <div class="form-group">
       <label>Seleccione una Sala</label>
-      <div class="input-group input-group-sm">
-        <select class="form-control" id="rooms" disabled>
-          <option>vacio</option>
-        </select>
-        <span class="input-group-addon" style="padding:0px;">
-          <a href="#" id="add-sala" disabled>
-              <i class="fa fa-plus" style="padding: 8px 18px;background-color: #3c8dbc;margin: 0;color: #fff;"></i>
-            </a>
-          </span>
-      </div>
-      <script>
-        $('#library').change(function(){
-          var id = $(this).val()
-          $.ajax({
-            method: "POST",
-            url: "/room/api/list",
-            data: { library: id }
-          })
-          .done(function( data ) {
-            var $el = $("#rooms");
-            $('#add-sala').attr('href', '/room/'+id+'/new')
-            $el.empty(); // remove old options
-            $.each(data, function(key,value) {
-              $el.append($("<option></option>")
-                 .attr("value", value).text(key));
+        <div class="input-group input-group-sm">
+          <select class="form-control" id="rooms" disabled>
+            <option value=null>vacio</option>
+          </select>
+          <span class="input-group-addon" style="padding:0px;">
+            <a href="#" id="add-sala" disabled>
+                <i class="fa fa-plus" style="padding: 8px 18px;background-color: #3c8dbc;margin: 0;color: #fff;"></i>
+              </a>
+            </span>
+        </div>
+        <script>
+          $('#library').change(function(){
+            var id = $(this).val()
+            $.ajax({
+              method: "POST",
+              url: "/room/api/list",
+              data: { library: id }
+            })
+            .done(function( data ) {
+              var $el = $("#rooms");
+              $('#add-sala').attr('href', '/room/'+id+'/new')
+              $el.empty(); // remove old options
+              $.each(data, function(key,value) {
+                $el.append($("<option></option>")
+                   .attr("value", key).text(value));
+              });
+              $el.removeAttr("disabled");
             });
-            $el.removeAttr("disabled");
-          });
-        })
-      </script>
-    </div>
-    <div class="form-group">
-      <label for="exampleInputFile">Archivo de Registro del DataLogger</label>
-      <input id="exampleInputFile" name="upload" type="file">
-      <p class="help-block">Seleccione el archivo .xls que contenga las siguientes columnas <br>   ("#";"Date";"Time, GMT-03:00";"Temp, °C";"RH, %";"DewPt, °C")</p>
-    </div>
+          })
 
+        </script>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputFile">Archivo de Registro del DataLogger</label>
+        <input id="uploadFile" name="upload" type="file">
+        <p class="help-block">Seleccione el archivo .xls que contenga las siguientes columnas <br>   ("#";"Date";"Time, GMT-03:00";"Temp, °C";"RH, %";"DewPt, °C")</p>
+      </div>
 {% endblock %}

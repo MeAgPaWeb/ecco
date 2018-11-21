@@ -18,12 +18,12 @@ class ProfileType extends AbstractType
         $builder->add('lastname', TextType::class, array('label' => 'Apellido'));
         $builder->add('avatar', FileType::class, array('mapped' => false, 'required' => false));
         if (!$options["profile"]){
-            $builder->add('roles', RoleType::class, array(
-                'label' => 'Roles',
-                'required' => true,
-                'multiple' => true,
-                'mapped' => true,
-            ));
+            // $builder->add('roles', RoleType::class, array(
+            //     'label' => 'Roles',
+            //     'required' => true,
+            //     'multiple' => true,
+            //     'mapped' => true,
+            // ));
             //not require type current password of a User to can Admin edit him...
             $builder->remove('current_password');
         }

@@ -51,7 +51,7 @@ class User extends BaseUser
     /**
      * @ORM\Column(name="registered_at", type="integer", nullable=false)
      */
-    private $registeredAt;
+    protected $registeredAt;
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -62,12 +62,12 @@ class User extends BaseUser
      * @ORM\Column(type="string", nullable=true)
      */
     protected $gender;
-    
+
     /**
      * One User has Many Follow-up Solicitations.
      * @ORM\OneToMany(targetEntity="Solicitation", mappedBy="user")
      */
-    private $followings;
+    protected $followings;
 
     public function __construct($configurations = null){
         parent::__construct();
