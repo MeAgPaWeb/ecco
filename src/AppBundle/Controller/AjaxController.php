@@ -49,6 +49,17 @@ class AjaxController extends Controller
         //Acá debería enviar el email notificando si se acepto o se rechazó la solicitud al $follower->getUser()
     }
 
+    private function sendEmail($email, $view){
+         $message = $this->get('EmailHandler')->getMessage( $email['email'],
+                                                            $email['user'],
+                                                            $email['library'],
+                                                            $email['subject'], $view);
+         $failures = "No se pudo enviar el email a la casilla de correo especificada";
+         $mailer = $this->container->get('mailer');
+         $mailer->send($message, $failures);
+         sleep(2);
+     }
+
     /**
      * @Route("/following_managment/{library}", name="ajax_following_managment")
      * @Method({"GET", "POST"})
@@ -62,44 +73,19 @@ class AjaxController extends Controller
         $solicitation->setLibrary($library);
         $em->persist($solicitation);
         $em->flush();
+        $email=array(
+                'subject'=> 'Solicitud de seguimiento de biblioteca',
+                'email'=> $this->getUser()->getEmail(),
+                'user' => $this->getUser(),
+                'library' => $library
+            );
+        $this->sendEmail($email, 'email_solicitation');
 
-        //Acá debería enviar el email notificando al $library->getOwner() que tiene una solicitud de seguimiento de su biblioteca
         if($request->request->get('_ajax')){
-          $response = array("code" => 200, "success" => true, "data" => $action);
+          $response = array("code" => 200, "success" => true, "data" => "alta");
           return new Response(json_encode($response));
         }else{
           return $this->redirectToRoute('library_index');
         }
     }
 }
-
-
-// public function newSolicitationAction (Library $library, User $user){
-//
-//   $solicitation = new Solicitation();
-//   $solicitation->setUser($user);
-//   $solicitation->setLibrary($library);
-//   $em = $this->getDoctrine()->getManager();
-//   $em->persist($solicitation);
-//   //el seguidor debería agregarse cuando cambie al estado accepted no???
-//   $em->flush();
-//   //enviar mail
-//   $email=array(
-//           'subject'=> 'Solicitud de seguimiento de biblioteca',
-//           'email'=> $user->getEmail(),
-//           'user' => $user,
-//           'library' => $library
-//       );
-//   $this->sendEmail($email, 'email_solicitation');
-// }
-//
-// private function sendEmail($email, $view){
-//       $message = $this->get('EmailHandler')->getMessage( $email['email'],
-//                                                          $email['user'],
-//                                                          $email['library'],
-//                                                          $email['subject'], $view);
-//       $failures = "No se pudo enviar el email a la casilla de correo especificada";
-//       $mailer = $this->container->get('mailer');
-//       $mailer->send($message, $failures);
-//       sleep(2);
-//   }

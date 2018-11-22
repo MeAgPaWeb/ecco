@@ -13,26 +13,13 @@
     $( "#target" ).click(function() {
       alert( "Handler for .click() called." );
     });
-    //
-    //     $.ajax({
-    //   method: "POST",
-    //   url: "some.php",
-    //   data: { name: "John", location: "Boston" }
-    // })
-    //   .done(function( msg ) {
-    //     alert( "Data Saved: " + msg );
-    //   });
+
       function initMap() {
-        // var position = $.parseJSON($('#appbundle_library_position').val());
         var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 13,
           mapTypeControl: false,
         });
-        //
-        // var marker = new google.maps.Marker({
-        //   map: map,
-        //   position: position
-        // });
+
         var locations = [];
           {% for library in libraries %}
             var position = '{{library.position|raw}}';
@@ -77,6 +64,22 @@
         $('#table').DataTable( {
             ordering: true
         } );
+        $('.solicitud').click(function(){
+          var url = $(this).attr('url');
+          var elm= $(this);
+          $.ajax({
+            method: "POST",
+            url: url,
+            dataType: "json",
+            data: { _ajax: "true", }
+          })
+            .done(function( data ) {
+              if (data.success) {
+                $(elm).html('<span class="label label-warning" >Pendiente</span>')
+
+              }
+            });
+        });
       });
     </script>
     <script async defer
@@ -132,7 +135,6 @@
                                       <td class="library-item" id-position='{{library.position}}' role="button">{{ library.name }}</td>
                                       <td>{{ library.address }}</td>
                                       <td class="table-operations">
-<
                                         {% if library.owner.id == app.user.id %}
                                           <span class="label label-primary">Creador</span>
                                         {% else %}
@@ -142,7 +144,7 @@
                                               {% if solicitud.library == library %}
                                                 {% set sendSolicitud = false %}
                                                 {% if solicitud.state == "pending" %}
-                                                  <span class="label label-warning">Pendiente</span>
+                                                  <span class="label label-warning" >Pendiente</span>
                                                 {% elseif solicitud.state == "canceled" %}
                                                   <span class="label label-danger">Cancelado</span>
                                                 {% elseif solicitud.state == "accepted" %}
@@ -151,7 +153,7 @@
                                               {% endif %}
                                           {% endfor %}
                                           {% if sendSolicitud %}
-                                            <a href="{{ path('ajax_following_managment', {'library': library.id}) }}" title="solicitar acceso"><span class="fa fa-sign-in" aria-hidden="true"></span> solicitar acceso</a>
+                                            <a href="#" class="solicitud" url="{{ path('ajax_following_managment', {'library': library.id}) }}" title="solicitar acceso"><span class="fa fa-sign-in" aria-hidden="true"></span> solicitar acceso</a>
                                           {% endif %}
 
                                         {% endif %}

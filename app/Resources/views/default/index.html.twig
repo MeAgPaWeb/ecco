@@ -263,7 +263,7 @@
             if($('#state_'+id).hasClass('label-danger')){
               var r = confirm("Estas seguro que deseas cancelar definitivamente");
             }
-            if (r) {  
+            if (r) {
               $.ajax({
                 method: "POST",
                 url: "{{ path('ajax_follower_managment') }}",
@@ -271,8 +271,6 @@
                 data: { _follower: {{app.user.id}}, _ajax: true , _action: action}
               })
               .done(function( data ) {
-                console.log(data.success);
-                console.log(data.action);
                 if (data.success) {
                   $('#state_'+id).removeClass('label-warning');
                   if (data.action == "accepted") {

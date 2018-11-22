@@ -20,7 +20,7 @@ class EmailHandler extends Controller{
                 ->setFrom([$this->container->getParameter('mailer_user') => "Devp"])
                 ->setTo($email)
                 ->setBody($this->renderView('email/'.$view.'.html.twig', array(
-                            'user' => $reader,
+                            'user' => $user,
                             'library' => $library,
                             )),
                     'text/html');
