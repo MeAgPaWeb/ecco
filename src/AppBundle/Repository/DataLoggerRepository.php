@@ -26,10 +26,8 @@ class DataLoggerRepository extends \Doctrine\ORM\EntityRepository
           ->select('avg(d.temperature) as meanAvT, avg(d.rh) as meanAvH')
           ->innerJoin('d.room', 'room')
           ->where('room = :room')
-          ->groupBy('d.room')
+          ->andWhere()
           ->setParameter('room', $room)
-          ->setMaxResults($limit)
-          ->setFirstResult($offset)
           ->getQuery()
           ->getArrayResult();
   }

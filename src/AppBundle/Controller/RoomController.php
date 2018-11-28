@@ -190,7 +190,7 @@ class RoomController extends Controller
           $activesheet = $phpExcelObject->getActiveSheet()->toArray();
           $j=2;
           while (isset($activesheet[$j][4])) {
-              $date= \DateTime::createFromFormat( "d/m/Y H:i:s", $activesheet[$j][1]." ".$activesheet[$j][2]);
+              $date= \DateTime::createFromFormat( "d/m/y H:i:s A", $activesheet[$j][1]." ".$activesheet[$j][2]);
               $data = new DataLogger($date,$room);
               $data->setNumber($activesheet[$j][0]);
               $data->setTemperature($activesheet[$j][3]);
@@ -225,12 +225,15 @@ class RoomController extends Controller
       $em = $this->getDoctrine()->getManager();
       $cant = $em->getRepository('AppBundle:DataLogger')->getCantDataLogger($room);
       // $offset=719; $limit=$cant-1439;
-      $offset=2160; $limit=$cant-4461;
+      $offset=2160; $limit=$cant-4320;
       $dataloggers = $em->getRepository('AppBundle:DataLogger')->getDataLoggersValid($room, $offset, $limit);
-      $offset=0; $limit=4461;
+      $offset=0; $limit=6020;
       // $offset=0; $limit=1440;
       foreach ($dataloggers as $datalogger) {
-
+        $data=$datalogger->getDate();
+        $dataMin=$data->sub(new \DateInterval('P15D'));
+        var_dump($dataMin);
+        die;
         $promedio = $em->getRepository('AppBundle:DataLogger')->getAvgHT($room, $offset, $limit);
 
         echo "id : ".$datalogger->getId()." <br><br> ";
