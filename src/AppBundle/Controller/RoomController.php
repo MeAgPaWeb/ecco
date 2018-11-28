@@ -214,7 +214,6 @@ class RoomController extends Controller
         return false;
       }
     }
-<<<<<<< HEAD
 
     /**
      * Displays a form to edit an existing room entity.
@@ -249,6 +248,4 @@ class RoomController extends Controller
       return new Response(json_encode(true));
 
     }
-=======
->>>>>>> 2b5eac0c2f8b2d6ab54b6edc2cb926423f31ec95
 }
