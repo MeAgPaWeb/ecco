@@ -38,28 +38,28 @@ class DataLogger
     /**
      * @var decimal|null
      *
-     * @ORM\Column(name="mean_av_H", type="decimal" , nullable=true)
+     * @ORM\Column(name="mean_av_H", type="decimal", precision=6, scale=3,   nullable=true)
      */
     private $meanAvH;
 
     /**
      * @var decimal|null
      *
-     * @ORM\Column(name="mean_av_T", type="decimal" , nullable=true)
+     * @ORM\Column(name="mean_av_T", type="decimal", precision=6, scale=3,   nullable=true)
      */
     private $meanAvT;
 
     /**
      * @var decimal|null
      *
-     * @ORM\Column(name="reg_mean_av_H", type="decimal" , nullable=true)
+     * @ORM\Column(name="reg_mean_av_H", type="decimal", precision=6, scale=3,   nullable=true)
      */
     private $regMeanAvH;
 
     /**
      * @var decimal|null
      *
-     * @ORM\Column(name="reg_mean_av_T", type="decimal" , nullable=true)
+     * @ORM\Column(name="reg_mean_av_T", type="decimal", precision=6, scale=3,   nullable=true)
      */
     private $regMeanAvT;
 
@@ -67,49 +67,49 @@ class DataLogger
     /**
      * @var decimal|null
      *
-     * @ORM\Column(name="botton_limit_H", type="decimal" , nullable=true)
+     * @ORM\Column(name="botton_limit_H", type="decimal", precision=6, scale=3,   nullable=true)
      */
     private $bottonLimitH;
 
     /**
      * @var decimal|null
      *
-     * @ORM\Column(name="botton_limit_T", type="decimal" , nullable=true)
+     * @ORM\Column(name="botton_limit_T", type="decimal", precision=6, scale=3,   nullable=true)
      */
     private $bottonLimitT;
 
     /**
      * @var decimal|null
      *
-     * @ORM\Column(name="top_limit_H", type="decimal" , nullable=true)
+     * @ORM\Column(name="top_limit_H", type="decimal", precision=6, scale=3,   nullable=true)
      */
     private $topLimitH;
 
     /**
      * @var decimal|null
      *
-     * @ORM\Column(name="top_limit_T", type="decimal" , nullable=true)
+     * @ORM\Column(name="top_limit_T", type="decimal", precision=6, scale=3,   nullable=true)
      */
     private $topLimitT;
 
     /**
      * @var decimal|null
      *
-     * @ORM\Column(name="temperature", type="decimal" , nullable=true)
+     * @ORM\Column(name="temperature", type="decimal", precision=6, scale=3,   nullable=true)
      */
     private $temperature;
 
     /**
      * @var decimal|null
      *
-     * @ORM\Column(name="rh", type="decimal" , nullable=true)
+     * @ORM\Column(name="rh", type="decimal", precision=6, scale=3,   nullable=true)
      */
     private $rh;
 
     /**
      * @var decimal|null
      *
-     * @ORM\Column(name="dewpt", type="decimal" , nullable=true)
+     * @ORM\Column(name="dewpt", type="decimal", precision=6, scale=3,   nullable=true)
      */
     private $dewpt;
 

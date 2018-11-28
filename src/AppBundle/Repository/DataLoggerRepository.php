@@ -21,7 +21,7 @@ class DataLoggerRepository extends \Doctrine\ORM\EntityRepository
 	        ->getResult();
 	}
 
-  public function getAvgHT($room, $offset, $limit=1440){
+  public function getAvgHT($room, $offset, $limit){
     return $this->createQueryBuilder('d')
           ->select('avg(d.temperature) as meanAvT, avg(d.rh) as meanAvH')
           ->innerJoin('d.room', 'room')

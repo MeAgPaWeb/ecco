@@ -81,7 +81,7 @@ class RoomController extends Controller
             $em->persist($room);
             $library->addRoom($room);
             $em->persist($library);
-            $em->flush(); //se rompe acá wachon!!!
+            $em->flush();
             $this->loadDataAction($request, $room);
 
             return $this->redirectToRoute($route, array('request' => $request, 'library' => $library->getId()));
@@ -193,9 +193,9 @@ class RoomController extends Controller
               $data = new DataLogger();
               $data->setNumber($activesheet[$j][0]);
               $data->setRoom($room);
-              $date= \DateTime::createFromFormat( "d/m/y H:i:s A", $activesheet[$j][1]." ".$activesheet[$j][2]);
+              $date= \DateTime::createFromFormat( "d/m/Y H:i:s", $activesheet[$j][1]." ".$activesheet[$j][2]);
               $data->setDate($date);
-              $data->setTemperature($activesheet[$j][3]);
+              $data->setTemperature((float)$activesheet[$j][3]);
               $data->setRh($activesheet[$j][4]);
               $data->setDewpt($activesheet[$j][5]);
               $em->persist($data);
@@ -226,11 +226,19 @@ class RoomController extends Controller
     public function calcDataAction(Request $request, Room $room){
       $em = $this->getDoctrine()->getManager();
       $cant = $em->getRepository('AppBundle:DataLogger')->getCantDataLogger($room);
-      $offset=719; $limit=$cant-1439;
+      // $offset=719; $limit=$cant-1439;
+      $offset=2160; $limit=$cant-4461;
       $dataloggers = $em->getRepository('AppBundle:DataLogger')->getDataLoggersValid($room, $offset, $limit);
-      $offset=0; $limit=1440;
+      $offset=0; $limit=4461;
+      // $offset=0; $limit=1440;
       foreach ($dataloggers as $datalogger) {
+
         $promedio = $em->getRepository('AppBundle:DataLogger')->getAvgHT($room, $offset, $limit);
+
+        echo "id : ".$datalogger->getId()." <br><br> ";
+        echo "<pre>";
+        var_dump($promedio);
+        die;
         $offset++;
         $datalogger->setMeanAvH($promedio[0]['meanAvH']);
         $datalogger->setMeanAvT($promedio[0]['meanAvT']);
