@@ -188,20 +188,20 @@ class RoomController extends Controller
           $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject($url);
           $phpExcelObject->setActiveSheetIndex(0);
           $activesheet = $phpExcelObject->getActiveSheet()->toArray();
-          $j=5;
+          $j=2;
           while (isset($activesheet[$j][0])) {
-            $data = new DataLogger();
-            $data->setNumber($activesheet[$j][0]);
-            $data->setRoom($room);
-            $data->setDate(\DateTime::createFromFormat( "d/m/Y H:i:s A", $activesheet[$j][1]." ".$activesheet[$j][2]));
-            $data->setTemperature($activesheet[$j][3]);
-            $data->setRh($activesheet[$j][4]);
-            $data->setDewpt($activesheet[$j][5]);
-            $em->persist($data);
-            // $em->flush();
-            $room->addDataLogger($data);
-            $em->persist($room);
-            $j++;
+            if (($activesheet[$j][3]>0) && ($activesheet[$j][4]>0)) {
+              $date= \DateTime::createFromFormat( "d/m/y H:i:s A", $activesheet[$j][1]." ".$activesheet[$j][2]);
+              $data = new DataLogger($activesheet[$j][1]." ".$activesheet[$j][2],$room);
+              $data->setNumber($activesheet[$j][0]);
+              $data->setTemperature($activesheet[$j][3]);
+              $data->setRh($activesheet[$j][4]);
+              $data->setDewpt($activesheet[$j][5]);
+              $em->persist($data);
+              $room->addDataLogger($data);
+              $em->persist($room);
+              $j++;
+            }
           }
           $em->flush();
           if ($request->request->get('ajax')) {

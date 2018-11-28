@@ -4,6 +4,7 @@
 namespace AppBundle\Twig;
 
 use AppBundle\Entity\User;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
 class AppExtension extends \Twig_Extension
 {
@@ -23,13 +24,16 @@ class AppExtension extends \Twig_Extension
     private $locales;
 
     private $parameters;
+    
+    protected $doctrine;
 
-    public function __construct($container = null, $request, $locale, $media, $security)
+    public function __construct($container = null, $request, $locale, $media, $security, RegistryInterface $doctrine)
     {
         $this->container = $container;
         $this->request = $request;
         $this->locales = array('en', 'es');
         $this->parameters = array('locale' => $locale, 'media' => $media, 'security' => $security);
+        $this->doctrine = $doctrine;
     }
 
     public function getFilters()
@@ -39,7 +43,32 @@ class AppExtension extends \Twig_Extension
             new \Twig_SimpleFilter('gender', array($this, 'gender')),
             new \Twig_SimpleFilter('role', array($this, 'role')),
             new \Twig_SimpleFilter('url', array($this, 'url')),
+            new \Twig_SimpleFilter('pending', array($this, 'pendingFilter')),
+            new \Twig_SimpleFilter('accepted', array($this, 'acceptedFilter')),
+            new \Twig_SimpleFilter('dataLoggers', array($this, 'dataLoggersFilter')),
         );
+    }
+    
+    public function pendingFilter($library)
+    {
+        $solicitations=$this->doctrine->getRepository('AppBundle:Solicitation')->findBy(
+            array('library' => $library, 'state' => 'pending')
+            );
+        return sizeof($solicitations);
+    }
+    
+    public function acceptedFilter($library)
+    {
+        $solicitations=$this->doctrine->getRepository('AppBundle:Solicitation')->findBy(
+            array('library' => $library, 'state' => 'accepted')
+            );
+        return sizeof($solicitations);
+    }
+    
+    public function dataLoggersFilter($library)
+    {
+        $dataLoggers=$this->doctrine->getRepository('AppBundle:DataLogger')->getDataLoggers($library);
+        return sizeof($dataLoggers);
     }
 
     public function gender($gender, $locale = null)

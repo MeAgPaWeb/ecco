@@ -39,6 +39,8 @@ class AjaxController extends Controller
         }elseif($action == 'canceled'){
           $follower->changeToCanceled();
           $message = "Su solicitud de seguimiento a la biblioteca ha sido rechazada.";
+          $em->remove($follower);
+          $em->flush();
         }else{
           $response = array("code" => 200, "success" => false, "action" => $action);
           return new Response(json_encode($response));
