@@ -35,13 +35,24 @@ class AjaxController extends Controller
         $follower = $em->getRepository('AppBundle:Solicitation')->findOneByUser($id);
         if ($action == 'accepted'){
           $follower->changeToAccepted();
+          $message = "Su solicitud de seguimiento a la biblioteca ha sido aceptada.";
         }elseif($action == 'canceled'){
+          $follower->changeToCanceled();
+          $message = "Su solicitud de seguimiento a la biblioteca ha sido rechazada.";
           $em->remove($follower);
           $em->flush();
         }else{
           $response = array("code" => 200, "success" => false, "action" => $action);
           return new Response(json_encode($response));
         }
+        $emailFollower=array(
+                'subject'=> 'Solicitud de seguimiento de biblioteca',
+                'email'=> $follower->getUser()->getEmail(),
+                'user' => $follower->getUser(),
+                'message' => $message
+            );
+        $this->sendEmail($emailFollower, 'email_solicitation');
+
         $em->persist($follower);
         $em->flush();
         $response = array("code" => 200, "success" => true, "action" => $action);
@@ -53,7 +64,6 @@ class AjaxController extends Controller
     private function sendEmail($email, $view){
          $message = $this->get('EmailHandler')->getMessage( $email['email'],
                                                             $email['user'],
-                                                            $email['library'],
                                                             $email['message'],
                                                             $email['subject'], $view);
          $failures = "No se pudo enviar el email a la casilla de correo especificada";
@@ -78,14 +88,12 @@ class AjaxController extends Controller
                 'subject'=> 'Solicitud de seguimiento de biblioteca',
                 'email'=> $this->getUser()->getEmail(),
                 'user' => $this->getUser(),
-                'library' => $library,
                 'message' => "Su solicitud de seguimiento a la biblioteca ".$library->getName()." se encuentra pendiente de aceptación."
             );
         $emailOwner=array(
                 'subject'=> 'Solicitud de seguimiento de biblioteca',
                 'email'=> $library->getOwner()->getEmail(),
                 'user' => $library->getOwner(),
-                'library' => $library,
                 'message' => "El usuario ".$this->getUser()->getUsername()." ha solicitado seguir a la biblioteca ".$library->getName().".
                             Puede aceptar o rechazar esta solicitud desde el panel de administración."
             );
