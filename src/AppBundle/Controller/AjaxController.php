@@ -53,11 +53,11 @@ class AjaxController extends Controller
          $message = $this->get('EmailHandler')->getMessage( $email['email'],
                                                             $email['user'],
                                                             $email['library'],
+                                                            $email['message'],
                                                             $email['subject'], $view);
          $failures = "No se pudo enviar el email a la casilla de correo especificada";
          $mailer = $this->container->get('mailer');
          $mailer->send($message, $failures);
-         sleep(2);
      }
 
     /**
@@ -73,13 +73,23 @@ class AjaxController extends Controller
         $solicitation->setLibrary($library);
         $em->persist($solicitation);
         $em->flush();
-        $email=array(
+        $emailFollower=array(
                 'subject'=> 'Solicitud de seguimiento de biblioteca',
                 'email'=> $this->getUser()->getEmail(),
                 'user' => $this->getUser(),
-                'library' => $library
+                'library' => $library,
+                'message' => "Su solicitud de seguimiento a la biblioteca ".$library->getName()." se encuentra pendiente de aceptación."
             );
-        $this->sendEmail($email, 'email_solicitation');
+        $emailOwner=array(
+                'subject'=> 'Solicitud de seguimiento de biblioteca',
+                'email'=> $library->getOwner()->getEmail(),
+                'user' => $library->getOwner(),
+                'library' => $library,
+                'message' => "El usuario ".$this->getUser()->getUsername()." ha solicitado seguir a la biblioteca ".$library->getName().".
+                            Puede aceptar o rechazar esta solicitud desde el panel de administración."
+            );
+        $this->sendEmail($emailFollower, 'email_solicitation');
+        $this->sendEmail($emailOwner, 'email_solicitation');
 
         if($request->request->get('_ajax')){
           $response = array("code" => 200, "success" => true, "data" => "alta");
