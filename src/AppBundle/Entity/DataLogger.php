@@ -34,25 +34,82 @@ class DataLogger
      * @ORM\Column(name="date", type="date")
      */
     private $date;
-
+    
     /**
-     * @var int|null
+     * @var decimal|null
      *
-     * @ORM\Column(name="temperature", type="integer" , nullable=true)
+     * @ORM\Column(name="mean_av_H", type="decimal" , nullable=true)
+     */
+    private $meanAvH;
+    
+    /**
+     * @var decimal|null
+     *
+     * @ORM\Column(name="mean_av_T", type="decimal" , nullable=true)
+     */
+    private $meanAvT;
+    
+    /**
+     * @var decimal|null
+     *
+     * @ORM\Column(name="reg_mean_av_H", type="decimal" , nullable=true)
+     */
+    private $regMeanAvH;
+    
+    /**
+     * @var decimal|null
+     *
+     * @ORM\Column(name="reg_mean_av_T", type="decimal" , nullable=true)
+     */
+    private $regMeanAvT;
+    
+    
+    /**
+     * @var decimal|null
+     *
+     * @ORM\Column(name="botton_limit_H", type="decimal" , nullable=true)
+     */
+    private $bottonLimitH;    
+        
+    /**
+     * @var decimal|null
+     *
+     * @ORM\Column(name="botton_limit_T", type="decimal" , nullable=true)
+     */
+    private $bottonLimitT;
+    
+    /**
+     * @var decimal|null
+     *
+     * @ORM\Column(name="top_limit_H", type="decimal" , nullable=true)
+     */
+    private $topLimitH;
+    
+    /**
+     * @var decimal|null
+     *
+     * @ORM\Column(name="top_limit_T", type="decimal" , nullable=true)
+     */
+    private $topLimitT;
+    
+    /**
+     * @var decimal|null
+     *
+     * @ORM\Column(name="temperature", type="decimal" , nullable=true)
      */
     private $temperature;
 
     /**
-     * @var int|null
+     * @var decimal|null
      *
-     * @ORM\Column(name="rh", type="integer" , nullable=true)
+     * @ORM\Column(name="rh", type="decimal" , nullable=true)
      */
     private $rh;
 
     /**
-     * @var int|null
+     * @var decimal|null
      *
-     * @ORM\Column(name="dewpt", type="integer" , nullable=true)
+     * @ORM\Column(name="dewpt", type="decimal" , nullable=true)
      */
     private $dewpt;
 
@@ -277,5 +334,197 @@ class DataLogger
     public function getEnabled()
     {
         return $this->enabled;
+    }
+
+    /**
+     * Set meanAvH.
+     *
+     * @param \decimal|null $meanAvH
+     *
+     * @return DataLogger
+     */
+    public function setMeanAvH(\decimal $meanAvH = null)
+    {
+        $this->meanAvH = $meanAvH;
+
+        return $this;
+    }
+
+    /**
+     * Get meanAvH.
+     *
+     * @return \decimal|null
+     */
+    public function getMeanAvH()
+    {
+        return $this->meanAvH;
+    }
+
+    /**
+     * Set meanAvT.
+     *
+     * @param \decimal|null $meanAvT
+     *
+     * @return DataLogger
+     */
+    public function setMeanAvT(\decimal $meanAvT = null)
+    {
+        $this->meanAvT = $meanAvT;
+
+        return $this;
+    }
+
+    /**
+     * Get meanAvT.
+     *
+     * @return \decimal|null
+     */
+    public function getMeanAvT()
+    {
+        return $this->meanAvT;
+    }
+
+    /**
+     * Set regMeanAvH.
+     *
+     * @param \decimal|null $regMeanAvH
+     *
+     * @return DataLogger
+     */
+    public function setRegMeanAvH(\decimal $regMeanAvH = null)
+    {
+        $this->regMeanAvH = $regMeanAvH;
+
+        return $this;
+    }
+
+    /**
+     * Get regMeanAvH.
+     *
+     * @return \decimal|null
+     */
+    public function getRegMeanAvH()
+    {
+        return $this->regMeanAvH;
+    }
+
+    /**
+     * Set regMeanAvT.
+     *
+     * @param \decimal|null $regMeanAvT
+     *
+     * @return DataLogger
+     */
+    public function setRegMeanAvT(\decimal $regMeanAvT = null)
+    {
+        $this->regMeanAvT = $regMeanAvT;
+
+        return $this;
+    }
+
+    /**
+     * Get regMeanAvT.
+     *
+     * @return \decimal|null
+     */
+    public function getRegMeanAvT()
+    {
+        return $this->regMeanAvT;
+    }
+
+    /**
+     * Set bottonLimitH.
+     *
+     * @param \decimal|null $bottonLimitH
+     *
+     * @return DataLogger
+     */
+    public function setBottonLimitH(\decimal $bottonLimitH = null)
+    {
+        $this->bottonLimitH = $bottonLimitH;
+
+        return $this;
+    }
+
+    /**
+     * Get bottonLimitH.
+     *
+     * @return \decimal|null
+     */
+    public function getBottonLimitH()
+    {
+        return $this->bottonLimitH;
+    }
+
+    /**
+     * Set bottonLimitT.
+     *
+     * @param \decimal|null $bottonLimitT
+     *
+     * @return DataLogger
+     */
+    public function setBottonLimitT(\decimal $bottonLimitT = null)
+    {
+        $this->bottonLimitT = $bottonLimitT;
+
+        return $this;
+    }
+
+    /**
+     * Get bottonLimitT.
+     *
+     * @return \decimal|null
+     */
+    public function getBottonLimitT()
+    {
+        return $this->bottonLimitT;
+    }
+
+    /**
+     * Set topLimitH.
+     *
+     * @param \decimal|null $topLimitH
+     *
+     * @return DataLogger
+     */
+    public function setTopLimitH(\decimal $topLimitH = null)
+    {
+        $this->topLimitH = $topLimitH;
+
+        return $this;
+    }
+
+    /**
+     * Get topLimitH.
+     *
+     * @return \decimal|null
+     */
+    public function getTopLimitH()
+    {
+        return $this->topLimitH;
+    }
+
+    /**
+     * Set topLimitT.
+     *
+     * @param \decimal|null $topLimitT
+     *
+     * @return DataLogger
+     */
+    public function setTopLimitT(\decimal $topLimitT = null)
+    {
+        $this->topLimitT = $topLimitT;
+
+        return $this;
+    }
+
+    /**
+     * Get topLimitT.
+     *
+     * @return \decimal|null
+     */
+    public function getTopLimitT()
+    {
+        return $this->topLimitT;
     }
 }

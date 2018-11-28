@@ -102,14 +102,8 @@
             <a class="btn btn-app" href="{{ path('library_edit', { 'id': library.id }) }}">
               <i class="fa fa-edit"></i> Editar
             </a>
-            <a class="btn btn-app" data-toggle="modal" data-target="#modal-danger{{library.id}}">
-              <i class="fa fa-remove"></i> Eliminar
-            </a>
             <a class="btn btn-app" href="{{ path('room_new', { 'library': library.id }) }}">
               <i class="fa fa-plus"></i> Sala
-            </a>
-            <a class="btn btn-app" href="{{ path('room_index', { 'library': library.id }) }}">
-              <i class="fa fa-list"></i> Salas
             </a>
             <a class="btn btn-app" data-toggle="modal" data-target="#modal-default{{library.id}}">
               <span class="badge bg-green">1</span>
@@ -120,26 +114,7 @@
             </a>
         </div>
       </div>
-      <!-- /.Modal Eliminar -->
-      <div class="modal modal-danger fade" id="modal-danger{{library.id}}">
-        <div class="modal-dialog">
-          <div class="modal-content">
-             <div class="modal-header">
-               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                 <span aria-hidden="true">&times;</span></button>
-               <h4 class="modal-title">Eliminar Biblioteca</h4>
-             </div>
-             <div class="modal-body">
-               <p>¿Está seguro de eliminar?</p>
-             </div>
-             <div class="modal-footer">
-               <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cerrar</button>
-               <a class="btn btn-outline" href="{{ path('library_delete', { 'id': library.id }) }}">Eliminar</a>
-             </div>
-          </div>
-        </div>
-      </div>
-      <!-- /.Fin Modal eliminar -->
+      
 
       <!-- /.Modal seguidores -->
       <div class="modal fade" id="modal-default{{library.id}}">
@@ -162,7 +137,7 @@
                 <tr>
                   {% if follower.state != 'canceled' %}
                     <td hidden>{{follower.id}}</td>
-                    <td><a href="{{ path('user_show', {'id': follower.user}) }}"></a> {{follower.user}}</td>
+                    <td><a href="{{ path('user_show', {'id': follower.user}) }}"> {{follower.user}}</a></td>
                     <td>
                        {% if follower.state == 'pending' %}
                           <span class="label label-warning" id="state_{{library.id}}"> Pendiente<span>
@@ -174,11 +149,11 @@
                     </td>
                     <td>
                       {% if follower.state == 'pending' %}
-                        <a href="#" class="ajax" library-id="{{library.id}}" action="accepted">
+                        <a href="#" class="ajax" library-id="{{library.id}}" follower-id="{{follower.user.id}}" action="accepted">
                           <span class="glyphicon glyphicon-ok text-success" id="action_{{library.id}}" aria-hidden="true">Aceptar</span>
                         </a>
                       {% endif %}
-                      <a href="#" class="ajax"  library-id="{{library.id}}" action="canceled">
+                      <a href="#" class="ajax"  library-id="{{library.id}}" follower-id="{{follower.user.id}}" action="canceled">
                         <span class="glyphicon glyphicon-remove text-danger" aria-hidden="true">Cancelar</span>
                       </a>
                     </td>
@@ -258,17 +233,19 @@
           $('.ajax').click(function(){
             var action = $(this).attr('action');
             var id = $(this).attr('library-id');
+            var follower = $(this).attr('follower-id');
             var elemn = $(this);
-            r=true;
-            if($('#state_'+id).hasClass('label-danger')){
-              var r = confirm("Estas seguro que deseas cancelar definitivamente");
+            if (action == "canceled") {
+              var r = confirm("Estas seguro que deseas cancelar la solicitud");
+            }else {
+              var r = true;
             }
             if (r) {
               $.ajax({
                 method: "POST",
                 url: "{{ path('ajax_follower_managment') }}",
                 dataType: "json",
-                data: { _follower: {{app.user.id}}, _ajax: true , _action: action}
+                data: { _follower: follower, _ajax: true , _action: action}
               })
               .done(function( data ) {
                 if (data.success) {

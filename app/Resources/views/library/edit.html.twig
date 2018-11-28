@@ -138,11 +138,34 @@
                 </div>
           </div>
           <div class="box-footer">
-            <input  data="homepage" class="btn btn-success" type="submit" value="Guardar" />
+            <a class="btn btn-danger pull-left" data-toggle="modal" data-target="#modal-danger{{library.id}}">
+               Eliminar
+            </a>
+            <input  data="homepage" class="btn btn-success pull-right" type="submit" value="Guardar" />
             <input  id="route" name="route" type="hidden" value="" />
           </div>
         {{ form_end(edit_form) }}
     </div>
+    <!-- /.Modal Eliminar -->
+    <div class="modal modal-danger fade" id="modal-danger{{library.id}}">
+      <div class="modal-dialog">
+        <div class="modal-content">
+           <div class="modal-header">
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span></button>
+             <h4 class="modal-title">Eliminar Biblioteca</h4>
+           </div>
+           <div class="modal-body">
+             <p>¿Está seguro de eliminar?</p>
+           </div>
+           <div class="modal-footer">
+             <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cerrar</button>
+             <a class="btn btn-outline" href="{{ path('library_delete', { 'id': library.id }) }}">Eliminar</a>
+           </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.Fin Modal eliminar -->
   </div>
   <div class="col-md-6">
     <div class="box box-primary">

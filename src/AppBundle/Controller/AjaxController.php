@@ -32,7 +32,7 @@ class AjaxController extends Controller
         $id = $request->request->get('_follower');
         $action = $request->request->get('_action');
         $em = $this->getDoctrine()->getManager();
-        $follower = $em->getRepository('AppBundle:Solicitation')->find($id);
+        $follower = $em->getRepository('AppBundle:Solicitation')->findOneByUser($id);
         if ($action == 'accepted'){
           $follower->changeToAccepted();
         }elseif($action == 'canceled'){
