@@ -116,7 +116,7 @@ class DataLogger
     /**
      * @var string
      *
-     * @ORM\Column(name="unique_attr", type="decimal" , nullable=false, unique=true)
+     * @ORM\Column(name="unique_attr", type="string", nullable=false, unique=true)
      */
     private $uniqueAttr;
 
@@ -137,18 +137,8 @@ class DataLogger
     {
         $this->date=$date;
         $this->room=$room;
-        $this->uniqueAttr=$this->generateUniqueAttr($date,$room);
+        $this->uniqueAttr=md5($room->getId().$date->format("U"));
         $this->enabled=false;
-    }
-
-    /**
-     * @return string
-     */
-    private function generateUniqueAttr($date, $room)
-    {
-        $uniqid=str_replace("\r",'',$date);
-        $uniqid=$uniqid.$room->getId();
-        return md5($uniqid);
     }
 
 

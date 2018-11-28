@@ -190,8 +190,8 @@ class RoomController extends Controller
           $activesheet = $phpExcelObject->getActiveSheet()->toArray();
           $j=2;
           while (isset($activesheet[$j][4])) {
-              $date= \DateTime::createFromFormat( "d/m/y H:i:s A", $activesheet[$j][1]." ".$activesheet[$j][2]);
-              $data = new DataLogger($activesheet[$j][1]." ".$activesheet[$j][2],$room);
+              $date= \DateTime::createFromFormat( "d/m/Y H:i:s", $activesheet[$j][1]." ".$activesheet[$j][2]);
+              $data = new DataLogger($date,$room);
               $data->setNumber($activesheet[$j][0]);
               $data->setTemperature($activesheet[$j][3]);
               $data->setRh($activesheet[$j][4]);
