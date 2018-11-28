@@ -112,7 +112,7 @@ class DataLogger
      * @ORM\Column(name="dewpt", type="decimal", precision=6, scale=3,   nullable=true)
      */
     private $dewpt;
-    
+
     /**
      * @var string
      *
@@ -135,14 +135,10 @@ class DataLogger
 
     public function __construct($date, $room)
     {
-<<<<<<< HEAD
         $this->date=$date;
         $this->room=$room;
         $this->uniqueAttr=$this->generateUniqueAttr($date,$room);
-        $this->enabled=true;
-=======
         $this->enabled=false;
->>>>>>> 39bf39f3b120e24d6f381f4e2537d0b844d7abd9
     }
 
     /**
