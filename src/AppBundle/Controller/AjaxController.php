@@ -36,7 +36,8 @@ class AjaxController extends Controller
         if ($action == 'accepted'){
           $follower->changeToAccepted();
         }elseif($action == 'canceled'){
-          $follower->changeToCanceled();
+          $em->remove($follower);
+          $em->flush();
         }else{
           $response = array("code" => 200, "success" => false, "action" => $action);
           return new Response(json_encode($response));
