@@ -223,32 +223,108 @@ class RoomController extends Controller
      */
     public function calcDataAction(Request $request, Room $room){
       $em = $this->getDoctrine()->getManager();
-      $cant = $em->getRepository('AppBundle:DataLogger')->getCantDataLogger($room);
-      // $offset=719; $limit=$cant-1439;
-      $offset=2160; $limit=$cant-4320;
-      $dataloggers = $em->getRepository('AppBundle:DataLogger')->getDataLoggersValid($room, $offset, $limit);
-      $offset=0; $limit=6020;
-      // $offset=0; $limit=1440;
+      $min= $em->getRepository('AppBundle:DataLogger')->getFirstDate($room);
+      $max= $em->getRepository('AppBundle:DataLogger')->getLastDate($room);
+      $dataloggers = $em->getRepository('AppBundle:DataLogger')->getDataLoggersValid($room, $min['date']->add(new \DateInterval('P15D')), $max['date']->sub(new \DateInterval('P15D')));
       foreach ($dataloggers as $datalogger) {
-        $data=$datalogger->getDate();
-        $dataMin=$data->sub(new \DateInterval('P15D'));
-        var_dump($dataMin);
-        die;
-        $promedio = $em->getRepository('AppBundle:DataLogger')->getAvgHT($room, $offset, $limit);
-
-        echo "id : ".$datalogger->getId()." <br><br> ";
-        echo "<pre>";
-        var_dump($promedio);
-        die;
-        $offset++;
+        $dateMin = clone $datalogger->getDate();
+        $dateMax = clone $datalogger->getDate();
+        $dateMin->sub(new \DateInterval('P15D'));
+        $dateMax->add(new \DateInterval('P15D'));
+        $promedio = $em->getRepository('AppBundle:DataLogger')->getAvgHT($room, $dateMin, $dateMax);
         $datalogger->setMeanAvH($promedio[0]['meanAvH']);
         $datalogger->setMeanAvT($promedio[0]['meanAvT']);
-        $datalogger->setRegMeanAvH($datalogger->getMeanAvH()-$promedio[0]['meanAvH']);
-        $datalogger->setRegMeanAvT($datalogger->getMeanAvT()-$promedio[0]['meanAvT']);
+        $datalogger->setEnabled(true);
+        $datalogger->setRegMeanAvH($datalogger->getRh()-$promedio[0]['meanAvH']);
+        $datalogger->setRegMeanAvT($datalogger->getTemperature()-$promedio[0]['meanAvT']);
         $em->persist($datalogger);
       }
       $em->flush();
       return new Response(json_encode(true));
 
     }
+
+    /**
+     * Displays a form to edit an existing room entity.
+     *
+     * @Route("/{id}/limit", name="room_limit")
+     * @Method({"GET", "POST"})
+     */
+    public function calcLimitAction(Request $request, Room $room){
+      $em = $this->getDoctrine()->getManager();
+      if ($room->getPerc7H()) {
+        $registros= $em->getRepository('AppBundle:DataLogger')->findBy(array('room'=>$room, 'enabled'=>true));
+        foreach ($registros as $reg) {
+          $bottomH=$room->getPerc7H()+$reg->getMeanAvH();
+          if ($bottomH > 70) {
+            $bottomH = 69;
+          }elseif ($bottomH < 45) {
+            $bottomH = 45;
+          }
+          $topH=$room->getPerc93H()+$reg->getMeanAvH();
+          if ($topH > 70) {
+            $topH = 70;
+          }
+          $bottomT=$room->getPerc7T()+$reg->getMeanAvT();
+
+          $topT=$room->getPerc93T()+$reg->getMeanAvT();
+          if ($topT > 30) {
+            $topT = 30;
+          }
+          $reg->setTopLimitT($topT);
+          $reg->setBottonLimitT($bottomT);
+
+          $reg->setTopLimitH($topH);
+          $reg->setBottonLimitH($bottomH);
+
+          $em->persist($reg);
+        }
+        $em->flush();
+      }else {
+        die('calcula los percentiles antes ');
+      }
+      return new Response(json_encode(true));
+
+    }
+
+    /**
+     * Displays a form to edit an existing room entity.
+     *
+     * @Route("/{id}/persentil", name="room_persentil")
+     * @Method({"GET", "POST"})
+     */
+    public function calcpersentilAction(Request $request, Room $room){
+      $em = $this->getDoctrine()->getManager();
+      $regMeanAvH= $em->getRepository('AppBundle:DataLogger')->getDataPersentil($room, "regMeanAvH");
+      $regMeanAvT= $em->getRepository('AppBundle:DataLogger')->getDataPersentil($room, "regMeanAvT");
+      $valuesH = array();
+      $valuesT = array();
+      foreach ($regMeanAvH as $datalogger) {
+        $valuesH[]=$datalogger["regMeanAvH"];
+      }
+      foreach ($regMeanAvT as $datalogger) {
+        $valuesT[]=$datalogger["regMeanAvT"];
+      }
+      $room->setPerc7H($this->getPercentile(7, $valuesH));
+      $room->setPerc93H($this->getPercentile(93, $valuesH));
+      $room->setPerc7T($this->getPercentile(7, $valuesT));
+      $room->setPerc93T($this->getPercentile(93, $valuesT));
+      $em->persist($room);
+      $em->flush();
+      return new Response(json_encode(true));
+
+    }
+
+    private function getPercentile($percentile, $array) {
+        sort($array);
+        $index = ($percentile/100) * count($array);
+        if (floor($index) == $index) {
+             $result = ($array[$index-1] + $array[$index])/2;
+        }
+        else {
+            $result = $array[floor($index)];
+        }
+        return $result;
+    }
+
 }

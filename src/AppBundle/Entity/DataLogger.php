@@ -351,7 +351,7 @@ class DataLogger
      *
      * @return DataLogger
      */
-    public function setMeanAvH(\decimal $meanAvH = null)
+    public function setMeanAvH(  $meanAvH = null)
     {
         $this->meanAvH = $meanAvH;
 
@@ -375,7 +375,7 @@ class DataLogger
      *
      * @return DataLogger
      */
-    public function setMeanAvT(\decimal $meanAvT = null)
+    public function setMeanAvT(  $meanAvT = null)
     {
         $this->meanAvT = $meanAvT;
 
@@ -399,7 +399,7 @@ class DataLogger
      *
      * @return DataLogger
      */
-    public function setRegMeanAvH(\decimal $regMeanAvH = null)
+    public function setRegMeanAvH(  $regMeanAvH = null)
     {
         $this->regMeanAvH = $regMeanAvH;
 
@@ -423,7 +423,7 @@ class DataLogger
      *
      * @return DataLogger
      */
-    public function setRegMeanAvT(\decimal $regMeanAvT = null)
+    public function setRegMeanAvT(  $regMeanAvT = null)
     {
         $this->regMeanAvT = $regMeanAvT;
 
@@ -447,7 +447,7 @@ class DataLogger
      *
      * @return DataLogger
      */
-    public function setBottonLimitH(\decimal $bottonLimitH = null)
+    public function setBottonLimitH(  $bottonLimitH = null)
     {
         $this->bottonLimitH = $bottonLimitH;
 
@@ -471,7 +471,7 @@ class DataLogger
      *
      * @return DataLogger
      */
-    public function setBottonLimitT(\decimal $bottonLimitT = null)
+    public function setBottonLimitT(  $bottonLimitT = null)
     {
         $this->bottonLimitT = $bottonLimitT;
 
@@ -495,7 +495,7 @@ class DataLogger
      *
      * @return DataLogger
      */
-    public function setTopLimitH(\decimal $topLimitH = null)
+    public function setTopLimitH(  $topLimitH = null)
     {
         $this->topLimitH = $topLimitH;
 
@@ -519,7 +519,7 @@ class DataLogger
      *
      * @return DataLogger
      */
-    public function setTopLimitT(\decimal $topLimitT = null)
+    public function setTopLimitT(  $topLimitT = null)
     {
         $this->topLimitT = $topLimitT;
 
