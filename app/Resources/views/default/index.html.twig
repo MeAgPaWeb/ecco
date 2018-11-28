@@ -102,17 +102,11 @@
             <a class="btn btn-app" href="{{ path('library_edit', { 'id': library.id }) }}">
               <i class="fa fa-edit"></i> Editar
             </a>
-            <!-- <a class="btn btn-app" data-toggle="modal" data-target="#modal-danger{{library.id}}">
-              <i class="fa fa-remove"></i> Eliminar
-            </a> -->
             <a class="btn btn-app" href="{{ path('room_new', { 'library': library.id }) }}">
               <i class="fa fa-plus"></i> Sala
             </a>
-            <!-- <a class="btn btn-app" href="{{ path('room_index', { 'library': library.id }) }}">
-              <i class="fa fa-list"></i> Salas
-            </a> -->
             <a class="btn btn-app" data-toggle="modal" data-target="#modal-default{{library.id}}">
-              <span class="badge bg-green">{{library | pending}}</span>
+              {%if library | pending %}<span class="badge bg-green">{{library | pending}}</span>{% endif %}
               <i class="fa fa-users"></i> Seguidores
             </a>
             <a class="btn btn-app" href="{{ path('library_log', {'id': library.id }) }}">
@@ -120,26 +114,6 @@
             </a>
         </div>
       </div>
-      <!-- /.Modal Eliminar -->
-      <!-- <div class="modal modal-danger fade" id="modal-danger{{library.id}}">
-        <div class="modal-dialog">
-          <div class="modal-content">
-             <div class="modal-header">
-               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                 <span aria-hidden="true">&times;</span></button>
-               <h4 class="modal-title">Eliminar Biblioteca</h4>
-             </div>
-             <div class="modal-body">
-               <p>¿Está seguro de eliminar?</p>
-             </div>
-             <div class="modal-footer">
-               <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cerrar</button>
-               <a class="btn btn-outline" href="{{ path('library_delete', { 'id': library.id }) }}">Eliminar</a>
-             </div>
-          </div>
-        </div>
-      </div> -->
-      <!-- /.Fin Modal eliminar -->
 
       <!-- /.Modal seguidores -->
       <div class="modal fade" id="modal-default{{library.id}}">
@@ -197,7 +171,59 @@
       <!-- /.Fin Modal seguidores -->
     </div>
   {% endfor %}
-    <!-- /.col -->
+    <!--BIBLIOtecas seguidas-->
+    {% for library in followings %}
+      <div class="col-md-6">
+        <!-- Widget: user widget style 1 -->
+        <div class="box box-widget widget-user">
+          <!-- Add the bg color to the header using any of the bg-* classes -->
+          <a href="#">
+            <div class="widget-user-header bg-aqua-active" style="background-color: {{ library.colour|default('#00a7d0') }}!important">
+              <h3 class="widget-user-username">{{ library.name }}</h3>
+              <h5 class="widget-user-desc">{{ library.address }}</h5>
+            </div>
+          </a>
+
+          <div class="box-body">
+            <div class="row">
+              <div class="col-sm-4 border-right">
+                <div class="description-block">
+                  <h5 class="description-header">{{library.rooms|length }}</h5>
+                  <span class="description-text">Salas</span>
+                </div>
+                <!-- /.description-block -->
+              </div>
+              <!-- /.col -->
+              <div class="col-sm-4 border-right">
+                <div class="description-block">
+                  <h5 class="description-header">{{library | dataLoggers}}</h5>
+                  <span class="description-text">Registros</span>
+                </div>
+                <!-- /.description-block -->
+              </div>
+              <!-- /.col -->
+              <div class="col-sm-4">
+                <div class="description-block">
+                  <h5 class="description-header">{{ library | accepted}}</h5>
+                  <span class="description-text">Seguidores</span>
+                </div>
+                <!-- /.description-block -->
+              </div>
+              <!-- /.col -->
+            </div>
+            <!-- /.row -->
+
+          </div>
+          <div class="box-footer">
+              <a class="btn btn-app" href="{{ path('library_log', {'id': library.id }) }}">
+                <i class="fa  fa-line-chart"></i> Estadísticas
+              </a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+    
+ 
 </div>
 {% endblock %}
 

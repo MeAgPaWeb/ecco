@@ -164,7 +164,11 @@ class UserController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $libraries = $em->getRepository('AppBundle:Library')->findBy(array('owner' => $user, 'enabled' => true));
-        $libraries_follows = $em->getRepository('AppBundle:Library')->findBy(array('owner' => $user, 'enabled' => true));
+        $solicitations = $em->getRepository('AppBundle:Solicitation')->getLibrariesFollowings($user);
+        $libraries_follows=array();
+        foreach ($solicitations as $solicitation){
+          $libraries_follows[]=$solicitation->getLibrary();
+        }
         $msj = null;
         if ($user === $this->getUser()) {
 

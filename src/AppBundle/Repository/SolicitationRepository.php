@@ -10,4 +10,15 @@ namespace AppBundle\Repository;
  */
 class SolicitationRepository extends \Doctrine\ORM\EntityRepository
 {
+  public function getLibrariesFollowings($user)
+  {
+    return $this->createQueryBuilder('solicitation')
+	        ->select('solicitation')
+	        ->innerJoin('solicitation.user', 'user')
+	        ->where('user = :user and solicitation.state = :state')
+	        ->setParameter('user', $user)
+          ->setParameter('state', 'accepted')
+	        ->getQuery()
+	        ->getResult();
+  }
 }
