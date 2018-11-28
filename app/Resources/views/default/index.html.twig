@@ -114,7 +114,7 @@
             </a>
         </div>
       </div>
-      
+
 
       <!-- /.Modal seguidores -->
       <div class="modal fade" id="modal-default{{library.id}}">
@@ -137,7 +137,7 @@
                 <tr>
                   {% if follower.state != 'canceled' %}
                     <td hidden>{{follower.id}}</td>
-                    <td><a href="{{ path('user_show', {'id': follower.user}) }}"> {{follower.user}}</a></td>
+                    <td><a href="{{ path('user_show', {'id': follower.user.id}) }}"> {{follower.user}}</a></td>
                     <td>
                        {% if follower.state == 'pending' %}
                           <span class="label label-warning" id="state_{{library.id}}"> Pendiente<span>

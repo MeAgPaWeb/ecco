@@ -31,67 +31,67 @@ class DataLogger
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date", type="date")
+     * @ORM\Column(name="date", type="datetime")
      */
     private $date;
-    
+
     /**
      * @var decimal|null
      *
      * @ORM\Column(name="mean_av_H", type="decimal" , nullable=true)
      */
     private $meanAvH;
-    
+
     /**
      * @var decimal|null
      *
      * @ORM\Column(name="mean_av_T", type="decimal" , nullable=true)
      */
     private $meanAvT;
-    
+
     /**
      * @var decimal|null
      *
      * @ORM\Column(name="reg_mean_av_H", type="decimal" , nullable=true)
      */
     private $regMeanAvH;
-    
+
     /**
      * @var decimal|null
      *
      * @ORM\Column(name="reg_mean_av_T", type="decimal" , nullable=true)
      */
     private $regMeanAvT;
-    
-    
+
+
     /**
      * @var decimal|null
      *
      * @ORM\Column(name="botton_limit_H", type="decimal" , nullable=true)
      */
-    private $bottonLimitH;    
-        
+    private $bottonLimitH;
+
     /**
      * @var decimal|null
      *
      * @ORM\Column(name="botton_limit_T", type="decimal" , nullable=true)
      */
     private $bottonLimitT;
-    
+
     /**
      * @var decimal|null
      *
      * @ORM\Column(name="top_limit_H", type="decimal" , nullable=true)
      */
     private $topLimitH;
-    
+
     /**
      * @var decimal|null
      *
      * @ORM\Column(name="top_limit_T", type="decimal" , nullable=true)
      */
     private $topLimitT;
-    
+
     /**
      * @var decimal|null
      *
@@ -118,14 +118,14 @@ class DataLogger
      * @ORM\JoinColumn(name="room_id", referencedColumnName="id")
      */
     private $room;
-    
+
     /**
      * @var bool
      *
      * @ORM\Column(name="enabled", type="boolean")
      */
     private $enabled;
-    
+
     public function __construct()
     {
         $this->enabled=true;
