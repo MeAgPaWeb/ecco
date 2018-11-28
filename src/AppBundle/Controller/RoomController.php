@@ -190,12 +190,10 @@ class RoomController extends Controller
           $activesheet = $phpExcelObject->getActiveSheet()->toArray();
           $j=2;
           while (isset($activesheet[$j][4])) {
-              $data = new DataLogger();
+              $date= \DateTime::createFromFormat( "d/m/y H:i:s A", $activesheet[$j][1]." ".$activesheet[$j][2]);
+              $data = new DataLogger($activesheet[$j][1]." ".$activesheet[$j][2],$room);
               $data->setNumber($activesheet[$j][0]);
-              $data->setRoom($room);
-              $date= \DateTime::createFromFormat( "d/m/Y H:i:s", $activesheet[$j][1]." ".$activesheet[$j][2]);
-              $data->setDate($date);
-              $data->setTemperature((float)$activesheet[$j][3]);
+              $data->setTemperature($activesheet[$j][3]);
               $data->setRh($activesheet[$j][4]);
               $data->setDewpt($activesheet[$j][5]);
               $em->persist($data);
@@ -216,6 +214,7 @@ class RoomController extends Controller
         return false;
       }
     }
+<<<<<<< HEAD
 
     /**
      * Displays a form to edit an existing room entity.
@@ -250,4 +249,6 @@ class RoomController extends Controller
       return new Response(json_encode(true));
 
     }
+=======
+>>>>>>> 2b5eac0c2f8b2d6ab54b6edc2cb926423f31ec95
 }
