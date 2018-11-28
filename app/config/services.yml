@@ -7,7 +7,7 @@ services:
 
     app.twig_extension:
         class: AppBundle\Twig\AppExtension
-        arguments: [ "@service_container", "@request_stack", "%locale%", "%media%", "%social%"]
+        arguments: [ "@service_container", "@request_stack", "%locale%", "%media%", "%social%", "@doctrine"]
         public: false
         tags:
             - { name: twig.extension }

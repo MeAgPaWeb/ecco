@@ -10,4 +10,14 @@ namespace AppBundle\Repository;
  */
 class DataLoggerRepository extends \Doctrine\ORM\EntityRepository
 {
+  public function getDataLoggers($library){
+		return $this->createQueryBuilder('dataLogger')
+	        ->select('dataLogger')
+	        ->innerJoin('dataLogger.room', 'room')
+	        ->innerJoin('room.library', 'library')
+	        ->where('library = :library')
+	        ->setParameter('library', $library)
+	        ->getQuery()
+	        ->getResult();
+	}
 }
