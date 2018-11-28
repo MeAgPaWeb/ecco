@@ -102,14 +102,8 @@
             <a class="btn btn-app" href="{{ path('library_edit', { 'id': library.id }) }}">
               <i class="fa fa-edit"></i> Editar
             </a>
-            <a class="btn btn-app" data-toggle="modal" data-target="#modal-danger{{library.id}}">
-              <i class="fa fa-remove"></i> Eliminar
-            </a>
             <a class="btn btn-app" href="{{ path('room_new', { 'library': library.id }) }}">
               <i class="fa fa-plus"></i> Sala
-            </a>
-            <a class="btn btn-app" href="{{ path('room_index', { 'library': library.id }) }}">
-              <i class="fa fa-list"></i> Salas
             </a>
             <a class="btn btn-app" data-toggle="modal" data-target="#modal-default{{library.id}}">
               <span class="badge bg-green">1</span>
@@ -120,26 +114,7 @@
             </a>
         </div>
       </div>
-      <!-- /.Modal Eliminar -->
-      <div class="modal modal-danger fade" id="modal-danger{{library.id}}">
-        <div class="modal-dialog">
-          <div class="modal-content">
-             <div class="modal-header">
-               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                 <span aria-hidden="true">&times;</span></button>
-               <h4 class="modal-title">Eliminar Biblioteca</h4>
-             </div>
-             <div class="modal-body">
-               <p>¿Está seguro de eliminar?</p>
-             </div>
-             <div class="modal-footer">
-               <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cerrar</button>
-               <a class="btn btn-outline" href="{{ path('library_delete', { 'id': library.id }) }}">Eliminar</a>
-             </div>
-          </div>
-        </div>
-      </div>
-      <!-- /.Fin Modal eliminar -->
+      
 
       <!-- /.Modal seguidores -->
       <div class="modal fade" id="modal-default{{library.id}}">
