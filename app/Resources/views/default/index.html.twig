@@ -162,7 +162,7 @@
                 <tr>
                   {% if follower.state != 'canceled' %}
                     <td hidden>{{follower.id}}</td>
-                    <td><a href="{{ path('user_show', {'id': follower.user}) }}"></a> {{follower.user}}</td>
+                    <td><a href="{{ path('user_show', {'id': follower.user}) }}"> {{follower.user}}</a></td>
                     <td>
                        {% if follower.state == 'pending' %}
                           <span class="label label-warning" id="state_{{library.id}}"> Pendiente<span>
@@ -174,11 +174,11 @@
                     </td>
                     <td>
                       {% if follower.state == 'pending' %}
-                        <a href="#" class="ajax" library-id="{{library.id}}" action="accepted">
+                        <a href="#" class="ajax" library-id="{{library.id}}" follower-id="{{follower.user.id}}" action="accepted">
                           <span class="glyphicon glyphicon-ok text-success" id="action_{{library.id}}" aria-hidden="true">Aceptar</span>
                         </a>
                       {% endif %}
-                      <a href="#" class="ajax"  library-id="{{library.id}}" action="canceled">
+                      <a href="#" class="ajax"  library-id="{{library.id}}" follower-id="{{follower.user.id}}" action="canceled">
                         <span class="glyphicon glyphicon-remove text-danger" aria-hidden="true">Cancelar</span>
                       </a>
                     </td>
@@ -258,17 +258,19 @@
           $('.ajax').click(function(){
             var action = $(this).attr('action');
             var id = $(this).attr('library-id');
+            var follower = $(this).attr('follower-id');
             var elemn = $(this);
-            r=true;
-            if($('#state_'+id).hasClass('label-danger')){
-              var r = confirm("Estas seguro que deseas cancelar definitivamente");
+            if (action == "canceled") {
+              var r = confirm("Estas seguro que deseas cancelar la solicitud");
+            }else {
+              var r = true;
             }
             if (r) {
               $.ajax({
                 method: "POST",
                 url: "{{ path('ajax_follower_managment') }}",
                 dataType: "json",
-                data: { _follower: {{app.user.id}}, _ajax: true , _action: action}
+                data: { _follower: follower, _ajax: true , _action: action}
               })
               .done(function( data ) {
                 if (data.success) {
