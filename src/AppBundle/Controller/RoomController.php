@@ -189,8 +189,7 @@ class RoomController extends Controller
           $phpExcelObject->setActiveSheetIndex(0);
           $activesheet = $phpExcelObject->getActiveSheet()->toArray();
           $j=2;
-          while (isset($activesheet[$j][0])) {
-            if (($activesheet[$j][3]>0) && ($activesheet[$j][4]>0)) {
+          while (isset($activesheet[$j][4])) {
               $data = new DataLogger();
               $data->setNumber($activesheet[$j][0]);
               $data->setRoom($room);
@@ -203,7 +202,6 @@ class RoomController extends Controller
               $room->addDataLogger($data);
               $em->persist($room);
               $j++;
-            }
           }
           $em->flush();
           if ($request->request->get('ajax')) {
@@ -217,5 +215,31 @@ class RoomController extends Controller
         }
         return false;
       }
+    }
+
+    /**
+     * Displays a form to edit an existing room entity.
+     *
+     * @Route("/{id}/calc", name="room_calc")
+     * @Method({"GET", "POST"})
+     */
+    public function calcDataAction(Request $request, Room $room){
+      $em = $this->getDoctrine()->getManager();
+      $cant = $em->getRepository('AppBundle:DataLogger')->getCantDataLogger($room);
+      $offset=719; $limit=$cant-1439;
+      $dataloggers = $em->getRepository('AppBundle:DataLogger')->getDataLoggersValid($room, $offset, $limit);
+      $offset=0; $limit=1440;
+      foreach ($dataloggers as $datalogger) {
+        $promedio = $em->getRepository('AppBundle:DataLogger')->getAvgHT($room, $offset, $limit);
+        $offset++;
+        $datalogger->setMeanAvH($promedio[0]['meanAvH']);
+        $datalogger->setMeanAvT($promedio[0]['meanAvT']);
+        $datalogger->setRegMeanAvH($datalogger->getMeanAvH()-$promedio[0]['meanAvH']);
+        $datalogger->setRegMeanAvT($datalogger->getMeanAvT()-$promedio[0]['meanAvT']);
+        $em->persist($datalogger);
+      }
+      $em->flush();
+      return new Response(json_encode(true));
+
     }
 }
