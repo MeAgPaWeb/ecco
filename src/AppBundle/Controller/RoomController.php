@@ -191,11 +191,9 @@ class RoomController extends Controller
           $j=2;
           while (isset($activesheet[$j][0])) {
             if (($activesheet[$j][3]>0) && ($activesheet[$j][4]>0)) {
-              $data = new DataLogger();
-              $data->setNumber($activesheet[$j][0]);
-              $data->setRoom($room);
               $date= \DateTime::createFromFormat( "d/m/y H:i:s A", $activesheet[$j][1]." ".$activesheet[$j][2]);
-              $data->setDate($date);
+              $data = new DataLogger($activesheet[$j][1]." ".$activesheet[$j][2],$room);
+              $data->setNumber($activesheet[$j][0]);
               $data->setTemperature($activesheet[$j][3]);
               $data->setRh($activesheet[$j][4]);
               $data->setDewpt($activesheet[$j][5]);

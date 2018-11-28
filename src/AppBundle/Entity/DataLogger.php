@@ -112,6 +112,13 @@ class DataLogger
      * @ORM\Column(name="dewpt", type="decimal" , nullable=true)
      */
     private $dewpt;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="unique_attr", type="decimal" , nullable=false, unique=true)
+     */
+    private $uniqueAttr;
 
     /**
      * @ORM\ManyToOne(targetEntity="Room", inversedBy="dataLoggers")
@@ -126,12 +133,23 @@ class DataLogger
      */
     private $enabled;
 
-    public function __construct()
+    public function __construct($date, $room)
     {
+        $this->date=$date;
+        $this->room=$room;
+        $this->uniqueAttr=$this->generateUniqueAttr($date,$room);
         $this->enabled=true;
     }
 
-
+    /**
+     * @return string
+     */
+    private function generateUniqueAttr($date, $room)
+    {
+        $uniqid=str_replace("\r",'',$date);
+        $uniqid=$uniqid.$room->getId();
+        return md5($uniqid);
+    }
 
 
     /**
