@@ -1,0 +1,61 @@
+{% if page is not defined %}
+    {% set page = {"title": "null", "subtitle": "null", "section": "null" } %}
+{% endif %}
+
+<li class="treeview {% if is_route_root("home") %}active{% endif %}">
+    <a href="{{ path('homepage') }}">
+    <i class="fa fa-dashboard "></i>
+    <span>Inicio</span>
+    </a>
+</li>
+
+<li class="treeview">
+    <a href="#">
+    <i class="fa fa-institution"></i>
+    <span>Biblitecas</span>
+    <i class="fa fa-angle-left pull-right"> </i>
+    </i>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="{{ path('library_index') }}">Listado</a></li>
+      <li><a href="{{ path('library_new') }}">Agregar</a></li>
+    </ul>
+</li>
+
+
+<li class="treeview">
+    <a href="#">
+    <i class="fa fa-puzzle-piece"></i>
+    <span>Salas</span>
+    <i class="fa fa-angle-left pull-right"> </i>
+    </i>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="{{ path('room_index') }}">Listado</a></li>
+      <li><a href="{{ path('room_new') }}">Agregar</a></li>
+    </ul>
+</li>
+
+<li class="treeview ">
+    <a href="#">
+    <i class="fa fa-area-chart"></i>
+    <span>Estaditicas</span>
+    <i class="fa fa-angle-left pull-right"> </i>
+    </a>
+    <ul class="treeview-menu">
+      <li>Biblitecas</li>
+      <li>Salas</li>
+    </ul>
+</li>
+
+
+<li class="treeview {% if is_route_root("user") %}active{% endif %}">
+    <a href="#">
+    <i class="fa fa-user"></i>
+    <span>Usuarios</span>
+    <i class="fa fa-angle-left pull-right"> </i>
+    </a>
+    <ul class="treeview-menu if">
+
+    </ul>
+</li>

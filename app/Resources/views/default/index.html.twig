@@ -1,0 +1,305 @@
+{% extends 'default.html.twig' %}
+
+{% set page =
+    {
+        "title": "Principal",
+        "subtitle": "Portada",
+    }
+%}
+
+{% block breadcrumb %}
+    <li class="active">Portada</li>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+  <!-- ./col -->
+  <a href="{{ path('library_new') }}">
+    <div class="col-lg-3 col-xs-6">
+      <div class="small-box bg-green">
+        <div class="inner">
+          <h3>Crear</h3>
+          <p>Biblioteca</p>
+        </div>
+        <div class="icon">
+          <i class="glyphicon glyphicon-plus"></i>
+        </div>
+      </div>
+    </div>
+  </a>
+  <a href="{{ path('library_index') }}">
+    <div class="col-lg-3 col-xs-6">
+      <div class="small-box bg-fucia">
+        <div class="inner">
+          <h3>Buscar</h3>
+          <p>Otras Bibliotecas</p>
+        </div>
+        <div class="icon">
+          <i class="ion ion-search"></i>
+        </div>
+      </div>
+    </div>
+  </a>
+  <a href="#" data-toggle="modal" data-target="#modal-load">
+    <div class="col-lg-3 col-xs-6">
+      <div class="small-box bg-red">
+        <div class="inner">
+          <h3>Cargar</h3>
+          <p>Datos a una sala</p>
+        </div>
+        <div class="icon">
+          <i class="ion ion-upload"></i>
+        </div>
+      </div>
+    </div>
+  </a>
+  <!-- ./col -->
+</div>
+<div class="row">
+  {% for library in libraries %}
+    <div class="col-md-6">
+      <!-- Widget: user widget style 1 -->
+      <div class="box box-widget widget-user">
+        <!-- Add the bg color to the header using any of the bg-* classes -->
+        <a href="#">
+          <div class="widget-user-header bg-aqua-active" style="background-color: {{ library.colour|default('#00a7d0') }}!important">
+            <h3 class="widget-user-username">{{ library.name }}</h3>
+            <h5 class="widget-user-desc">{{ library.address }}</h5>
+          </div>
+        </a>
+
+        <div class="box-body">
+          <div class="row">
+            <div class="col-sm-4 border-right">
+              <div class="description-block">
+                <h5 class="description-header">{{library.rooms|length }}</h5>
+                <span class="description-text">Salas</span>
+              </div>
+              <!-- /.description-block -->
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-4 border-right">
+              <div class="description-block">
+                <h5 class="description-header">12000</h5>
+                <span class="description-text">Registros</span>
+              </div>
+              <!-- /.description-block -->
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-4">
+              <div class="description-block">
+                <h5 class="description-header">2</h5>
+                <span class="description-text">Seguidores</span>
+              </div>
+              <!-- /.description-block -->
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.row -->
+
+        </div>
+        <div class="box-footer">
+            <a class="btn btn-app" href="{{ path('library_edit', { 'id': library.id }) }}">
+              <i class="fa fa-edit"></i> Editar
+            </a>
+            <a class="btn btn-app" data-toggle="modal" data-target="#modal-danger{{library.id}}">
+              <i class="fa fa-remove"></i> Eliminar
+            </a>
+            <a class="btn btn-app" href="{{ path('room_new', { 'library': library.id }) }}">
+              <i class="fa fa-plus"></i> Sala
+            </a>
+            <a class="btn btn-app" href="{{ path('room_index', { 'library': library.id }) }}">
+              <i class="fa fa-list"></i> Salas
+            </a>
+            <a class="btn btn-app" data-toggle="modal" data-target="#modal-default{{library.id}}">
+              <span class="badge bg-green">1</span>
+              <i class="fa fa-users"></i> Seguidores
+            </a>
+            <a class="btn btn-app" href="{{ path('library_log', {'id': library.id }) }}">
+              <i class="fa  fa-line-chart"></i> Estadísticas
+            </a>
+        </div>
+      </div>
+      <!-- /.Modal Eliminar -->
+      <div class="modal modal-danger fade" id="modal-danger{{library.id}}">
+        <div class="modal-dialog">
+          <div class="modal-content">
+             <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                 <span aria-hidden="true">&times;</span></button>
+               <h4 class="modal-title">Eliminar Biblioteca</h4>
+             </div>
+             <div class="modal-body">
+               <p>¿Está seguro de eliminar?</p>
+             </div>
+             <div class="modal-footer">
+               <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cerrar</button>
+               <a class="btn btn-outline" href="{{ path('library_delete', { 'id': library.id }) }}">Eliminar</a>
+             </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.Fin Modal eliminar -->
+
+      <!-- /.Modal seguidores -->
+      <div class="modal fade" id="modal-default{{library.id}}">
+        <div class="modal-dialog">
+          <div class="modal-content">
+             <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                 <span aria-hidden="true">&times;</span></button>
+               <h4 class="modal-title">Ver seguidores</h4>
+             </div>
+             <div class="modal-body table-responsive no-padding">
+              <table class="table table-hover">
+                <tbody><tr>
+                  <th hidden>#</th>
+                  <th>Usuario</th>
+                  <th>Estado</th>
+                  <th>Acción</th>
+                </tr>
+                {% for follower in library.followers %}
+                <tr>
+                  {% if follower.state != 'canceled' %}
+                    <td hidden>{{follower.id}}</td>
+                    <td><a href="{{ path('user_show', {'id': follower.user}) }}"> {{follower.user}}</a></td>
+                    <td>
+                       {% if follower.state == 'pending' %}
+                          <span class="label label-warning" id="state_{{library.id}}"> Pendiente<span>
+                        {% elseif follower.state == 'accepted'%}
+                           <span class="label label-success" id="state_{{library.id}}"> Aceptado<span>
+                        {% else %}
+                          <span class="label label-danger" id="state_{{library.id}}"> Cancelado<span>
+                        {% endif %}
+                    </td>
+                    <td>
+                      {% if follower.state == 'pending' %}
+                        <a href="#" class="ajax" library-id="{{library.id}}" follower-id="{{follower.user.id}}" action="accepted">
+                          <span class="glyphicon glyphicon-ok text-success" id="action_{{library.id}}" aria-hidden="true">Aceptar</span>
+                        </a>
+                      {% endif %}
+                      <a href="#" class="ajax"  library-id="{{library.id}}" follower-id="{{follower.user.id}}" action="canceled">
+                        <span class="glyphicon glyphicon-remove text-danger" aria-hidden="true">Cancelar</span>
+                      </a>
+                    </td>
+                  {% endif %}
+                </tr>
+                {% endfor %}
+              </tbody></table>
+             </div>
+             <div class="modal-footer">
+               <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cerrar</button>
+               <a class="btn btn-outline" href="#">Eliminar</a>
+             </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.Fin Modal seguidores -->
+    </div>
+  {% endfor %}
+    <!-- /.col -->
+</div>
+{% endblock %}
+
+{% block modal_title %}
+  Cargar datos a una sala
+{% endblock %}
+
+{% block modal_body %}
+    <div class="form-group">
+      <label>Seleccione una Bibliteca</label>
+      <div class="input-group input-group-sm">
+        <select class="form-control" id="library">
+             <option value="" disabled selected>Seleccione una bibliteca</option>
+          {% for library in libraries %}
+              <option value="{{library.id}}">{{library.name}}</option>
+          {% endfor %}
+        </select>
+        <span class="input-group-addon" style="padding:0px;">
+          <a href="{{ path('library_new')}}">
+              <i class="fa fa-plus" style="padding: 8px 18px;background-color: #3c8dbc;margin: 0;color: #fff;"></i>
+            </a>
+          </span>
+      </div>
+
+    </div>
+    <div class="form-group">
+      <label>Seleccione una Sala</label>
+        <div class="input-group input-group-sm">
+          <select class="form-control" id="rooms" disabled>
+            <option value=null>vacio</option>
+          </select>
+          <span class="input-group-addon" style="padding:0px;">
+            <a href="#" id="add-sala" disabled>
+                <i class="fa fa-plus" style="padding: 8px 18px;background-color: #3c8dbc;margin: 0;color: #fff;"></i>
+              </a>
+            </span>
+        </div>
+        <script>
+          $('#library').change(function(){
+            var id = $(this).val()
+            $.ajax({
+              method: "POST",
+              url: "/room/api/list",
+              data: { library: id }
+            })
+            .done(function( data ) {
+              var $el = $("#rooms");
+              $('#add-sala').attr('href', '/room/'+id+'/new')
+              $el.empty(); // remove old options
+              $.each(data, function(key,value) {
+                $el.append($("<option></option>")
+                   .attr("value", key).text(value));
+              });
+              $el.removeAttr("disabled");
+            });
+          })
+
+          $('.ajax').click(function(){
+            var action = $(this).attr('action');
+            var id = $(this).attr('library-id');
+            var follower = $(this).attr('follower-id');
+            var elemn = $(this);
+            if (action == "canceled") {
+              var r = confirm("Estas seguro que deseas cancelar la solicitud");
+            }else {
+              var r = true;
+            }
+            if (r) {
+              $.ajax({
+                method: "POST",
+                url: "{{ path('ajax_follower_managment') }}",
+                dataType: "json",
+                data: { _follower: follower, _ajax: true , _action: action}
+              })
+              .done(function( data ) {
+                if (data.success) {
+                  $('#state_'+id).removeClass('label-warning');
+                  if (data.action == "accepted") {
+                    $('#state_'+id).addClass('label-success');
+                      $('#state_'+id).html('Aceptado');
+                  }else if(data.action == "canceled") {
+                    if($('#state_'+id).hasClass('label-danger')){
+                      $('#state_'+id).parent().parent().remove()
+                    }else{
+                      $('#state_'+id).addClass('label-danger');
+                      $('#state_'+id).html('Cancelado');
+                    }
+                  }
+                  $('#action_'+id).remove();
+                }else{
+                  alert('no se pudo procesar la solicitud');
+                }
+              });
+
+            }
+          });
+
+        </script>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputFile">Archivo de Registro del DataLogger</label>
+        <input id="uploadFile" name="upload" type="file">
+        <p class="help-block">Seleccione el archivo .xls que contenga las siguientes columnas <br>   ("#";"Date";"Time, GMT-03:00";"Temp, °C";"RH, %";"DewPt, °C")</p>
+      </div>
+{% endblock %}

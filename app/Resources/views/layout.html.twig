@@ -1,0 +1,301 @@
+{% import "macros/macros.html.twig" as macro %}
+
+{% if stylesheets is not defined %}
+    {% set stylesheets = [] %}
+{% endif %}
+
+{% if javascripts is not defined %}
+    {% set javascripts = [] %}
+{% endif %}
+
+{% set stylesheets = [
+                        'lib/bootstrap/css/bootstrap.min.css',
+                        'lib/bootstrap/css/bootstrap-theme.min.css',
+                        'lib/jquery-ui/jquery-ui.min.css',
+                        'lib/font-awesome/css/font-awesome.min.css',
+                        'lib/jquery-ionicons/css/ionicons.min.css',
+                        'lib/adminlte/css/AdminLTE.min.css',
+                        'lib/adminlte/css/skins/_all-skins.min.css',
+                        'lib/jquery-select2/dist/css/select2.min.css',
+                        'css/custom.css',
+                        'lib/icheck/skins/flat/_all.css',
+                     ] | merge(stylesheets) %}
+
+{% set javascripts = [
+                        'lib/jquery/jquery.min.js',
+                        'lib/jquery-ui/jquery-ui.min.js',
+                        'lib/bootstrap/js/bootstrap.min.js',
+                        'lib/fastclick/fastclick.min.js',
+                        'lib/moment.js/moment-with-locales.js',
+                        'lib/jquery-slimscroll/jquery.slimscroll.min.js',
+                        'lib/jquery-select2/dist/js/select2.min.js',
+                        'lib/adminlte/js/app.min.js',
+                        'lib/icheck/icheck.min.js'
+                     ] | merge(javascripts) %}
+{% set messages = [
+    {
+        "sender": {
+            "name": "Juan",
+            "lastname": "Peréz",
+            "avatar": asset('media/avatars/Male_gender.jpg')
+        },
+        "url": "#",
+        "body": "Nueva gestión de usuarios",
+        "time": "Recién"
+    },
+    {
+        "sender": {
+            "name": "María",
+            "lastname": "Rodríguez",
+            "avatar": asset('media/avatars/Female_gender.jpg')
+        },
+        "url": "#",
+        "body": "Envío de nueva publicidad",
+        "time": "1 hora"
+    },
+    {
+        "sender": {
+            "name": "Mariana",
+            "lastname": "Gordillo",
+            "avatar": asset('media/avatars/Female_gender.jpg')
+        },
+        "url": "#",
+        "body": "Envío de primicia",
+        "time": "3 horas"
+    },
+        {
+        "sender": {
+            "name": "Gustavo",
+            "lastname": "Ordoqui",
+            "avatar": asset('media/avatars/Male_gender.jpg')
+        },
+        "url": "#",
+        "body": "Generar nueva encuesta",
+        "time": "Ayer"
+    }
+] %}
+
+{% set notifications = [
+    {"title": "Un usuario nuevo", "url": "#", "icon": "user", "color": "red" },
+    {"title": "Se publicó un nuevo mensaje en una publicación", "url": "#", "icon": "warning", "color": "yellow" },
+    {"title": "7 noticias superaron las 1000 visitas", "url": "#", "icon": "angellist", "color": "green" }
+] %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+        <title>{{ system.title }} | {{ page.title }}</title>
+        {% block stylesheet %}
+            <style media="screen">
+            div.espacio3D {
+              width: 300px;
+              height: 300px;
+              margin: 3em auto 0 auto;
+              position: relative;
+              perspective-origin: center -50%;
+              perspective: 500px;
+              transform: scale(0.45);
+            }
+
+            div.cubo3D {
+              width: 100%;
+              height: 100%;
+              position: absolute;
+              transform-style: preserve-3d;
+              transform: translateZ(-50px);
+              animation-name: gira;
+              animation-duration: 6000ms;
+              animation-iteration-count: infinite;
+            }
+
+            div.base {
+              position: absolute;
+              width: 150px;
+              height: 150px;
+              background-color: rgba(0,0,0,0.15);
+              transform: translateX(75px) translateY(75px) rotateX(90deg) translateZ(-200px);
+              box-shadow: 0 0 50px 100px rgba(0,0,0,0.15);
+            }
+            aside.cara {
+              position: absolute;
+              width: 298px;
+              height: 298px;
+              background-color: rgba(255,150,0,0.25);
+              border: 1px solid rgba(255,150,0,0.75);
+              color: #08f;
+              font-size: 3em;
+              text-align: center;
+              line-height: 298px;
+              box-shadow: 0px 0px 5px rgba(255,150,0,0.75);
+            }
+
+            aside.cara1 { /* Frente */
+              transform: translateZ(150px);
+            }
+
+            aside.cara2 { /* Atrás */
+              transform: rotateY(180deg) translateZ(150px);
+            }
+
+            aside.cara3 { /* Izquierda */
+              transform: rotateY(-90deg) translateZ(150px);
+            }
+
+            aside.cara4 { /* derecha */
+              transform: rotateY(90deg) translateZ(150px);
+            }
+
+            aside.cara5 { /* abajo */
+              transform: rotateX(-90deg) translateZ(150px);
+            }
+
+            aside.cara6 { /* arriba */
+              transform: rotateX(90deg) translateZ(150px);
+            }
+
+            @keyframes gira {
+              0% {
+                transform: translateZ(-150px) rotateY(0deg);
+              }
+              100% {
+                transform: translateZ(-150px) rotateY(360deg);
+              }
+            }
+            </style>
+            {{ macro.stylesheets(stylesheets) }}
+        {% endblock stylesheet %}
+        <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('favicon/apple-icon-57x57.png')}}">
+        <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('favicon/apple-icon-60x60.png')}}">
+        <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('favicon/apple-icon-72x72.png')}}">
+        <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('favicon/apple-icon-76x76.png')}}">
+        <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('favicon/apple-icon-114x114.png')}}">
+        <link rel="apple-touch-icon" sizes="120x120" href="{{ asset('favicon/apple-icon-120x120.png')}}">
+        <link rel="apple-touch-icon" sizes="144x144" href="{{ asset('favicon/apple-icon-144x144.png')}}">
+        <link rel="apple-touch-icon" sizes="152x152" href="{{ asset('favicon/apple-icon-152x152.png')}}">
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicon/apple-icon-180x180.png')}}">
+        <link rel="icon" type="image/png" sizes="192x192"  href="{{ asset('favicon/android-icon-192x192.png')}}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon/favicon-32x32.png')}}">
+        <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('favicon/favicon-96x96.png')}}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon/favicon-16x16.png')}}">
+        <link rel="manifest" href="{{ asset('favicon/manifest.json')}}">
+        <meta name="msapplication-TileColor" content="#ffffff">
+        <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+        <meta name="theme-color" content="#ffffff">
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+            <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body class="skin-blue layout-top-nav">
+        <div class="wrapper">
+            <header class="main-header">
+                <nav class="navbar navbar-static-top" >
+                    <div class="navbar-header">
+                      <a href="{{ path('homepage') }}" class="navbar-brand"><span class="logo-font">ECCO</span> <span class="font-sub">Evaluación del Clima de Conservación</span></a>
+                      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+                        <i class="fa fa-bars"></i>
+                      </button>
+                    </div>
+                    <div class="navbar-custom-menu">
+                        <ul class="nav navbar-nav">
+                            {% block navbarCustomMenu %}{% endblock %}
+                        </ul>
+                    </div>
+                </nav>
+            </header>
+
+            <div class="content-wrapper">
+                {% block contentWrapper %}{% endblock %}
+            </div>
+
+            <footer class="main-footer">
+                <div class="pull-right hidden-xs">
+                    <b>Version</b> {{ system.version }}
+                </div>
+                {{ system.footer | raw }}
+            </footer>
+
+
+            <aside class="control-sidebar control-sidebar-dark">
+                {% block controlSidebar %}{% endblock %}
+            </aside>
+            <div class="control-sidebar-bg"></div>
+        </div>
+
+        {% block javascript %}
+            {{ macro.javascripts(javascripts) }}
+            <script src="{{asset('lib/jquery-inputmask/min/jquery.inputmask.bundle.min.js')}}"></script>
+            <script src="{{asset('lib/jquery-inputmask/min/inputmask/jquery.inputmask.min.js')}}"></script>
+            <script src="{{asset('lib/jquery-inputmask/min/inputmask/inputmask.extensions.min.js')}}"></script>
+            <script src="{{asset('lib/jquery-inputmask/min/inputmask/inputmask.date.extensions.min.js')}}"></script>
+
+        {% endblock javascript %}
+
+        {% block modal %}
+           <div class="modal fade" id="modal-load">
+              <div class="modal-dialog">
+                <div class="box modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">{% block modal_title %} Cargar datos a una sala {% endblock %}</h4>
+                  </div>
+                  <div class="box-body modal-body">
+                    {% block modal_body %} <p>cuerpo del modal</p> {% endblock %}
+                  </div>
+                  <div class="overlay" id="load" style="display:none;">
+                    <i class="fa fa-refresh fa-spin"></i>
+                    <span class="pull-right text-muted">cargando datos...</span>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
+                    <button type="button" id="button_finish" class="btn btn-primary">Cargar</button>
+                  </div>
+                </div>
+                <!-- /.modal-content -->
+              </div>
+              <!-- /.modal-dialog -->
+            </div>
+            <script type="text/javascript">
+            $('#button_finish').click(function(){
+              var id_room = $('#rooms').val();
+              if (id_room !== "null") {
+                if ($('#uploadFile').val()) {
+                  $('#load').show();
+                  var formData = new FormData();
+                  formData.append('upload', $('#uploadFile')[0].files[0]);
+                  formData.append('ajax', 'yes');
+                  $.ajax({
+                    method: "POST",
+                    url: "/room/"+id_room+"/load",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: formData
+                  })
+                  .done(function( data ) {
+                    if (data) {
+                      alert('carga completa');
+                      $('#load').hide();
+                      $('#modal-load').modal('toggle');
+                    }else{
+                      alert('hubo un error en la carga');
+                    }
+                  });
+                }else{
+                  alert('no selecciono ningun archivo');
+                }
+              }else {
+                alert('seleccione una sala');
+              }
+            });
+            </script>
+        {% endblock %}
+    </body>
+</html>

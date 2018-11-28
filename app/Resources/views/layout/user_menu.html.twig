@@ -1,0 +1,29 @@
+<li class="dropdown user user-menu">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <img src="{{ avatar_asset(app.user.avatar) }}" class="user-image" alt="Imágen del usuario">
+        <span class="hidden-xs">{{ app.user.name }} {{ app.user.lastname }}</span>
+    </a>
+    <ul class="dropdown-menu">
+
+        <!-- User image -->
+        <li class="user-header">
+            <img src="{{ avatar_asset(app.user.avatar) }}" class="img-circle" alt="Imágen del usuario">
+            <p>
+                {{ app.user.name }} {{ app.user.lastname }} - {{ app.user.roles | role }}
+                <small>Miembro desde {{ app.user.registeredAt | locale_date("j \\d\\e F \\d\\e Y") }}</small>
+                <small>Tu último ingreso fue {{ app.user.lastLogin.timestamp | locale_date("d/m/Y H:i") }}</small>
+            </p>
+        </li>
+
+        <!-- Menu Footer-->
+        <li class="user-footer">
+            <div class="pull-left">
+                <a href="/user" class="btn btn-default btn-flat">Perfil</a>
+            </div>
+            <div class="pull-right">
+                <a href="{{ path("fos_user_security_logout") }}" class="btn btn-default btn-flat">Cerrar sesión</a>
+            </div>
+        </li>
+
+    </ul>
+</li>

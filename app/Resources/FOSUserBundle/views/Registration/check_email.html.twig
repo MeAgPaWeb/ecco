@@ -1,0 +1,15 @@
+{% extends 'user/layout.html.twig' %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% set page =
+    {
+        "title": "Confirmación de Email",
+        "preclass": "login"
+    }
+%}
+
+{% block content %}
+  <p>Revise su casilla de email para confirmar y terminar el alta de usuario</p>
+  <a class="btn btn-primary btn-block btn-flat" href="{{ path('fos_user_security_login') }}">Ingresar</a>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'table.html.twig' %}
+
+{% set page =
+    {
+        "title": "Salas",
+        "subtitle": "Listado",
+    }
+%}
+
+{% block breadcrumb %}
+    <li><a href="#"><i class="fa fa-dashboard"></i> Salas</a></li>
+    <li class="active">Listado</li>
+{% endblock %}
+
+{% set page =
+    {
+        "title": "Sala",
+        "subtitle": "Listado"
+    }
+%}
+
+{% set new =
+    {
+        "route": path("room_new", {'library': library.id}),
+        "title": "Nueva Sala"
+    }
+%}
+
+{% block thead %}
+<tr>
+    <th>Nombre</th>
+    <th>Alto</th>
+    <th>Largo</th>
+    <th>Sup. Vidriada</th>
+    <th></th>
+</tr>
+{% endblock %}
+{% block tfoot %}
+<tr>
+    <th>Nombre</th>
+    <th>Alto</th>
+    <th>Largo</th>
+    <th>Sup. Vidriada</th>
+    <th></th>
+</tr>
+{% endblock %}
+{% block tbody %}
+  {% for room in rooms %}
+      <tr>
+          <td>{{ room.name }}</td>
+          <td>{{ room.high }}</td>
+          <td>{{ room.length }}</td>
+          <td>{{ room.glazedSurface }}</td>
+          <td class="table-operations">
+            <a href="{{ path('room_load', { 'id': room.id }) }}" title="Cargar Datos"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a>
+            <a href="{{ path('room_edit', { 'id': room.id }) }}" title="Editar"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+          </td>
+      </tr>
+  {% endfor %}
+{% endblock %}

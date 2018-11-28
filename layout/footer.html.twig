@@ -1,0 +1,49 @@
+<footer id="footer" class="uk-background-blue">
+	<div class="uk-container">
+		<div class="uk-child-width-1-3 footer-list" uk-grid>
+			<div>
+				<ul class="uk-list uk-text-light border-left margin-small">
+						<li><a href="{{ path('homepage') }}">Inicio</a></li>
+						{% for item in mainmenu_items %}
+										{% if item.noSection is defined and item.noSection %}
+												<li><a href="{{ path(item.name~"_view") }}">{{item.title}}</a></li>
+										{% else %}
+												{% if item.orderMenu is defined %} {% if item.orderMenu > 0 %}
+														{% if not item.parentSection %}
+																<li>
+																		<a href="{{ path("section_view", {title: item.name | url , id: item.id}) }}">{{item.title}} </a>
+																</li>
+														{% endif %}
+												{% endif %}
+											{% endif %}
+										{% endif %}
+						{% endfor %}
+				</ul>
+			</div>
+			<div class="uk-grid-small uk-child-width-1-2@s uk-flex-center uk-text-center uk-margin-top" uk-grid>
+				<div>
+					<img data-src="{{asset('images/logo_b.png')}}" alt="logo IPP del footer" class="uk-img-footer" uk-img>
+				</div>
+			</div>
+			<div class="remove-padding">
+				<ul class="uk-list uk-text-light uk-text-right border-right margin-small">
+					<li>
+						<p>Aviso Legal - Cookies</p>
+					</li>
+					<li>
+						<p>&nbsp;&nbsp;</p>
+					</li>
+					<li>
+						<p> IPP 2018</p>
+					</li>
+					<li>
+						<p>Todos los derechos reservados</p>
+					</li>
+					<li>
+						<p>Creado por <a href="http://devp.com.ar" style="color:#fff;">DeVP</a></p>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</footer>

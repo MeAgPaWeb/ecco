@@ -1,0 +1,57 @@
+<style>
+    {% for item in mainmenu_items %}
+        .{{ item.name }}-background {
+            background-color: {{item.color}}!important;
+        }
+
+        .{{ item.name }}-background-hover:hover, .{{ item.name }}-background-hover a:hover {
+            background-color: {{item.color}}!important;
+            color: #fff;
+        }
+
+        .{{ item.name }}-border {
+            border-color: {{item.color}}!important;
+        }
+
+        .{{ item.name }}-border-hover:hover{
+            border-color: {{item.color}}!important;
+        }
+
+        .{{ item.name }}-color {
+            color: {{item.color}}!important;
+        }
+
+        .{{ item.name }}-color-hover:hover {
+            color: {{item.color}}!important;
+        }
+
+        .{{ item.name }}-color-hover:hover a {
+            color: {{item.color}}!important;
+        }
+    {% endfor %}
+    {% for item in content_group %}
+        .{{ item.name }}-background {
+            background-color: {{item.color}}!important;
+        }
+
+        .{{ item.name }}-background-hover:hover {
+            background-color: {{item.color}}!important;
+        }
+
+        .{{ item.name }}-border {
+            border-color: {{item.color}}!important;
+        }
+
+        .{{ item.name }}-border-hover-span:hover span {
+            border-color: {{item.color}}!important;
+        }
+
+        .{{ item.name }}-color {
+            color: {{item.color}}!important;
+        }
+
+        .{{ item.name }}-color-hover:hover {
+            color: {{item.color}}!important;
+        }
+    {% endfor %}
+</style>

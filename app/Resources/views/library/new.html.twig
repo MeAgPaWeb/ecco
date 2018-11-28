@@ -1,0 +1,142 @@
+{% extends 'default.html.twig' %}
+{% form_theme form 'form/fields.html.twig' %}
+{% set page =
+    {
+        "title": "Biblioteca",
+        "subtitle": "Crear",
+    }
+%}
+{% if stylesheets is not defined %}
+    {% set stylesheets = [] %}
+{% endif %}
+
+{% if javascripts is not defined %}
+    {% set javascripts = [] %}
+{% endif %}
+
+{% set stylesheets = [
+                        'lib/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css',
+                     ] | merge(stylesheets) %}
+
+{% set javascripts = [
+                        'lib/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js'
+                     ] | merge(javascripts) %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script type="text/javascript">
+        function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 3,
+          mapTypeControl: false,
+          center: {lat: -34.896375, lng: -57.941920900000014}
+        });
+        var geocoder = new google.maps.Geocoder();
+
+        document.getElementById('location_on').addEventListener('click', function() {
+          geocodeAddress(geocoder, map);
+        });
+        $('#appbundle_library_address').change(function(){
+          var address = $(this).val();
+          geocoder.geocode({'address': address}, function(results, status) {
+            if (status === 'OK') {
+              map.setCenter(results[0].geometry.location);
+              map.setZoom(16);
+              console.log('lat:'+results[0].geometry.location.lat()+' | lng:'+results[0].geometry.location.lng());
+              $('#appbundle_library_position').val('{"lat": '+results[0].geometry.location.lat()+', "lng": '+results[0].geometry.location.lng()+'}');
+              var marker = new google.maps.Marker({
+                map: map,
+                position: results[0].geometry.location
+              });
+            } else {
+              alert('No se pudo encontrar la ubicación por la siguiente razón: ' + status);
+            }
+          });
+        });
+        $('.my-colorpicker1').colorpicker();      
+      }
+
+
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAGQU_QnF4HiBg14sk8sD2pOF17WyhkwPo&callback=initMap">
+    </script>
+    <script type="text/javascript">
+      $(function(){
+         $('#appbundle_library_age').inputmask("9999", {
+            postValidation: function (buffer, opts) {
+                return parseInt(buffer.join('')) <= (new Date()).getFullYear();
+            }
+        });
+
+      });
+    </script>
+    <script>
+      $('input.btn').click(function(){
+        $('#load').show();
+        $('#route').val($(this).attr('data'));
+      });
+    </script>
+{% endblock javascript %}
+{% block breadcrumb %}
+    <li><a href="{{ path('library_index') }}"> Biblioteca</a></li>
+    <li class="active">Crear</li>
+{% endblock %}
+
+{% block content %}
+  <div class="box box-primary">
+      <div class="box-header with-border">
+        <h3 class="box-title">Agregando una Bibliteca </h3>
+      </div>
+      {{ form_start(form) }}
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group has-feedback{% if form.name.vars.errors | length %} has-error{% endif %}">
+                {{ form_label(form.name) }}
+                {{ form_widget(form.name) }}
+                <div class="help-block with-errors">
+                    {{ form_errors(form.name) }}
+                </div>
+              </div>
+              <div class="form-group has-feedback{% if form.address.vars.errors | length %} has-error{% endif %}">
+                {{ form_label(form.address) }}
+
+                <div class="input-group">
+                  {{ form_widget(form.address) }}
+                  {#<input class="form-control" type="text" id="address" placeholder="Calle, Número, Ciudad, Provincia, País">#}
+                  <a class="input-group-addon" type="button" id="location_on" href="#"><i class="fa fa-map-marker"></i></a>
+                </div>
+                <div class="help-block with-errors">
+                    {{ form_errors(form.address) }}
+                </div>
+              </div>
+              <div class="form-group has-feedback{% if form.age.vars.errors | length %} has-error{% endif %}">
+                {{ form_label(form.age) }}
+                {{ form_widget(form.age) }}
+                <div class="help-block with-errors">
+                    {{ form_errors(form.age) }}
+                </div>
+              </div>
+              <div class="form-group has-feedback{% if form.colour.vars.errors | length %} has-error{% endif %}">
+                {{ form_label(form.colour) }}
+                {{ form_widget(form.colour) }}
+                <div class="help-block with-errors">
+                    {{ form_errors(form.colour) }}
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div id="map" style="width: 100%; min-height: 250px"></div>
+            </div>
+          </div>
+          <div class="box-footer">
+              <input  data="room_new" class="btn btn-primary" type="submit" value="Agregar una Sala" />
+              <input  data="homepage" class="btn btn-success" type="submit" value="Finalizar Carga" />
+              <input  id="route" name="route" type="hidden" value="" />
+          </div>
+        </div>
+      {{ form_end(form) }}
+  </div>
+
+{% endblock %}

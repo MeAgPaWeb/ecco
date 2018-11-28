@@ -1,0 +1,54 @@
+parameters:
+#    parameter_name: value
+
+services:
+    app.uploader:
+        class: AppBundle\Helper\Uploader
+
+    app.twig_extension:
+        class: AppBundle\Twig\AppExtension
+        arguments: [ "@service_container", "@request_stack", "%locale%", "%media%", "%social%"]
+        public: false
+        tags:
+            - { name: twig.extension }
+
+    app.form.registration:
+        class: AppBundle\Form\RegistrationType
+        tags:
+            - { name: form.type, alias: app_user_registration }
+
+    app.form.profile:
+        class: AppBundle\Form\Type\ProfileType
+        tags:
+            - { name: form.type alias: app_user_profile}
+
+    app.roles:
+       class: AppBundle\Helper\Roles
+       arguments: ['%security.role_hierarchy.roles%']
+
+    AppBundle\:
+        resource: '../../src/AppBundle/*'
+        # you can exclude directories or files
+        # but if a service is unused, it's removed anyway
+        exclude: '../../src/AppBundle/{Entity,Repository,Tests}'
+
+    # controllers are imported separately to make sure they're public
+    # and have a tag that allows actions to type-hint services
+    AppBundle\Controller\:
+        resource: '../../src/AppBundle/Controller'
+        public: true
+        tags: ['controller.service_arguments']
+
+    EmailHandler:
+        class:        AppBundle\Service\EmailHandler
+        arguments:    ["@service_container"]
+
+
+    # app.form.type.role:
+    #     class: AppBundle\Form\Type\RoleType
+    #     arguments:
+    #         - '%security%'
+    #     tags:
+    #         - { name: form.type }
+    # app.frontend_controller:
+    #     class:     AppBundle\Controller\FrontendController

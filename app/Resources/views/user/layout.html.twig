@@ -1,0 +1,122 @@
+{% import "macros/macros.html.twig" as macro %}
+{% if page is not defined %}
+{% set page =
+    {
+        "title": "sin titulo",
+        "preclass": "login"
+    }
+%}
+
+{% endif %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>{{ system.title }} | {{ page.title }}</title>
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+        {% block stylesheet %}
+            {% block linkStylesheet %}
+                <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous" />
+                {% stylesheets
+                    'lib/jquery-ui/jquery-ui.css'
+                    'lib/adminlte/css/AdminLTE.min.css'
+                    'css/custom.css'
+
+                    filter='cssrewrite'
+                    filter='uglifycss'
+                    output='css/build/backend_layout.css'
+                %}
+                    <link type="text/css" rel="stylesheet" href="{{ asset_url }}" />
+                    <style media="screen">
+                      .login-box, .register-box {
+                        width: 470px;
+                      }
+                      .login-box-body, .register-box-body {
+                        padding: 49px;
+                      }
+                      .login-box, .register-box {
+                          margin-bottom: -5%;
+                          margin-top: 5%;
+                      }
+                    </style>
+                {% endstylesheets %}
+            {% endblock %}
+            <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
+            {% block styleStylesheets %}
+            {% endblock %}
+        {% endblock stylesheet %}
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body class="hold-transition {{ page.preclass }}-page">
+
+        <div class="{{ page.preclass }}-box">
+
+            <div class="{{ page.preclass }}-box-body">
+                <div class="{{ page.preclass }}-logo">
+                  <a href="{{ path('homepage') }}">
+                    <span class="logo-font logo-user">ECCO</span>
+                  </a>
+                </div>
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+        {% block javascript %}
+            <script src="//code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+            <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+            <script src="https://rawgit.com/RobinHerbots/Inputmask/4.x/dist/jquery.inputmask.bundle.js"></script>
+            <script type="text/javascript">
+            $(function() {
+              $('.error-email').hide();
+              $('.confirmacion-pass').hide();
+              $('.confirmacion-username').hide();
+              $('.email').inputmask('email',{
+                "onincomplete": function(){
+                  $(this).parent().addClass('has-error');
+                  $('.error-email').show();
+                },
+                "oncomplete": function(){
+                  $(this).parent().removeClass('has-error');
+                  $('.error-email').hide();
+                }
+              });
+
+              $('#fos_user_registration_form_plainPassword_second').keyup(function(){
+                if($('#fos_user_registration_form_plainPassword_first').val() != $('#fos_user_registration_form_plainPassword_second').val()){
+                  $(this).parent().addClass('has-error');
+                  $('.confirmacion-pass').show();
+                }else{
+                  $(this).parent().removeClass('has-error');
+                  $(this).parent().addClass('has-success');
+                  $('.confirmacion-pass').hide();
+
+                }
+              });
+
+              $('#usernameConfirm').keyup(function(){
+                if($('#username').val() != $('#usernameConfirm').val()){
+                  $(this).parent().addClass('has-error');
+                  $('.confirmacion-username').show();
+                }else{
+                  $(this).parent().removeClass('has-error');
+                  $(this).parent().addClass('has-success');
+                  $('.confirmacion-username').hide();
+
+                }
+              });
+
+            });
+            </script>
+
+        {% endblock javascript %}
+    </body>
+</html>

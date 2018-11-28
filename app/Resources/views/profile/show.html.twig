@@ -1,0 +1,374 @@
+{% extends 'user/layout.html.twig' %}
+
+{% form_theme form 'form/fields.html.twig' %}
+{% form_theme pass_form 'form/fields.html.twig' %}
+
+{% set page =
+    {
+        "title": "Perfil",
+        "subtitle": "Ver detalle"
+    }
+%}
+
+{% set stylesheets = [
+                      'css/user.css',
+                      'lib/bootstrap-datatables/dataTables.bootstrap.css',
+                      'css/table.css'
+                     ] %}
+
+{% set javascripts = [
+                      'lib/bootstrap-datatables/jquery.dataTables.js',
+                      'lib/bootstrap-datatables/dataTables.bootstrap.min.js',
+                      'js/table.js',
+                      'js/profile.js',
+                     ] %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script>
+        var original_avatar = "{{ avatar_asset(user.avatar) }}";
+    </script>
+{% endblock %}
+
+{% block breadcrumb %}
+    <li><a href="{{ path('homepage') }}"><i class="fa fa-dashboard"></i> Inicio</a></li>
+    <li><a href="{{ path('user_index') }}"> {{ page.title }}</a></li>
+    <li class="active">{{ page.subtitle }}</li>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-4">
+            <div class="box box-primary">
+                <div class="box-body box-profile">
+                    <img class="profile-user-img img-responsive img-rounded" src="{{ avatar_asset(app.user.getAvatar()) }}" alt="Imágen de usuario">
+                    <h3 class="profile-username text-center">{{ app.user.name }} {{ app.user.lastname }}</h3>
+                    <p class="text-muted text-center">{{ app.user.roles | role }}</p>
+                    <strong><i class="glyphicon glyphicon-user margin-r-5"></i> Datos personales</strong>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <td>{{ user.name }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Apellido</th>
+                                    <td>{{ user.lastname }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Correo electrónico</th>
+                                    <td>{{ user.email }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Sexo</th>
+                                    <td>{{ user.gender | gender }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <strong><i class="glyphicon glyphicon-lock margin-r-5"></i> Datos de la cuenta</strong>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th>Nombre de usuario</th>
+                                    <td>
+                                        {{ app.user.username }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Rol</th>
+                                    <td>
+                                        {{ app.user.roles | role }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Registrado</th>
+                                    <td>{{ app.user.registeredAt | locale_date("d/m/Y H:i") }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Ultimo ingreso</th>
+                                    <td>{{ app.user.lastLogin.timestamp | locale_date("d/m/Y H:i") }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="nav-tabs-custom">
+
+                <ul class="nav nav-tabs">
+                    <li {% if active_tab == "comments" %}class="active"{% endif %}><a aria-expanded="false" href="#comments" data-toggle="tab">Comentarios</a></li>
+                    <li {% if active_tab == "publications" %}class="active"{% endif %}><a aria-expanded="false" href="#publications" data-toggle="tab">Publicaciones</a></li>
+                    <li {% if active_tab == "editions" %}class="active"{% endif %}><a aria-expanded="false" href="#editions" data-toggle="tab">Ediciones</a></li>
+                    <li {% if active_tab == "revisions" %}class="active"{% endif %}><a aria-expanded="false" href="#revisions" data-toggle="tab">Revisiones</a></li>
+                    <li {% if active_tab == "personal" %}class="active"{% endif %}><a aria-expanded="false" href="#personal" data-toggle="tab">Datos personales</a></li>
+                    <li {% if active_tab == "account" %}class="active"{% endif %}><a aria-expanded="false" href="#account" data-toggle="tab">Datos de la cuenta</a></li>
+                </ul>
+
+                <div class="tab-content">
+
+                    <div class="tab-pane {% if active_tab == "comments" %}active{% endif %}" id="comments">
+                        <table class="table table-bordered table-striped datatable">
+                            <thead>
+                                <tr>
+                                    <th>Comentario</th>
+                                    <th>Contenido</th>
+                                    <th>Fecha</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for comment in app.user.comments %}
+                                    <tr>
+                                        <td>{{ comment.commentText  | slice(0, 30) ~ '...' }}</td>
+                                        <td>{{ comment.content }}</td>
+                                        <td>{{ comment.datetime.timestamp | locale_date("d/m/Y h:i") }}</td>
+                                        <td>
+                                            <a href="{{ path('comment_show', { 'id': comment.id }) }}" title="Ver detalle"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a>&nbsp;&nbsp;
+                                            <a href="{{ path('comment_edit', { 'id': comment.id }) }}" title="Editar"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Comentario</th>
+                                    <th>Contenido</th>
+                                    <th>Fecha</th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                    <div class="tab-pane {% if active_tab == "publications" %}active{% endif %}" id="publications">
+                        <table class="table table-bordered table-striped datatable">
+                            <thead>
+                                <tr>
+                                    <th>Título</th>
+                                    <th>Fecha</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for content in app.user.publications %}
+                                    <tr>
+                                        <td>{{ content.title  | slice(0, 30) ~ '...' }}</td>
+                                        <td>{{ content.redactionDatetime | locale_date("d/m/Y h:i") }}</td>
+                                        <td>
+                                            <a href="{{ path('content_show', { 'id': content.id }) }}" title="Ver detalle"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a>&nbsp;&nbsp;
+                                            <a href="{{ path('content_edit', { 'id': content.id }) }}" title="Editar"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Título</th>
+                                    <th>Fecha</th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                    <div class="tab-pane {% if active_tab == "editions" %}active{% endif %}" id="editions">
+                        <table class="table table-bordered table-striped datatable">
+                            <thead>
+                                <tr>
+                                    <th>Título</th>
+                                    <th>Fecha</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for content in app.user.editions %}
+                                    <tr>
+                                        <td>{{ content.title  | slice(0, 30) ~ '...' }}</td>
+                                        <td>{{ content.redactionDatetime | locale_date("d/m/Y h:i") }}</td>
+                                        <td>
+                                            <a href="{{ path('contentnote_show', { 'id': content.id }) }}" title="Ver detalle"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a>&nbsp;&nbsp;
+                                            <a href="{{ path('contentnote_edit', { 'id': content.id }) }}" title="Editar"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Título</th>
+                                    <th>Fecha</th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                    <div class="tab-pane {% if active_tab == "revisions" %}active{% endif %}" id="revisions">
+                        <table class="table table-bordered table-striped datatable">
+                            <thead>
+                                <tr>
+                                    <th>Título</th>
+                                    <th>Fecha</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for content in app.user.revisions %}
+                                    <tr>
+                                        <td>{{ content.title  | slice(0, 30) ~ '...' }}</td>
+                                        <td>{{ content.redactionDatetime | locale_date("d/m/Y h:i") }}</td>
+                                        <td>
+                                            <a href="{{ path('contentnote_show', { 'id': content.id }) }}" title="Ver detalle"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a>&nbsp;&nbsp;
+                                            <a href="{{ path('contentnote_edit', { 'id': content.id }) }}" title="Editar"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Título</th>
+                                    <th>Fecha</th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                    <div class="tab-pane {% if active_tab == "personal" %}active{% endif %}" id="personal">
+
+                        {{ form_start(form, { 'action': path('backend_profile_show'), 'attr': { 'class': 'form-horizontal' } }) }}
+
+                        <div class="form-group{% if form.name.vars.errors|length > 0 %} has-error{% endif %}">
+                            {{ form_label(form.name, null, {"label_attr": {"class": "col-sm-3 control-label"}}) }}
+                            <div class="col-sm-9">
+                                {{ form_widget(form.name, {"type":"text", "attr": {"placeholder": "Ingrese un nuevo nombre"}}) }}
+                                <div class="help-block with-errors">
+                                    {{ form_errors(form.name) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group{% if form.lastname.vars.errors|length > 0 %} has-error{% endif %}">
+                            {{ form_label(form.lastname, null, {"label_attr": {"class": "col-sm-3 control-label"}}) }}
+                            <div class="col-sm-9">
+                                {{ form_widget(form.lastname, {"type":"text", "attr": {"placeholder": "Ingrese un nuevo apellido"}}) }}
+                                <div class="help-block with-errors">
+                                    {{ form_errors(form.lastname) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group{% if form.email.vars.errors|length > 0 %} has-error{% endif %}">
+                            {{ form_label(form.email, "Correo electrónico", {"label_attr": {"class": "col-sm-3 control-label"}}) }}
+                            <div class="col-sm-9">
+                                {{ form_widget(form.email, {"type":"text", "attr": {"placeholder": "Ingrese un nuevo correo electrónico"}}) }}
+                                <div class="help-block with-errors">
+                                    {{ form_errors(form.email) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group{% if form.gender.vars.errors|length > 0 %} has-error{% endif %}">
+                            {{ form_label(form.gender, "Sexo", {"label_attr": {"class": "col-sm-3 control-label"}}) }}
+                            <div class="col-sm-9">
+                                {{ form_widget(form.gender) }}
+                                <div class="help-block with-errors">
+                                    {{ form_errors(form.gender) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group{% if form.avatar.vars.errors|length > 0 %} has-error{% endif %}">
+                            <div class="col-sm-3"></div>
+                            <div class="col-sm-9">
+                                {{ form_widget(form.avatar) }}
+                                <a id="user_avatar_launcher" class="btn btn-primary form-control" href="#">
+                                    Nueva imágen de avatar
+                                </a>
+                                <div class="avatar-preview" id="user_avatar_preview_wrapper">
+                                    <img id="user_avatar_preview" alt="Imágen del usuario" src="none"/>
+                                </div>
+                                <div class="help-block with-errors">
+                                    {{ form_errors(form.avatar) }}
+                                    {% if error %}
+                                        {{ error }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div class="form-group{% if form.current_password.vars.errors|length > 0 %} has-error{% endif %}">
+                            {{ form_label(form.current_password, "Confirmar contraseña", {"label_attr": {"class": "col-sm-3 control-label"}}) }}
+                            <div class="col-sm-9">
+                                {{ form_widget(form.current_password, {"type":"password", "attr": {"placeholder": "Ingrese su contraseña actual"}}) }}
+                                <div class="help-block with-errors">
+                                    {{ form_errors(form.current_password) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        {{ form_widget(form.username, {"attr": {"class":"hidden"}}) }}
+                        <input type="hidden" name="personal" value="true" />
+
+                        <button type="reset" id="personal_reset" class="btn btn-default" value="Reset"> Restablecer</button>
+                        <button type="submit" class="btn btn-success pull-right"><span class="glyphicon glyphicon-floppy-disk"></span> Guardar</button>
+
+                        {{ form_end(form) }}
+
+                    </div>
+
+                    <div class="tab-pane {% if active_tab == "account" %}active{% endif %}" id="account">
+
+                        {{ form_start(pass_form, { 'action': path('backend_profile_show'), 'attr': { 'class': 'form-horizontal' } }) }}
+
+                        <div class="form-group{% if pass_form.plainPassword["first"].vars.errors|length > 0 %} has-error{% endif %}">
+                            {{ form_label(pass_form.plainPassword["first"], null, {"label_attr": {"class": "col-sm-3 control-label"}}) }}
+                            <div class="col-sm-9">
+                                {{ form_widget(pass_form.plainPassword["first"], {"type":"password", "attr": {"placeholder": "Ingrese su nueva contraseña"}}) }}
+                                <div class="help-block with-errors">
+                                    {{ form_errors(pass_form.plainPassword["first"]) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group{% if pass_form.plainPassword["second"].vars.errors|length > 0 %} has-error{% endif %}">
+                            {{ form_label(pass_form.plainPassword["second"], null, {"label_attr": {"class": "col-sm-3 control-label"}}) }}
+                            <div class="col-sm-9">
+                                {{ form_widget(pass_form.plainPassword["second"], {"type":"password", "attr": {"placeholder": "Repita su nueva contraseña"}}) }}
+                                <div class="help-block with-errors">
+                                    {{ form_errors(pass_form.plainPassword["second"]) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div class="form-group{% if pass_form.current_password.vars.errors|length > 0 %} has-error{% endif %}">
+                            {{ form_label(pass_form.current_password, "Confirmar contraseña", {"label_attr": {"class": "col-sm-3 control-label"}}) }}
+                            <div class="col-sm-9">
+                                {{ form_widget(pass_form.current_password, {"type":"password", "attr": {"placeholder": "Ingrese su contraseña actual"}}) }}
+                                <div class="help-block with-errors">
+                                    {{ form_errors(pass_form.current_password) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <input type="hidden" name="account" value="true" />
+                        <button type="reset" class="btn btn-default" value="Reset"> Restablecer</button>
+                        <button type="submit" class="btn btn-success pull-right"><span class="glyphicon glyphicon-floppy-disk"></span> Guardar</button>
+
+                        {{ form_end(pass_form) }}
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

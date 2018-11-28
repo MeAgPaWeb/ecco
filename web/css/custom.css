@@ -1,0 +1,40 @@
+.box-footer {
+    padding-top: 17px!important;
+    text-align: center!important;
+}
+.btn-app{
+  margin: -4px 3px 3px 3px!important;
+}
+
+.bg-fucia{
+  background-color: #d06 !important;
+  color:#fff;
+}
+#map {
+  height: 100%;
+}
+@font-face {
+  font-family: 'font-logo';
+  src: url('../font/chasingEmbers.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'font-sub';
+  src: url('../font/rockwell.ttf') format('truetype');
+}
+.logo-font{
+  font-family: "font-logo";
+  font-size: 5em;
+}
+.font-sub{
+  font-family: "font-sub";
+}
+
+.login-logo, .register-logo {
+    font-size: 33px!important;
+    margin-bottom: -35px!important;
+    margin-top: -35px!important;
+}
+
+.btn-app {
+    min-width: 70px;
+}

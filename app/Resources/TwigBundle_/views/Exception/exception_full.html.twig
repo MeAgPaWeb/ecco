@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+        <title>book</title>
+
+        <style>
+
+            body {
+                background: #3080CC;
+
+            }
+
+            .centered {
+              position: fixed;
+              top: 50%;
+              left: 50%;
+              /* bring your own prefixes */
+              transform: translate(-50%, -50%);
+            font-family: "TheSans Bold";
+            }
+
+            .logo img {
+                width: 100%;
+            }
+        </style>
+    </head>
+    <body >
+        <div class="centered logo">
+            <img src="{{ asset('images/logo.png') }}" alt="book" />
+        </div>
+    </body>
+</html>

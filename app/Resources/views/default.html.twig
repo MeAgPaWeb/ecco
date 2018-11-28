@@ -1,0 +1,50 @@
+{% extends 'layout.html.twig' %}
+
+{% if stylesheets is not defined %}
+    {% set stylesheets = [] %}
+{% endif %}
+
+{% if javascripts is not defined %}
+    {% set javascripts = [] %}
+{% endif %}
+
+{% block logo %}
+    <span class="logo-mini">{{ system.backendTitleMini | raw }}</span>
+    <span class="logo-lg">{{ system.backendTitle | raw }}</span>
+{% endblock %}
+
+{% block navbarCustomMenu %}
+    {% if system.options.show_messages %}
+        {% include 'layout/messages_menu.html.twig' %}
+    {% endif %}
+    {% if system.options.show_notifications %}
+        {% include 'layout/notifications_menu.html.twig' %}
+    {% endif %}
+    {% if system.options.show_alerts %}
+        {% include 'layout/alerts_menu.html.twig' %}
+    {% endif %}
+    {% include 'layout/user_menu.html.twig' %}
+    <li>
+        <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+    </li>
+{% endblock %}
+
+{% block contentWrapper %}
+<div class="container">
+
+    <section class="content-header">
+        <h1>
+            {{ page.title }}
+            <small>{{ page.subtitle }}</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{ path('homepage')}}"><i class="fa fa-dashboard"></i> Inicio</a></li>
+            {% block breadcrumb %}{% endblock %}
+        </ol>
+    </section>
+
+    <div class="content" style="overflow:auto;">
+        {% block content %}{% endblock %}
+    </div>
+</div>
+{% endblock %}

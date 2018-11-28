@@ -1,0 +1,55 @@
+{% extends 'default.html.twig' %}
+
+{% if stylesheets is not defined %}
+    {% set stylesheets = [] %}
+{% endif %}
+
+{% if javascripts is not defined %}
+    {% set javascripts = [] %}
+{% endif %}
+
+{% set stylesheets = [
+                        'lib/bootstrap-datatables/dataTables.bootstrap.css',
+                        'lib/jquery-select2/dist/css/select2.min.css',
+                        'css/custom.css',
+                        'css/DataTable.css'
+                     ] | merge(stylesheets)  %}
+
+{% set javascripts = [
+                        'lib/bootstrap-datatables/jquery.dataTables.js',
+                        'lib/bootstrap-datatables/dataTables.bootstrap.min.js',
+                        'js/DataTable.ready.js'
+                     ] | merge(javascripts) %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-primary">
+                <div class="box-body">
+                  {% block boxBody %}
+                    <div class="dataTables_wrapper form-inline dt-bootstrap">
+                        <table id="table" class="table {% block classTable %} dataTable {% endblock %} table-bordered table-hover">
+                            <thead>
+                              {% if no_new_button is defined %}
+                                  {% block new_block %}{% endblock %}
+                              {% else %}
+                                  <div class="box-body ">
+                                      <a class="btn btn-success btn-flat" href="{{ new.route }}"><span class="glyphicon glyphicon-plus"></span> {{ new.title }}</a>
+                                  </div>
+                              {% endif %}
+                                {% block thead %}{% endblock %}
+                            </thead>
+                            <tbody>
+                                {% block tbody %}{% endblock %}
+                            </tbody>
+                            <tfoot>
+                                {% block tfoot %}{% endblock %}
+                            </tfoot>
+                        </table>
+                    </div>
+                  {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

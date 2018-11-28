@@ -1,0 +1,100 @@
+{% extends 'user/layout.html.twig' %}
+
+{% form_theme form 'form/fields.html.twig' %}
+
+{% set page =
+    {
+        "title": "Registro al portal",
+        "preclass": "register"
+    }
+%}
+
+{% set stylesheets = [
+                        'css/user/register.css'
+                     ] %}
+{% set javascripts = [
+                        'js/Register.js',
+                        'js/Register.ready.js'
+                    ]%}
+
+{% block content %}
+    {{form_start(form, {'method': 'POST', 'attr':{'class': 'register'}})}}
+    <div class="form-group has-feedback {% if form.name.vars.errors|length > 0 %}has-error{% endif %}">
+        {{ form_label(form.name) }}
+        {{ form_widget(form.name, { 'attr': {'placeholder': 'Ingrese nombre'} }) }}
+        <div class="help-block with-errors">
+            {{ form_errors(form.name) }}
+        </div>
+    </div>
+
+    <div class="form-group has-feedback {% if form.lastname.vars.errors|length > 0 %}has-error{% endif %}">
+        {{ form_label(form.lastname) }}
+        {{ form_widget(form.lastname, { 'attr': {'placeholder': 'Ingrese apellido'} }) }}
+        <div class="help-block with-errors">
+            {{ form_errors(form.lastname) }}
+        </div>
+    </div>
+
+    <div class="form-group has-feedback {% if form.email.vars.errors|length > 0 %}has-error{% endif %}">
+        {{ form_label(form.email) }}
+        {{ form_widget(form.email) }}
+        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+        <span class="help-block error-email">Ingrese un email válido! ej: usuario@dominio.com</span>
+        <div class="help-block with-errors">
+            {{ form_errors(form.email) }}
+        </div>
+    </div>
+
+    <div class="form-group has-feedback row row-no-margin">
+        <div class="col-xs-10 no-padding">
+            <span id="avatar-button" class="btn btn-block btn-default btn-file file-input text-left">
+                Imágen de perfil <span class="small">(opcional)</span> {{ form_widget(form.avatar)}}
+            </span>
+        </div>
+        <div class="col-xs-2 no-padding">
+            <div id="avatar">
+                <img id="image" class="hidden" src="{{ asset('media/avatars/avatar.jpg')}}" />
+                <img id="Custom" class="hidden opacity10" src="" />
+                <span id="avatar-remove" class="glyphicon glyphicon-remove visibility-hidden"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group has-feedback {% if form.username.vars.errors|length > 0 %}has-error{% endif %}">
+        {{ form_label(form.username) }}
+        {{ form_widget(form.username, { 'attr': {'placeholder': 'Ingrese nombre de usuario'} }) }}
+        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+        <div class="help-block with-errors">
+            {{ form_errors(form.username) }}
+        </div>
+    </div>
+
+    <div class="form-group has-feedback {% if form.plainPassword.first.vars.errors|length > 0 %}has-error{% endif %}">
+        {{ form_label(form.plainPassword.first) }}
+        {{ form_widget(form.plainPassword.first, { 'attr': {'placeholder': 'Contraseña'} }) }}
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        <div class="help-block with-errors">
+            {{ form_errors(form.plainPassword.first) }}
+        </div>
+    </div>
+
+    <div class="form-group has-feedback {% if form.plainPassword.second.vars.errors|length > 0 %}has-error{% endif %}">
+        {{ form_label(form.plainPassword.second) }}
+        {{ form_widget(form.plainPassword.second, { 'attr': {'placeholder': 'Repetir contraseña'} }) }}
+        <span class="help-block confirmacion-pass">Las contraseñas no coinciden</span>
+        <span class="glyphicon form-control-feedback"></span>
+        <div class="help-block with-errors">
+            {{ form_errors(form.plainPassword.second) }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-8">
+            <a href="{{ path('fos_user_security_login') }}">Ya tengo cuenta</a><br>
+        </div>
+        <div class="col-xs-4">
+            <button type="submit" class="btn btn-primary btn-block btn-flat">Registrarse</button>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

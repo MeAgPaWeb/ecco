@@ -1,0 +1,17 @@
+<li class="dropdown messages-menu">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <i class="fa fa-envelope-o"></i>
+        <span class="label label-success show-graphic-notification {% if not is_graphic_notifications(app.user) %}hide{% endif %}" >{{ messages | length }}</span>
+    </a>
+    <ul class="dropdown-menu">
+        <li class="header">Tenés {{ messages | length }} {% if messages | length == 1 %}mensaje nuevo{% else %}mensajes nuevos{% endif %}</li>
+        <li>
+            <ul class="menu">
+                {% for m in messages %}
+                    {{ macro.message(m) }}
+                {% endfor %}
+            </ul>
+        </li>
+        <li class="footer"><a href="#">Ver todos los mensajes</a></li>
+    </ul>
+</li>

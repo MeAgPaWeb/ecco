@@ -1,0 +1,59 @@
+<ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+    <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+    <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+</ul>
+
+{% set config = app.user.configurations %}
+
+<div class="tab-content">
+    <div class="tab-pane active" id="control-sidebar-home-tab">
+        <h3 class="control-sidebar-heading">Bienvenida</h3>
+        <p></p>
+    </div>
+    <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
+
+    <div class="tab-pane" id="control-sidebar-settings-tab">
+        <form method="post">
+            <h3 class="control-sidebar-heading">Notificaciones</h3>
+            <div class="form-group">
+                <label class="control-sidebar-subheading">
+                Notificaciones gráficas
+                <input id="graphicnotifications" type="checkbox" class="pull-right" {% if is_graphic_notifications(app.user) %}checked{% endif %}>
+                </label>
+                <p>
+                    Nuevas noticias y alertas informadas gráficamente en cada botón
+                </p>
+            </div>
+            <div class="form-group">
+                <label class="control-sidebar-subheading">
+                Notificaciones sonoras
+                <input id="soundnotifications" type="checkbox" class="pull-right" {% if is_sound_notifications(app.user) %}checked{% endif %}>
+                </label>
+                <p>
+                    Reproducir un sonido por cada notificación
+                </p>
+            </div>
+
+            <h3 class="control-sidebar-heading">Configuración Visual</h3>
+            <div class="form-group">
+                <label class="control-sidebar-subheading">
+                    Tema visual
+                    <select id="theme" class="pull-right text-black">
+                        <option {% if is_current_theme(app.user,"black") %}selected{% endif %} value="black">Negro</option>
+                        <option {% if is_current_theme(app.user,"blue") %}selected{% endif %} value="blue">Azul</option>
+                        <option {% if is_current_theme(app.user,"green") %}selected{% endif %} value="green">Verde</option>
+                        <option {% if is_current_theme(app.user,"purple") %}selected{% endif %} value="purple">Púrpura</option>
+                        <option {% if is_current_theme(app.user,"red") %}selected{% endif %} value="red">Rojo</option>
+                        <option {% if is_current_theme(app.user,"yellow") %}selected{% endif %} value="yellow">Amarillo</option>
+                    </select>
+                </label>
+            </div>
+            <div class="form-group">
+                <label class="control-sidebar-subheading">
+                Versión Clara
+                <input id="lighttheme" type="checkbox" class="pull-right" {% if is_lighttheme(app.user) %}checked{% endif %}>
+                </label>
+            </div>
+        </form>
+    </div>
+</div>
