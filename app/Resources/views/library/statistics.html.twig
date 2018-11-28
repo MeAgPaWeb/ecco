@@ -82,6 +82,39 @@ averages = [
   [1248912000000, 15],
   [1248998400000, 13.6]
 ];
+temperatura = [
+  [1246406400000, 22.5],
+  [1246492800000, 21.1],
+  [1246579200000, 23.45],
+  [1246665600000, 22.8],
+  [1246752000000, 22.4],
+  [1246838400000, 20.3],
+  [1246924800000, 17.3],
+  [1247011200000, 19.4],
+  [1247097600000, 18.4],
+  [1247184000000, 17.7],
+  [1247270400000, 16.5],
+  [1247356800000, 18.6],
+  [1247443200000, 19.7],
+  [1247529600000, 19.8],
+  [1247616000000, 18.7],
+  [1247702400000, 16.3],
+  [1247788800000, 12.8],
+  [1247875200000, 13.1],
+  [1247961600000, 14.2],
+  [1248048000000, 15.4],
+  [1248134400000, 16.7],
+  [1248220800000, 12.7],
+  [1248307200000, 15.6],
+  [1248393600000, 18.3],
+  [1248480000000, 19.3],
+  [1248566400000, 20.8],
+  [1248652800000, 11.2],
+  [1248739200000, 15.8],
+  [1248825600000, 16.4],
+  [1248912000000, 17],
+  [1248998400000, 18.6]
+];
 
 
 Highcharts.chart('container', {
@@ -110,15 +143,39 @@ legend: {
 },
 
 series: [{
-  name: 'temperatura promedio',
+  name: 'temperatura esperada',
   data: averages,
   zIndex: 1,
   marker: {
     fillColor: 'white',
-    lineWidth: 2,
+    lineWidth: 3,
     lineColor: Highcharts.getOptions().colors[0]
   }
-}, {
+},
+{
+    name: 'temperatura',
+    data: temperatura,
+    type: 'line',
+    tooltip: {
+        valueDecimals: 2
+    },
+    lineWidth: 1,
+    color: Highcharts.getOptions().colors[9],
+    marker: {
+        enabled: false
+      }
+}
+// {
+//   name: 'temperatura',
+//   data: temperatura,
+//   zIndex: -2,
+//   marker: {
+//     fillColor: 'white',
+//     lineWidth: 1,
+//     lineColor: Highcharts.getOptions().colors[2]
+//   }
+// }
+, {
   name: 'minimo y maximo',
   data: ranges,
   type: 'arearange',

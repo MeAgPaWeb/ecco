@@ -126,7 +126,7 @@
                               <tr>
                                   <th>Nombre</th>
                                   <th>Dirección</th>
-                                  <th>Acciones</th>
+                                  <th>Seguimiento</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -138,7 +138,6 @@
                                         {% if library.owner.id == app.user.id %}
                                           <span class="label label-primary">Creador</span>
                                         {% else %}
-
                                           {% set sendSolicitud = true %}
                                           {% for solicitud in solicitudes %}
                                               {% if solicitud.library == library %}
@@ -155,9 +154,7 @@
                                           {% if sendSolicitud %}
                                             <a href="#" class="solicitud" url="{{ path('ajax_following_managment', {'library': library.id}) }}" title="solicitar acceso"><span class="fa fa-sign-in" aria-hidden="true"></span> solicitar acceso</a>
                                           {% endif %}
-
                                         {% endif %}
-
                                       </td>
                                   </tr>
                               {% endfor %}
@@ -169,34 +166,3 @@
         </div>
     </div>
 {% endblock %}
-{#
-{% block thead %}
-    <tr>
-        <th>#</th>
-        <th>Nombre</th>
-        <th>Año</th>
-        <th>Acciones</th>
-    </tr>
-{% endblock %}
-{% block tfoot %}
-  <tr>
-      <th>#</th>
-      <th>Nombre</th>
-      <th>Año</th>
-      <th>Acciones</th>
-  </tr>
-{% endblock %}
-{% block tbody %}
-  {% for library in libraries %}
-      <tr>
-          <td><a href="{{ path('library_show', { 'id': library.id }) }}">{{ library.id }}</a></td>
-          <td>{{ library.name }}</td>
-          <td>{{ library.age }}</td>
-          <td class="table-operations">
-              <a href="{{ path('room_new', { 'library': library.id }) }}" title="Agregar Sala"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a>&nbsp;&nbsp;
-              <a href="{{ path('library_edit', { 'id': library.id }) }}" title="Editar"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-          </td>
-      </tr>
-  {% endfor %}
-{% endblock %}
-#}
