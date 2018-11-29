@@ -187,10 +187,10 @@ class Room
     public function __construct()
     {
         $this->dataLoggers = new \Doctrine\Common\Collections\ArrayCollection();
-		$this->backing = 0.0;
-		$this->transparency = 0.0;
-		$this->thermalTransmittance = 0.0;
-		$this->dough = 0.0;
+    		$this->backing = 0.0;
+    		$this->transparency = 0.0;
+    		$this->thermalTransmittance = 0.0;
+    		$this->dough = 0.0;
         $this->enabled=true;
     }
 

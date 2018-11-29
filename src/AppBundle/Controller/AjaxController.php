@@ -118,18 +118,64 @@ class AjaxController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $room=$em->getRepository('AppBundle:Room')->findOneById($request->request->get('_room'));
-        $registros= $em->getRepository('AppBundle:DataLogger')->findBy(array('room'=>$room, 'enabled'=>true), $limit = 50);
-        $data = array(
-          'limits' => array(),
-          'promedio' => array(),
-          'valor' => array()
-        );
-        foreach ($registros as $reg) {
-            $data['limits'][]= array($reg->getDate()->format("U"), $reg->getTopLimitT(),$reg->getBottonLimitT());
-            $data['promedio'][]= array($reg->getDate()->format("U"), $reg->getMeanAvT());
-            $data['valor'][]= array($reg->getDate()->format("U"), $reg->getTemperature());
-        }
+        $registros= $em->getRepository('AppBundle:DataLogger')->findBy(array('room'=>$room, 'enabled'=>true));
 
+        $limit ="[";
+        $promedio ="[";
+        $valor ="[";
+        foreach ($registros as $reg) {
+            $datetime=$reg->getDate()->format("U");
+            $datetime=$datetime*1000;
+            $limit.= "[".$datetime.", ".$reg->getTopLimitT().", ".$reg->getBottonLimitT()."],";
+            $promedio.= "[".$datetime.", ".$reg->getMeanAvT()."],";
+            $valor.="[".$datetime.", ".$reg->getTemperature()."],";
+        }
+        $limit =substr($limit, 0, -1);
+        $promedio =substr($promedio, 0, -1);
+        $valor =substr($valor, 0, -1);
+        $limit .="]";
+        $promedio .="]";
+        $valor .="]";
+        $data = array(
+          'limits' => $limit,
+          'promedio' => $promedio,
+          'valor' => $valor
+        );
+        $response = array("code" => 200, "success" => true, "data" => $data);
+        return new Response(json_encode($response));
+    }
+
+    /**
+     * @Route("/data/humidity", name="ajax_data_humidity")
+     * @Method({"POST"})
+     */
+    public function ajaxDataHumiditiAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $room=$em->getRepository('AppBundle:Room')->findOneById($request->request->get('_room'));
+        $registros= $em->getRepository('AppBundle:DataLogger')->findBy(array('room'=>$room, 'enabled'=>true));
+
+        $limit ="[";
+        $promedio ="[";
+        $valor ="[";
+        foreach ($registros as $reg) {
+            $datetime=$reg->getDate()->format("U");
+            $datetime=$datetime*1000;
+            $limit.= "[".$datetime.", ".$reg->getTopLimitH().", ".$reg->getBottonLimitH()."],";
+            $promedio.= "[".$datetime.", ".$reg->getMeanAvH()."],";
+            $valor.="[".$datetime.", ".$reg->getRh()."],";
+        }
+        $limit =substr($limit, 0, -1);
+        $promedio =substr($promedio, 0, -1);
+        $valor =substr($valor, 0, -1);
+        $limit .="]";
+        $promedio .="]";
+        $valor .="]";
+        $data = array(
+          'limits' => $limit,
+          'promedio' => $promedio,
+          'valor' => $valor
+        );
         $response = array("code" => 200, "success" => true, "data" => $data);
         return new Response(json_encode($response));
     }

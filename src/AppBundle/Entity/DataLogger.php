@@ -137,7 +137,7 @@ class DataLogger
     {
         $this->date=$date;
         $this->room=$room;
-        $this->uniqueAttr=md5($room->getId().$date->format("U"));
+        $this->uniqueAttr=md5($date->getTimestamp().$room->getId());
         $this->enabled=false;
     }
 
