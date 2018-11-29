@@ -14,6 +14,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 use AppBundle\Entity\Solicitation;
 use AppBundle\Entity\Library;
+use AppBundle\Entity\Room;
+use AppBundle\Entity\DataLogger;
 
 /**
  * User controller.
@@ -106,5 +108,29 @@ class AjaxController extends Controller
         }else{
           return $this->redirectToRoute('library_index');
         }
+    }
+
+    /**
+     * @Route("/data/temperature", name="ajax_data_temperature")
+     * @Method({"POST"})
+     */
+    public function ajaxDataTemperatureAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $room=$em->getRepository('AppBundle:Room')->findOneById($request->request->get('_room'));
+        $registros= $em->getRepository('AppBundle:DataLogger')->findBy(array('room'=>$room, 'enabled'=>true));
+        $data = array(
+          'limits' => array(),
+          'promedio' => array(),
+          'valor' => array()
+        );
+        foreach ($registros as $reg) {
+            $data['limits'][]= array($reg->getDate()->format("U"), $reg->getTopLimitT(),$reg->getBottonLimitT());
+            $data['promedio'][]= array($reg->getDate()->format("U"), $reg->getMeanAvT());
+            $data['valor'][]= array($reg->getDate()->format("U"), $reg->getTemperature());
+        }
+
+        $response = array("code" => 200, "success" => true, "data" => $data);
+        return new Response(json_encode($response));
     }
 }
