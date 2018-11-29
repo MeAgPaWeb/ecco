@@ -118,7 +118,7 @@ class AjaxController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $room=$em->getRepository('AppBundle:Room')->findOneById($request->request->get('_room'));
-        $registros= $em->getRepository('AppBundle:DataLogger')->findBy(array('room'=>$room, 'enabled'=>true));
+        $registros= $em->getRepository('AppBundle:DataLogger')->findBy(array('room'=>$room, 'enabled'=>true), $limit = 50);
         $data = array(
           'limits' => array(),
           'promedio' => array(),
