@@ -1,0 +1,30 @@
+1. Objetivo del proyecto
+
+Desarrollar una aplicación que gestione usuarios, bibliotecas y salas (pertenecientes a una biblioteca), permitiendo que un usuario registrado pueda conocer cuál es el clima ideal de una sala basado en la condición previa a la cual los materiales de dicha sala se aclimataron. Esta información previa se obtuvo a través de dataloggers que registraron durante cierto tiempo la temperatura y humedad de la sala en cuestión.
+
+2. User Stories que llegaron a desarrollarse
+
+I. Como usuario de una biblioteca monitorizada que aún no ha sido incorporada a sistema (nuevo usuario) deseo registrarme como usuario del sistema, para poder registrar los datos de mi biblioteca.
+
+II. Como nuevo usuario deseo registrar la biblioteca en el sistema para poder luego conocer los datos del clima que se desprendan del análisis que realiza el sistema.
+
+III. Como usuario registrado deseo visualizar para una sala con datos cargados:
+	A. Media móvil
+	B. Objetivo climático
+
+IV.  Como usuario de una biblioteca registrada en el sistema deseo registrarme como usuario autorizado a acceder a los datos de una biblioteca.
+
+3. Reflexiones sobre usabilidad.
+
+4. Trabajo futuro:
+A. User stories que quedaron sin desarrollar
+	I. Como usuario registrado deseo visualizar para una sala con datos cargados la resiliencia (estabilidad de clima en un día particular en ujna época del año particular, la actual o no.
+	II. Como usuario registrado deseo evaluar la condición actual (cargando los datos de sensado actuales) visualizando:
+		I. En qué porcentaje cumple con el objetivo climático, informando satisfacción de humedad relativa, satisfacción de temperatura y satisfacción de ambas variables en simultáneo.
+		II. Gráfico de comparación de la condición actual con el objetivo climático que tiene asignada la biblioteca
+	III. Como usuario registrado deseo modificar los parámetros de amplitud diaria.
+
+B. Posibles stories que podrían agregarse
+
+I. Gestor de dataloggers
+II. Exportar los gráficos a pdf
