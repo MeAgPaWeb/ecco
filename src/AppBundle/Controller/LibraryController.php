@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Library controller.
  *
- * @Route("library")
+ * @Route("biblioteca")
  */
 class LibraryController extends Controller
 {
@@ -39,7 +39,7 @@ class LibraryController extends Controller
     /**
      * Lists all library entities.
      *
-     * @Route("/{id}/log", name="library_log")
+     * @Route("/{id}/estadistica", name="library_log")
      * @Method("GET")
      */
     public function statisticAction(Library $library)
@@ -56,7 +56,7 @@ class LibraryController extends Controller
     /**
      * get  all library entities.
      *
-     * @Route("/api/list", name="api_library_list")
+     * @Route("/api/listado", name="api_library_list")
      * @Method("GET")
      */
     public function apiListAction()
@@ -71,7 +71,7 @@ class LibraryController extends Controller
     /**
      * Creates a new library entity.
      *
-     * @Route("/new", name="library_new")
+     * @Route("/crear", name="library_new")
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request)
@@ -120,7 +120,7 @@ class LibraryController extends Controller
     /**
      * Displays a form to edit an existing library entity.
      *
-     * @Route("/{id}/edit", name="library_edit")
+     * @Route("/{id}/editar", name="library_edit")
      * @Method({"GET", "POST"})
      */
     public function editAction(Request $request, Library $library)

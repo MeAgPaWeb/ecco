@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Room controller.
  *
- * @Route("room")
+ * @Route("sala")
  */
 class RoomController extends Controller
 {
@@ -41,7 +41,7 @@ class RoomController extends Controller
     /**
      * get  all library entities.
      *
-     * @Route("/api/list", name="api_library_list")
+     * @Route("/api/listado", name="api_library_list")
      * @Method("GET")
      */
     public function apiListAction(Request $request)
@@ -65,7 +65,7 @@ class RoomController extends Controller
     /**
      * Creates a new room entity.
      *
-     * @Route("/{library}/new", name="room_new")
+     * @Route("/{library}/crear", name="room_new")
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request, Library $library)
@@ -113,7 +113,7 @@ class RoomController extends Controller
     /**
      * Displays a form to edit an existing room entity.
      *
-     * @Route("/{id}/edit", name="room_edit")
+     * @Route("/{id}/editar", name="room_edit")
      * @Method({"GET", "POST"})
      */
     public function editAction(Request $request, Room $room)
@@ -175,7 +175,7 @@ class RoomController extends Controller
     /**
      * Displays a form to edit an existing room entity.
      *
-     * @Route("/{id}/load", name="room_load")
+     * @Route("/{id}/cargar", name="room_load")
      * @Method({"GET", "POST"})
      */
     public function loadDataAction(Request $request, Room $room){
@@ -218,7 +218,7 @@ class RoomController extends Controller
     /**
      * Displays a form to edit an existing room entity.
      *
-     * @Route("/{id}/calc", name="room_calc")
+     * @Route("/{id}/calcular", name="room_calc")
      * @Method({"GET", "POST"})
      */
     public function calcDataAction(Request $request, Room $room){
@@ -247,7 +247,7 @@ class RoomController extends Controller
     /**
      * Displays a form to edit an existing room entity.
      *
-     * @Route("/{id}/limit", name="room_limit")
+     * @Route("/{id}/calcularlimites", name="room_limit")
      * @Method({"GET", "POST"})
      */
     public function calcLimitAction(Request $request, Room $room){
@@ -290,7 +290,7 @@ class RoomController extends Controller
     /**
      * Displays a form to edit an existing room entity.
      *
-     * @Route("/{id}/persentil", name="room_persentil")
+     * @Route("/{id}/percentil", name="room_persentil")
      * @Method({"GET", "POST"})
      */
     public function calcpersentilAction(Request $request, Room $room){

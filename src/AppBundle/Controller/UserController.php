@@ -22,7 +22,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 /**
  * User controller.
  *
- * @Route("/user")
+ * @Route("/usuario")
  */
 class UserController extends Controller
 {
@@ -76,7 +76,7 @@ class UserController extends Controller
     /**
      * Creates a new User entity.
      *
-     * @Route("/new", name="user_new")
+     * @Route("/crear", name="user_new")
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request)

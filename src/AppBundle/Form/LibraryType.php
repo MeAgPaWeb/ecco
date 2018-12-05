@@ -21,7 +21,7 @@ class LibraryType extends AbstractType
                   'placeholder'  => 'Nombre de la Biblioteca, Dependencia')
                 ))
                 ->add('address',null,array(
-                  'label' => 'Dirección',
+                  'label' => 'Dirección (Calle, Número, Ciudad, Provincia, País)',
                   'attr' => array(
                     'placeholder'  => 'Calle, Número, Ciudad, Provincia, País')
                 ))

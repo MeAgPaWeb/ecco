@@ -61,12 +61,10 @@
       <!-- Widget: user widget style 1 -->
       <div class="box box-widget widget-user">
         <!-- Add the bg color to the header using any of the bg-* classes -->
-        <a href="#">
           <div class="widget-user-header bg-aqua-active" style="background-color: {{ library.colour|default('#00a7d0') }}!important">
             <h3 class="widget-user-username">{{ library.name }}</h3>
             <h5 class="widget-user-desc">{{ library.address }}</h5>
           </div>
-        </a>
 
         <div class="box-body">
           <div class="row">
@@ -233,10 +231,10 @@
 
 {% block modal_body %}
     <div class="form-group">
-      <label>Seleccione una Bibliteca</label>
+      <label>Seleccione una Biblioteca</label>
       <div class="input-group input-group-sm">
         <select class="form-control" id="library">
-             <option value="" disabled selected>Seleccione una bibliteca</option>
+             <option value="" disabled selected>Seleccione una biblioteca</option>
           {% for library in libraries %}
               <option value="{{library.id}}">{{library.name}}</option>
           {% endfor %}
