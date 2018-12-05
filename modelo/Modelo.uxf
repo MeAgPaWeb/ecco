@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?><diagram program="umlet" version="13.3">
+  <zoom_level>6</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>96</x>
+      <y>36</y>
+      <w>126</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>_DataLogger: Class_
+--
+- id: int
+- number: int
+- date: datetime
+- ...: ...
+[waiting for message]</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>24</x>
+      <y>138</y>
+      <w>108</w>
+      <h>78</h>
+    </coordinates>
+    <panel_attributes>_User: Class_
+--
+- id: int
+- name: string
+- lastname: string
+- email: string
+- ...: ...
+[waiting for message]</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>390</x>
+      <y>30</y>
+      <w>126</w>
+      <h>78</h>
+    </coordinates>
+    <panel_attributes>_Room: Class_
+--
+- id: int
+- use: string
+- name: string
+- ...: ...
+[waiting for message]</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>222</x>
+      <y>348</y>
+      <w>126</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes>_Solicitation: Class_
+--
+- id: int
+- state: string
+[waiting for message]</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>210</x>
+      <y>138</y>
+      <w>126</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>_Library: Class_
+--
+- id: int
+- address: string
+- name: string
+- age: int
+- ...: ...
+[waiting for message]</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>330</x>
+      <y>102</y>
+      <w>150</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>m1=*
+rooms &gt;</panel_attributes>
+    <additional_attributes>170.0;10.0;170.0;130.0;10.0;130.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>330</x>
+      <y>204</y>
+      <w>156</w>
+      <h>168</h>
+    </coordinates>
+    <panel_attributes>m1=*
+m2=1
+followers &gt;
+&lt; library</panel_attributes>
+    <additional_attributes>30.0;250.0;160.0;250.0;160.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>216</x>
+      <y>60</y>
+      <w>186</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>m2=*
+&lt; dataLoggers </panel_attributes>
+    <additional_attributes>290.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>126</x>
+      <y>162</y>
+      <w>96</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>m2=1
+&lt; owner</panel_attributes>
+    <additional_attributes>140.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>126</x>
+      <y>192</y>
+      <w>108</w>
+      <h>192</h>
+    </coordinates>
+    <panel_attributes>m1=*
+m2=1
+followings &gt;
+&lt; user</panel_attributes>
+    <additional_attributes>160.0;290.0;70.0;290.0;70.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>606</x>
+      <y>36</y>
+      <w>126</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>_Photo: Class_
+--
+- id: int
+- url: string
+- ...: ...
+[waiting for message]</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>510</x>
+      <y>60</y>
+      <w>108</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>m2=1
+&lt; room</panel_attributes>
+    <additional_attributes>160.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+</diagram>
