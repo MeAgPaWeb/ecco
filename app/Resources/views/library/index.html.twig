@@ -67,6 +67,7 @@
         $('.solicitud').click(function(){
           var url = $(this).attr('url');
           var elm= $(this);
+          $(elm).html('<span class="label label-default" >Enviando</span>')
           $.ajax({
             method: "POST",
             url: url,
@@ -76,7 +77,6 @@
             .done(function( data ) {
               if (data.success) {
                 $(elm).html('<span class="label label-warning" >Pendiente</span>')
-
               }
             });
         });

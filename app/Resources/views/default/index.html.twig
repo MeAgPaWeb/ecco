@@ -106,7 +106,7 @@
               <i class="fa fa-plus"></i> Sala
             </a>
             <a class="btn btn-app" data-toggle="modal" data-target="#modal-default{{library.id}}">
-              {%if library | pending %}<span class="badge bg-green">{{library | pending}}</span>{% endif %}
+              {%if library | pending %}<span class="badge bg-green" id="cant_{{library.id}}">{{library | pending}}</span>{% endif %}
               <i class="fa fa-users"></i> Seguidores
             </a>
             <a class="btn btn-app" href="{{ path('library_log', {'id': library.id }) }}">
@@ -222,8 +222,8 @@
         </div>
       </div>
     {% endfor %}
-    
- 
+
+
 </div>
 {% endblock %}
 
@@ -286,33 +286,45 @@
             var id = $(this).attr('library-id');
             var follower = $(this).attr('follower-id');
             var elemn = $(this);
+            var cant = $('#cant_'+id).html();
+            $('#cant_'+id).html(--cant);
             if (action == "canceled") {
               var r = confirm("Estas seguro que deseas cancelar la solicitud");
             }else {
               var r = true;
             }
             if (r) {
+              var cancel = $('#action_'+id).parent().next();
+              $(cancel).hide();
+              $('#action_'+id).parent().remove();
+              $('#state_'+id).removeClass('label-warning');
+              $('#state_'+id).addClass('label-default');
+              $('#state_'+id).html('en proceso');
+
               $.ajax({
                 method: "POST",
                 url: "{{ path('ajax_follower_managment') }}",
                 dataType: "json",
-                data: { _follower: follower, _ajax: true , _action: action}
+                data: { _follower: follower, _ajax: true , _action: action, _library:id}
               })
               .done(function( data ) {
+                $(cancel).show();
                 if (data.success) {
-                  $('#state_'+id).removeClass('label-warning');
+                  $('#state_'+id).removeClass('label-default');
+                  $('#state_'+id).removeClass('label-success');
                   if (data.action == "accepted") {
                     $('#state_'+id).addClass('label-success');
                       $('#state_'+id).html('Aceptado');
                   }else if(data.action == "canceled") {
                     if($('#state_'+id).hasClass('label-danger')){
                       $('#state_'+id).parent().parent().remove()
+                      $(cancel).hide();
                     }else{
                       $('#state_'+id).addClass('label-danger');
                       $('#state_'+id).html('Cancelado');
+                      $(cancel).hide();
                     }
                   }
-                  $('#action_'+id).remove();
                 }else{
                   alert('no se pudo procesar la solicitud');
                 }

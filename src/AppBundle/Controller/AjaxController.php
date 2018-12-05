@@ -32,16 +32,22 @@ class AjaxController extends Controller
     {
         $request = Request::createFromGlobals();
         $id = $request->request->get('_follower');
+        $libraryId = $request->request->get('_library');
         $action = $request->request->get('_action');
         $em = $this->getDoctrine()->getManager();
-        $follower = $em->getRepository('AppBundle:Solicitation')->findOneByUser($id);
+        $user = $em->getRepository('AppBundle:User')->findOneById($id);
+        $library = $em->getRepository('AppBundle:Library')->findOneById($libraryId);
+        $follower = $em->getRepository('AppBundle:Solicitation')->findOneBy(array('user' => $user, 'library' => $library));
         if ($action == 'accepted'){
           $follower->changeToAccepted();
           $message = "Su solicitud de seguimiento a la biblioteca ha sido aceptada.";
+          $em->persist($follower);
+          $em->flush();
         }elseif($action == 'canceled'){
-          $follower->changeToCanceled();
           $message = "Su solicitud de seguimiento a la biblioteca ha sido rechazada.";
           $em->remove($follower);
+          $user->removeFollowing($follower);
+          $em->persist($user);
           $em->flush();
         }else{
           $response = array("code" => 200, "success" => false, "action" => $action);
@@ -55,8 +61,6 @@ class AjaxController extends Controller
             );
         $this->sendEmail($emailFollower, 'email_solicitation');
 
-        $em->persist($follower);
-        $em->flush();
         $response = array("code" => 200, "success" => true, "action" => $action);
         return new Response(json_encode($response));
 
@@ -99,6 +103,7 @@ class AjaxController extends Controller
                 'message' => "El usuario ".$this->getUser()->getUsername()." ha solicitado seguir a la biblioteca ".$library->getName().".
                             Puede aceptar o rechazar esta solicitud desde el panel de administración."
             );
+
         $this->sendEmail($emailFollower, 'email_solicitation');
         $this->sendEmail($emailOwner, 'email_solicitation');
 
