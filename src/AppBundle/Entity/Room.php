@@ -58,6 +58,34 @@ class Room
      */
     private $dough;
 
+    /**
+     * @var string|"0"
+     *
+     * @ORM\Column(name="perc_7_h", type="float", nullable=true)
+     */
+    private $perc7H;
+
+    /**
+     * @var string|"0"
+     *
+     * @ORM\Column(name="perc_93_h", type="float", nullable=true)
+     */
+    private $perc93H;
+
+    /**
+     * @var string|"0"
+     *
+     * @ORM\Column(name="perc_7_t", type="float", nullable=true)
+     */
+    private $perc7T;
+
+    /**
+     * @var string|"0"
+     *
+     * @ORM\Column(name="perc_93_t", type="float", nullable=true)
+     */
+    private $perc93T;
+
 
     /**
      * @var integer|null
@@ -159,10 +187,10 @@ class Room
     public function __construct()
     {
         $this->dataLoggers = new \Doctrine\Common\Collections\ArrayCollection();
-		$this->backing = 0.0;
-		$this->transparency = 0.0;
-		$this->thermalTransmittance = 0.0;
-		$this->dough = 0.0;
+    		$this->backing = 0.0;
+    		$this->transparency = 0.0;
+    		$this->thermalTransmittance = 0.0;
+    		$this->dough = 0.0;
         $this->enabled=true;
     }
 
@@ -646,5 +674,101 @@ class Room
     public function getDough()
     {
         return $this->dough;
+    }
+
+    /**
+     * Set perc7H.
+     *
+     * @param float|null $perc7H
+     *
+     * @return Room
+     */
+    public function setPerc7H($perc7H = null)
+    {
+        $this->perc7H = $perc7H;
+
+        return $this;
+    }
+
+    /**
+     * Get perc7H.
+     *
+     * @return float|null
+     */
+    public function getPerc7H()
+    {
+        return $this->perc7H;
+    }
+
+    /**
+     * Set perc93H.
+     *
+     * @param float|null $perc93H
+     *
+     * @return Room
+     */
+    public function setPerc93H($perc93H = null)
+    {
+        $this->perc93H = $perc93H;
+
+        return $this;
+    }
+
+    /**
+     * Get perc93H.
+     *
+     * @return float|null
+     */
+    public function getPerc93H()
+    {
+        return $this->perc93H;
+    }
+
+    /**
+     * Set perc7T.
+     *
+     * @param float|null $perc7T
+     *
+     * @return Room
+     */
+    public function setPerc7T($perc7T = null)
+    {
+        $this->perc7T = $perc7T;
+
+        return $this;
+    }
+
+    /**
+     * Get perc7T.
+     *
+     * @return float|null
+     */
+    public function getPerc7T()
+    {
+        return $this->perc7T;
+    }
+
+    /**
+     * Set perc93T.
+     *
+     * @param float|null $perc93T
+     *
+     * @return Room
+     */
+    public function setPerc93T($perc93T = null)
+    {
+        $this->perc93T = $perc93T;
+
+        return $this;
+    }
+
+    /**
+     * Get perc93T.
+     *
+     * @return float|null
+     */
+    public function getPerc93T()
+    {
+        return $this->perc93T;
     }
 }

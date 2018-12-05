@@ -21,37 +21,62 @@ class DataLoggerRepository extends \Doctrine\ORM\EntityRepository
 	        ->getResult();
 	}
 
-  public function getAvgHT($room, $offset, $limit=1440){
+  public function getAvgHT($room, $from, $to){
     return $this->createQueryBuilder('d')
           ->select('avg(d.temperature) as meanAvT, avg(d.rh) as meanAvH')
           ->innerJoin('d.room', 'room')
           ->where('room = :room')
-          ->groupBy('d.room')
+          ->andWhere('d.date BETWEEN :from AND :to')
+          ->setParameter('from', $from )
+          ->setParameter('to', $to)
           ->setParameter('room', $room)
-          ->setMaxResults($limit)
-          ->setFirstResult($offset)
           ->getQuery()
           ->getArrayResult();
   }
 
-  public function getDataLoggersValid($room, $offset, $limit){
+  public function getDataLoggersValid($room, $from, $to){
     return $this->createQueryBuilder('d')
           ->select('d')
           ->where('d.room = :room')
+          ->andWhere('d.date BETWEEN :from AND :to')
+          ->setParameter('from', $from )
+          ->setParameter('to', $to)
           ->setParameter('room', $room->getId())
-          ->setMaxResults($limit)
-          ->setFirstResult($offset)
           ->getQuery()
           ->getResult();
   }
 
-  public function getCantDataLogger($room){
+  public function getLastDate($room){
     return $this->createQueryBuilder('d')
-            ->select('COUNT(d)')
+            ->select('d.date')
             ->where('d.room = :room')
             ->setParameter('room', $room->getId())
+            ->setMaxResults(1)
+            ->orderBy('d.date', 'DESC')
             ->getQuery()
-            ->getSingleScalarResult();
-      }
+            ->getSingleResult();
+    }
+
+  public function getFirstDate($room){
+    return $this->createQueryBuilder('d')
+            ->select('d.date')
+            ->where('d.room = :room')
+            ->setParameter('room', $room->getId())
+            ->setMaxResults(1)
+            ->orderBy('d.date', 'ASC')
+            ->getQuery()
+            ->getSingleResult();
+    }
+
+  public function getDataPersentil($room, $type){
+    return $this->createQueryBuilder('d')
+            ->select('d.'.$type)
+            ->where('d.room = :room')
+            ->andwhere('d.enabled = 1')
+            ->setParameter('room', $room->getId())
+            ->orderBy('d.'.$type, 'ASC')
+            ->getQuery()
+            ->getScalarResult();
+    }
 
 }

@@ -14,6 +14,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 use AppBundle\Entity\Solicitation;
 use AppBundle\Entity\Library;
+use AppBundle\Entity\Room;
+use AppBundle\Entity\DataLogger;
 
 /**
  * User controller.
@@ -35,13 +37,24 @@ class AjaxController extends Controller
         $follower = $em->getRepository('AppBundle:Solicitation')->findOneByUser($id);
         if ($action == 'accepted'){
           $follower->changeToAccepted();
+          $message = "Su solicitud de seguimiento a la biblioteca ha sido aceptada.";
         }elseif($action == 'canceled'){
+          $follower->changeToCanceled();
+          $message = "Su solicitud de seguimiento a la biblioteca ha sido rechazada.";
           $em->remove($follower);
           $em->flush();
         }else{
           $response = array("code" => 200, "success" => false, "action" => $action);
           return new Response(json_encode($response));
         }
+        $emailFollower=array(
+                'subject'=> 'Solicitud de seguimiento de biblioteca',
+                'email'=> $follower->getUser()->getEmail(),
+                'user' => $follower->getUser(),
+                'message' => $message
+            );
+        $this->sendEmail($emailFollower, 'email_solicitation');
+
         $em->persist($follower);
         $em->flush();
         $response = array("code" => 200, "success" => true, "action" => $action);
@@ -53,7 +66,6 @@ class AjaxController extends Controller
     private function sendEmail($email, $view){
          $message = $this->get('EmailHandler')->getMessage( $email['email'],
                                                             $email['user'],
-                                                            $email['library'],
                                                             $email['message'],
                                                             $email['subject'], $view);
          $failures = "No se pudo enviar el email a la casilla de correo especificada";
@@ -78,14 +90,12 @@ class AjaxController extends Controller
                 'subject'=> 'Solicitud de seguimiento de biblioteca',
                 'email'=> $this->getUser()->getEmail(),
                 'user' => $this->getUser(),
-                'library' => $library,
                 'message' => "Su solicitud de seguimiento a la biblioteca ".$library->getName()." se encuentra pendiente de aceptación."
             );
         $emailOwner=array(
                 'subject'=> 'Solicitud de seguimiento de biblioteca',
                 'email'=> $library->getOwner()->getEmail(),
                 'user' => $library->getOwner(),
-                'library' => $library,
                 'message' => "El usuario ".$this->getUser()->getUsername()." ha solicitado seguir a la biblioteca ".$library->getName().".
                             Puede aceptar o rechazar esta solicitud desde el panel de administración."
             );
@@ -98,5 +108,75 @@ class AjaxController extends Controller
         }else{
           return $this->redirectToRoute('library_index');
         }
+    }
+
+    /**
+     * @Route("/data/temperature", name="ajax_data_temperature")
+     * @Method({"POST"})
+     */
+    public function ajaxDataTemperatureAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $room=$em->getRepository('AppBundle:Room')->findOneById($request->request->get('_room'));
+        $registros= $em->getRepository('AppBundle:DataLogger')->findBy(array('room'=>$room, 'enabled'=>true));
+
+        $limit ="[";
+        $promedio ="[";
+        $valor ="[";
+        foreach ($registros as $reg) {
+            $datetime=$reg->getDate()->format("U");
+            $datetime=$datetime*1000;
+            $limit.= "[".$datetime.", ".$reg->getTopLimitT().", ".$reg->getBottonLimitT()."],";
+            $promedio.= "[".$datetime.", ".$reg->getMeanAvT()."],";
+            $valor.="[".$datetime.", ".$reg->getTemperature()."],";
+        }
+        $limit =substr($limit, 0, -1);
+        $promedio =substr($promedio, 0, -1);
+        $valor =substr($valor, 0, -1);
+        $limit .="]";
+        $promedio .="]";
+        $valor .="]";
+        $data = array(
+          'limits' => $limit,
+          'promedio' => $promedio,
+          'valor' => $valor
+        );
+        $response = array("code" => 200, "success" => true, "data" => $data);
+        return new Response(json_encode($response));
+    }
+
+    /**
+     * @Route("/data/humidity", name="ajax_data_humidity")
+     * @Method({"POST"})
+     */
+    public function ajaxDataHumiditiAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $room=$em->getRepository('AppBundle:Room')->findOneById($request->request->get('_room'));
+        $registros= $em->getRepository('AppBundle:DataLogger')->findBy(array('room'=>$room, 'enabled'=>true));
+
+        $limit ="[";
+        $promedio ="[";
+        $valor ="[";
+        foreach ($registros as $reg) {
+            $datetime=$reg->getDate()->format("U");
+            $datetime=$datetime*1000;
+            $limit.= "[".$datetime.", ".$reg->getTopLimitH().", ".$reg->getBottonLimitH()."],";
+            $promedio.= "[".$datetime.", ".$reg->getMeanAvH()."],";
+            $valor.="[".$datetime.", ".$reg->getRh()."],";
+        }
+        $limit =substr($limit, 0, -1);
+        $promedio =substr($promedio, 0, -1);
+        $valor =substr($valor, 0, -1);
+        $limit .="]";
+        $promedio .="]";
+        $valor .="]";
+        $data = array(
+          'limits' => $limit,
+          'promedio' => $promedio,
+          'valor' => $valor
+        );
+        $response = array("code" => 200, "success" => true, "data" => $data);
+        return new Response(json_encode($response));
     }
 }

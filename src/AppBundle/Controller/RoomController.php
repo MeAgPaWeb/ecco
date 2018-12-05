@@ -81,7 +81,7 @@ class RoomController extends Controller
             $em->persist($room);
             $library->addRoom($room);
             $em->persist($library);
-            $em->flush(); //se rompe acá wachon!!!
+            $em->flush();
             $this->loadDataAction($request, $room);
 
             return $this->redirectToRoute($route, array('request' => $request, 'library' => $library->getId()));
@@ -189,10 +189,9 @@ class RoomController extends Controller
           $phpExcelObject->setActiveSheetIndex(0);
           $activesheet = $phpExcelObject->getActiveSheet()->toArray();
           $j=2;
-          while (isset($activesheet[$j][0])) {
-            if (($activesheet[$j][3]>0) && ($activesheet[$j][4]>0)) {
+          while (isset($activesheet[$j][4])) {
               $date= \DateTime::createFromFormat( "d/m/y H:i:s A", $activesheet[$j][1]." ".$activesheet[$j][2]);
-              $data = new DataLogger($activesheet[$j][1]." ".$activesheet[$j][2],$room);
+              $data = new DataLogger($date,$room);
               $data->setNumber($activesheet[$j][0]);
               $data->setTemperature($activesheet[$j][3]);
               $data->setRh($activesheet[$j][4]);
@@ -201,7 +200,6 @@ class RoomController extends Controller
               $room->addDataLogger($data);
               $em->persist($room);
               $j++;
-            }
           }
           $em->flush();
           if ($request->request->get('ajax')) {
@@ -216,4 +214,117 @@ class RoomController extends Controller
         return false;
       }
     }
+
+    /**
+     * Displays a form to edit an existing room entity.
+     *
+     * @Route("/{id}/calc", name="room_calc")
+     * @Method({"GET", "POST"})
+     */
+    public function calcDataAction(Request $request, Room $room){
+      $em = $this->getDoctrine()->getManager();
+      $min= $em->getRepository('AppBundle:DataLogger')->getFirstDate($room);
+      $max= $em->getRepository('AppBundle:DataLogger')->getLastDate($room);
+      $dataloggers = $em->getRepository('AppBundle:DataLogger')->getDataLoggersValid($room, $min['date']->add(new \DateInterval('P15D')), $max['date']->sub(new \DateInterval('P15D')));
+      foreach ($dataloggers as $datalogger) {
+        $dateMin = clone $datalogger->getDate();
+        $dateMax = clone $datalogger->getDate();
+        $dateMin->sub(new \DateInterval('P15D'));
+        $dateMax->add(new \DateInterval('P15D'));
+        $promedio = $em->getRepository('AppBundle:DataLogger')->getAvgHT($room, $dateMin, $dateMax);
+        $datalogger->setMeanAvH($promedio[0]['meanAvH']);
+        $datalogger->setMeanAvT($promedio[0]['meanAvT']);
+        $datalogger->setEnabled(true);
+        $datalogger->setRegMeanAvH($datalogger->getRh()-$promedio[0]['meanAvH']);
+        $datalogger->setRegMeanAvT($datalogger->getTemperature()-$promedio[0]['meanAvT']);
+        $em->persist($datalogger);
+      }
+      $em->flush();
+      return new Response(json_encode(true));
+
+    }
+
+    /**
+     * Displays a form to edit an existing room entity.
+     *
+     * @Route("/{id}/limit", name="room_limit")
+     * @Method({"GET", "POST"})
+     */
+    public function calcLimitAction(Request $request, Room $room){
+      $em = $this->getDoctrine()->getManager();
+      if ($room->getPerc7H()) {
+        $registros= $em->getRepository('AppBundle:DataLogger')->findBy(array('room'=>$room, 'enabled'=>true));
+        foreach ($registros as $reg) {
+          $bottomH=$room->getPerc7H()+$reg->getMeanAvH();
+          if ($bottomH > 70) {
+            $bottomH = 69;
+          }elseif ($bottomH < 45) {
+            $bottomH = 45;
+          }
+          $topH=$room->getPerc93H()+$reg->getMeanAvH();
+          if ($topH > 70) {
+            $topH = 70;
+          }
+          $bottomT=$room->getPerc7T()+$reg->getMeanAvT();
+
+          $topT=$room->getPerc93T()+$reg->getMeanAvT();
+          if ($topT > 30) {
+            $topT = 30;
+          }
+          $reg->setTopLimitT($topT);
+          $reg->setBottonLimitT($bottomT);
+
+          $reg->setTopLimitH($topH);
+          $reg->setBottonLimitH($bottomH);
+
+          $em->persist($reg);
+        }
+        $em->flush();
+      }else {
+        die('calcula los percentiles antes ');
+      }
+      return new Response(json_encode(true));
+
+    }
+
+    /**
+     * Displays a form to edit an existing room entity.
+     *
+     * @Route("/{id}/persentil", name="room_persentil")
+     * @Method({"GET", "POST"})
+     */
+    public function calcpersentilAction(Request $request, Room $room){
+      $em = $this->getDoctrine()->getManager();
+      $regMeanAvH= $em->getRepository('AppBundle:DataLogger')->getDataPersentil($room, "regMeanAvH");
+      $regMeanAvT= $em->getRepository('AppBundle:DataLogger')->getDataPersentil($room, "regMeanAvT");
+      $valuesH = array();
+      $valuesT = array();
+      foreach ($regMeanAvH as $datalogger) {
+        $valuesH[]=$datalogger["regMeanAvH"];
+      }
+      foreach ($regMeanAvT as $datalogger) {
+        $valuesT[]=$datalogger["regMeanAvT"];
+      }
+      $room->setPerc7H($this->getPercentile(7, $valuesH));
+      $room->setPerc93H($this->getPercentile(93, $valuesH));
+      $room->setPerc7T($this->getPercentile(7, $valuesT));
+      $room->setPerc93T($this->getPercentile(93, $valuesT));
+      $em->persist($room);
+      $em->flush();
+      return new Response(json_encode(true));
+
+    }
+
+    private function getPercentile($percentile, $array) {
+        sort($array);
+        $index = ($percentile/100) * count($array);
+        if (floor($index) == $index) {
+             $result = ($array[$index-1] + $array[$index])/2;
+        }
+        else {
+            $result = $array[floor($index)];
+        }
+        return $result;
+    }
+
 }

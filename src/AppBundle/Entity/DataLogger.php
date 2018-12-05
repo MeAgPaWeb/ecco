@@ -38,28 +38,28 @@ class DataLogger
     /**
      * @var decimal|null
      *
-     * @ORM\Column(name="mean_av_H", type="decimal" , nullable=true)
+     * @ORM\Column(name="mean_av_H", type="decimal", precision=6, scale=3,   nullable=true)
      */
     private $meanAvH;
 
     /**
      * @var decimal|null
      *
-     * @ORM\Column(name="mean_av_T", type="decimal" , nullable=true)
+     * @ORM\Column(name="mean_av_T", type="decimal", precision=6, scale=3,   nullable=true)
      */
     private $meanAvT;
 
     /**
      * @var decimal|null
      *
-     * @ORM\Column(name="reg_mean_av_H", type="decimal" , nullable=true)
+     * @ORM\Column(name="reg_mean_av_H", type="decimal", precision=6, scale=3,   nullable=true)
      */
     private $regMeanAvH;
 
     /**
      * @var decimal|null
      *
-     * @ORM\Column(name="reg_mean_av_T", type="decimal" , nullable=true)
+     * @ORM\Column(name="reg_mean_av_T", type="decimal", precision=6, scale=3,   nullable=true)
      */
     private $regMeanAvT;
 
@@ -67,56 +67,56 @@ class DataLogger
     /**
      * @var decimal|null
      *
-     * @ORM\Column(name="botton_limit_H", type="decimal" , nullable=true)
+     * @ORM\Column(name="botton_limit_H", type="decimal", precision=6, scale=3,   nullable=true)
      */
     private $bottonLimitH;
 
     /**
      * @var decimal|null
      *
-     * @ORM\Column(name="botton_limit_T", type="decimal" , nullable=true)
+     * @ORM\Column(name="botton_limit_T", type="decimal", precision=6, scale=3,   nullable=true)
      */
     private $bottonLimitT;
 
     /**
      * @var decimal|null
      *
-     * @ORM\Column(name="top_limit_H", type="decimal" , nullable=true)
+     * @ORM\Column(name="top_limit_H", type="decimal", precision=6, scale=3,   nullable=true)
      */
     private $topLimitH;
 
     /**
      * @var decimal|null
      *
-     * @ORM\Column(name="top_limit_T", type="decimal" , nullable=true)
+     * @ORM\Column(name="top_limit_T", type="decimal", precision=6, scale=3,   nullable=true)
      */
     private $topLimitT;
 
     /**
      * @var decimal|null
      *
-     * @ORM\Column(name="temperature", type="decimal" , nullable=true)
+     * @ORM\Column(name="temperature", type="decimal", precision=6, scale=3,   nullable=true)
      */
     private $temperature;
 
     /**
      * @var decimal|null
      *
-     * @ORM\Column(name="rh", type="decimal" , nullable=true)
+     * @ORM\Column(name="rh", type="decimal", precision=6, scale=3,   nullable=true)
      */
     private $rh;
 
     /**
      * @var decimal|null
      *
-     * @ORM\Column(name="dewpt", type="decimal" , nullable=true)
+     * @ORM\Column(name="dewpt", type="decimal", precision=6, scale=3,   nullable=true)
      */
     private $dewpt;
-    
+
     /**
      * @var string
      *
-     * @ORM\Column(name="unique_attr", type="decimal" , nullable=false, unique=true)
+     * @ORM\Column(name="unique_attr", type="string", nullable=false, unique=true)
      */
     private $uniqueAttr;
 
@@ -135,24 +135,10 @@ class DataLogger
 
     public function __construct($date, $room)
     {
-<<<<<<< HEAD
         $this->date=$date;
         $this->room=$room;
-        $this->uniqueAttr=$this->generateUniqueAttr($date,$room);
-        $this->enabled=true;
-=======
+        $this->uniqueAttr=md5($date->getTimestamp().$room->getId());
         $this->enabled=false;
->>>>>>> 39bf39f3b120e24d6f381f4e2537d0b844d7abd9
-    }
-
-    /**
-     * @return string
-     */
-    private function generateUniqueAttr($date, $room)
-    {
-        $uniqid=str_replace("\r",'',$date);
-        $uniqid=$uniqid.$room->getId();
-        return md5($uniqid);
     }
 
 
@@ -365,7 +351,7 @@ class DataLogger
      *
      * @return DataLogger
      */
-    public function setMeanAvH(\decimal $meanAvH = null)
+    public function setMeanAvH(  $meanAvH = null)
     {
         $this->meanAvH = $meanAvH;
 
@@ -389,7 +375,7 @@ class DataLogger
      *
      * @return DataLogger
      */
-    public function setMeanAvT(\decimal $meanAvT = null)
+    public function setMeanAvT(  $meanAvT = null)
     {
         $this->meanAvT = $meanAvT;
 
@@ -413,7 +399,7 @@ class DataLogger
      *
      * @return DataLogger
      */
-    public function setRegMeanAvH(\decimal $regMeanAvH = null)
+    public function setRegMeanAvH(  $regMeanAvH = null)
     {
         $this->regMeanAvH = $regMeanAvH;
 
@@ -437,7 +423,7 @@ class DataLogger
      *
      * @return DataLogger
      */
-    public function setRegMeanAvT(\decimal $regMeanAvT = null)
+    public function setRegMeanAvT(  $regMeanAvT = null)
     {
         $this->regMeanAvT = $regMeanAvT;
 
@@ -461,7 +447,7 @@ class DataLogger
      *
      * @return DataLogger
      */
-    public function setBottonLimitH(\decimal $bottonLimitH = null)
+    public function setBottonLimitH(  $bottonLimitH = null)
     {
         $this->bottonLimitH = $bottonLimitH;
 
@@ -485,7 +471,7 @@ class DataLogger
      *
      * @return DataLogger
      */
-    public function setBottonLimitT(\decimal $bottonLimitT = null)
+    public function setBottonLimitT(  $bottonLimitT = null)
     {
         $this->bottonLimitT = $bottonLimitT;
 
@@ -509,7 +495,7 @@ class DataLogger
      *
      * @return DataLogger
      */
-    public function setTopLimitH(\decimal $topLimitH = null)
+    public function setTopLimitH(  $topLimitH = null)
     {
         $this->topLimitH = $topLimitH;
 
@@ -533,7 +519,7 @@ class DataLogger
      *
      * @return DataLogger
      */
-    public function setTopLimitT(\decimal $topLimitT = null)
+    public function setTopLimitT(  $topLimitT = null)
     {
         $this->topLimitT = $topLimitT;
 

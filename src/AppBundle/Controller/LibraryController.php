@@ -49,7 +49,6 @@ class LibraryController extends Controller
         $libraries = $em->getRepository('AppBundle:Library')->findAll();
 
         return $this->render('library/statistics.html.twig', array(
-            'libraries' => $libraries,
             'library' => $library
         ));
     }
