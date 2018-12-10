@@ -124,9 +124,9 @@ class RoomController extends Controller
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-            $this->loadDataAction($request, $room);
+            //$this->loadDataAction($request, $room);
 
-            return $this->redirectToRoute('room_edit', array('id' => $room->getId()));
+            return $this->redirectToRoute('library_edit', array('id' => $room->getLibrary()->getId()));
         }
 
         return $this->render('room/edit.html.twig', array(

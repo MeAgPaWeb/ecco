@@ -1,4 +1,8 @@
-agregar la carga del datalogger en el editar biblioteca
+- agregar la carga del datalogger en el editar biblioteca
+- en la carga de archivo solo poder seleccionar xls
+- capturar excepciones en carga del datalogger
+- ver cuando ejecutar las 3 acciones que realizan los calculos sobre los registros
+
 agregar flash messeger en acciones de crear editar todo gato
-en la carga de archivo solo poder seleccionar xls
 poder poner puntos en el mapa - sin direccion
+si no tiene seguidores que aparezca que no tiene ninguno o no te abra el poppus
