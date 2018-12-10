@@ -12,22 +12,15 @@
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/highcharts-more.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
-
-    <script>
-
-    $('#select-sala').change(function(){
-        var id = $(this).val();
-        if (id == 0) {
-          $('#temperature').hide();
-          $('#humidity').hide();
-        }else{
-          $('#temperature').show();
-          $('#humidity').show();
+    <script type="text/javascript">
+      function loadData(id){
+        var first = $('#first').val();
+        var last = $('#last').val();
         $.ajax({
           method: "POST",
           url: "{{path('ajax_data_temperature')}}",
           dataType: "json",
-          data: { _room: id }
+          data: { _room: id, _first: first, _last:last }
         })
         .done(function( data ) {
           if (data.success) {
@@ -103,7 +96,7 @@
           method: "POST",
           url: "{{path('ajax_data_humidity')}}",
           dataType: "json",
-          data: { _room: id }
+          data: { _room: id, _first: first, _last:last }
         })
         .done(function( data ) {
           if (data.success) {
@@ -173,6 +166,48 @@
 
           }
         });
+      }
+    </script>
+    <script>
+    $('#select-sala').change(function(){
+        var id = $(this).val();
+        if (id == 0) {
+          $('#temperature').hide();
+          $('#humidity').hide();
+          $('#reservation').attr('disabled', true);
+        }else{
+          $('#temperature').show();
+          $('#humidity').show();
+          $.ajax({
+            method: "POST",
+            url: "{{path('ajax_data_date')}}",
+            dataType: "json",
+            data: { _room: id }
+          })
+          .done(function( data ) {
+            if (data.success) {
+              $('#first').val(moment(data.data.first).unix());
+              $('#last').val(moment(data.data.last).unix());
+              $('#reservation').attr('disabled', false);
+              $('#reservation').daterangepicker({
+              'minDate': moment(data.data.first),
+              'maxDate': moment(data.data.last),
+              'startDate': moment(data.data.first),
+              'endDate': moment(data.data.last)
+              },
+              function(start, end) {
+                $('#first').val(moment(start).unix());
+                $('#last').val(moment(end).unix());
+                loadData(id);                
+              });
+              loadData(id);
+            }else {
+              $('#temperature').hide();
+              $('#humidity').hide();
+              $('#reservation').attr('disabled', true);
+              alert('esta sala no posee datos cargados');
+            }
+          });
         }
     });
 
@@ -203,12 +238,31 @@
   <div class="col-xs-12">
       <div class="box box-primary">
           <div class="box-body">
-            <select class="form-control" id="select-sala" placeholder="seleccione una sala">
-              <option value="0">seleccione una sala</option>
-              {% for room in library.rooms %}
-                <option value="{{room.id}}">{{room.name}}</option>
-              {% endfor %}
-            </select>
+            <div class="row">
+              <div class="col-md-6">
+                <label for="select-sala">Eleccione una Sala de la Biblioteca</label>
+                <select class="form-control" id="select-sala" placeholder="seleccione una sala">
+                  <option value="0">seleccione una sala</option>
+                  {% for room in library.rooms %}
+                  <option value="{{room.id}}">{{room.name}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Rango de Fechas</label>
+                  <div class="input-group">
+                    <div class="input-group-addon">
+                      <i class="fa fa-calendar"></i>
+                    </div>
+                    <input type="text" class="form-control pull-right" id="reservation" disabled>
+                    <input type="hidden" id="first" disabled>
+                    <input type="hidden" id="last" disabled>
+                  </div>
+                  <!-- /.input group -->
+                </div>
+              </div>
+            </div>
           </div>
       </div>
   </div>

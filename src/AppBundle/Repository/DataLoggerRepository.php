@@ -38,6 +38,7 @@ class DataLoggerRepository extends \Doctrine\ORM\EntityRepository
     return $this->createQueryBuilder('d')
           ->select('d')
           ->where('d.room = :room')
+          ->andWhere('d.enabled = 1')
           ->andWhere('d.date BETWEEN :from AND :to')
           ->setParameter('from', $from )
           ->setParameter('to', $to)
@@ -50,22 +51,24 @@ class DataLoggerRepository extends \Doctrine\ORM\EntityRepository
     return $this->createQueryBuilder('d')
             ->select('d.date')
             ->where('d.room = :room')
+            ->andWhere('d.enabled = 1')
             ->setParameter('room', $room->getId())
             ->setMaxResults(1)
             ->orderBy('d.date', 'DESC')
             ->getQuery()
-            ->getSingleResult();
+            ->getOneOrNullResult();
     }
 
   public function getFirstDate($room){
     return $this->createQueryBuilder('d')
             ->select('d.date')
             ->where('d.room = :room')
+            ->andWhere('d.enabled = 1')
             ->setParameter('room', $room->getId())
             ->setMaxResults(1)
             ->orderBy('d.date', 'ASC')
             ->getQuery()
-            ->getSingleResult();
+            ->getOneOrNullResult();
     }
 
   public function getDataPersentil($room, $type){

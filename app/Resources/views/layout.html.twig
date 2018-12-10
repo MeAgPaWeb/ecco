@@ -17,6 +17,7 @@
                         'lib/adminlte/css/AdminLTE.min.css',
                         'lib/adminlte/css/skins/_all-skins.min.css',
                         'lib/jquery-select2/dist/css/select2.min.css',
+                        'lib/bootstrap-daterangepicker/daterangepicker.css',
                         'css/custom.css',
                         'lib/icheck/skins/flat/_all.css',
                      ] | merge(stylesheets) %}
@@ -25,61 +26,15 @@
                         'lib/jquery/jquery.min.js',
                         'lib/jquery-ui/jquery-ui.min.js',
                         'lib/bootstrap/js/bootstrap.min.js',
+                        'lib/moment.js/moment.min.js',
                         'lib/fastclick/fastclick.min.js',
                         'lib/moment.js/moment-with-locales.js',
+                        'lib/bootstrap-daterangepicker/daterangepicker.js',
                         'lib/jquery-slimscroll/jquery.slimscroll.min.js',
                         'lib/jquery-select2/dist/js/select2.min.js',
                         'lib/adminlte/js/app.min.js',
                         'lib/icheck/icheck.min.js'
                      ] | merge(javascripts) %}
-{% set messages = [
-    {
-        "sender": {
-            "name": "Juan",
-            "lastname": "Peréz",
-            "avatar": asset('media/avatars/Male_gender.jpg')
-        },
-        "url": "#",
-        "body": "Nueva gestión de usuarios",
-        "time": "Recién"
-    },
-    {
-        "sender": {
-            "name": "María",
-            "lastname": "Rodríguez",
-            "avatar": asset('media/avatars/Female_gender.jpg')
-        },
-        "url": "#",
-        "body": "Envío de nueva publicidad",
-        "time": "1 hora"
-    },
-    {
-        "sender": {
-            "name": "Mariana",
-            "lastname": "Gordillo",
-            "avatar": asset('media/avatars/Female_gender.jpg')
-        },
-        "url": "#",
-        "body": "Envío de primicia",
-        "time": "3 horas"
-    },
-        {
-        "sender": {
-            "name": "Gustavo",
-            "lastname": "Ordoqui",
-            "avatar": asset('media/avatars/Male_gender.jpg')
-        },
-        "url": "#",
-        "body": "Generar nueva encuesta",
-        "time": "Ayer"
-    }
-] %}
-
-{% set notifications = [
-    {"title": "Un usuario nuevo", "url": "#", "icon": "user", "color": "red" },
-    {"title": "Se publicó un nuevo mensaje en una publicación", "url": "#", "icon": "warning", "color": "yellow" },
-    {"title": "7 noticias superaron las 1000 visitas", "url": "#", "icon": "angellist", "color": "green" }
-] %}
 
 <!DOCTYPE html>
 <html>

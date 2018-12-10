@@ -123,8 +123,9 @@ class AjaxController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $room=$em->getRepository('AppBundle:Room')->findOneById($request->request->get('_room'));
-        $registros= $em->getRepository('AppBundle:DataLogger')->findBy(array('room'=>$room, 'enabled'=>true));
-
+        $first = new \DateTime('@'.$request->request->get('_first'));
+        $last = new \DateTime('@'.$request->request->get('_last'));
+        $registros= $em->getRepository('AppBundle:DataLogger')->getDataLoggersValid($room, $first->format("Y-m-d H:i:s"), $last->format("Y-m-d H:i:s"));
         $limit ="[";
         $promedio ="[";
         $valor ="[";
@@ -158,7 +159,9 @@ class AjaxController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $room=$em->getRepository('AppBundle:Room')->findOneById($request->request->get('_room'));
-        $registros= $em->getRepository('AppBundle:DataLogger')->findBy(array('room'=>$room, 'enabled'=>true));
+        $first = new \DateTime('@'.$request->request->get('_first'));
+        $last = new \DateTime('@'.$request->request->get('_last'));
+        $registros= $em->getRepository('AppBundle:DataLogger')->getDataLoggersValid($room, $first, $last);
 
         $limit ="[";
         $promedio ="[";
@@ -182,6 +185,31 @@ class AjaxController extends Controller
           'valor' => $valor
         );
         $response = array("code" => 200, "success" => true, "data" => $data);
+        return new Response(json_encode($response));
+    }
+
+
+    /**
+     * @Route("/data/fechasCargadas", name="ajax_data_date")
+     * @Method({"POST"})
+     */
+    public function ajaxDataDateAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $room=$em->getRepository('AppBundle:Room')->findOneById($request->request->get('_room'));
+        $first= $em->getRepository('AppBundle:DataLogger')->getFirstDate($room);
+        if (isset($first['date'])) {
+          $last= $em->getRepository('AppBundle:DataLogger')->getLastDate($room);
+          $data = array(
+            'first' => $first['date']->format('Y-m-d'),
+            'last' => $last['date']->format('Y-m-d')
+          );
+          $success = true;
+        }else{
+          $data = array();
+          $success=false;
+        }
+        $response = array("code" => 200, "success" => $success, "data" => $data);
         return new Response(json_encode($response));
     }
 }
