@@ -77,6 +77,11 @@
         $('#load').show();
         $('#route').val($(this).attr('data'));
       });
+      $('.carga').click(function(){
+        $('#room').val($(this).attr('room'));
+        $('#library').val($(this).attr('library'));
+        $('#modal-load').modal('toggle');
+      });
     </script>
 {% endblock javascript %}
 {% block breadcrumb %}
@@ -187,8 +192,8 @@
                       <td>{{room.id}}</td>
                       <td>{{room.name}}</td>
                       <td>
-                        <a href="{{ path('room_load', { 'id': room.id }) }}" title="Cargar Datos"><span class="ion ion-upload" aria-hidden="true"></span></a>
-                        <a href="{{ path('room_edit', { 'id': room.id }) }}" title="Editar"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                        <div role="button"  href="{{ path('room_load', { 'id': room.id }) }}" class="btn btn-flat pull-left carga" library="{{room.library.id}}" room="{{room.id}}" title="Cargar Datos"><span class="ion ion-upload" aria-hidden="true"></span> Cargar Datos</div>
+                        <a href="{{ path('room_edit', { 'id': room.id }) }}" title="Editar" class="btn btn-flat pull-left"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Editar</a>
                       </td>
                     </tr>
                   {% endfor %}
@@ -207,4 +212,16 @@
 </div>
 
 
+{% endblock %}
+
+
+{% block modal_body %}
+      <input type="hidden" class="form-control" id="library" />
+
+      <input type="hidden" class="form-control" id="room" />
+      <div class="form-group">
+        <label for="exampleInputFile">Archivo de Registro del DataLogger</label>
+        <input id="uploadFile" name="upload" type="file">
+        <p class="help-block">Seleccione el archivo .xls que contenga las siguientes columnas <br>   ("#";"Date";"Time, GMT-03:00";"Temp, °C";"RH, %";"DewPt, °C")</p>
+      </div>
 {% endblock %}
