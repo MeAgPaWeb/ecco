@@ -9,6 +9,9 @@
 {% block javascript %}
   {{parent()}}
   <script>
+  $('input.btn').click(function(){
+    $('#route').val($(this).attr('data'));
+  });
   </script>
 {% endblock javascript %}
 {% block breadcrumb %}
