@@ -184,35 +184,51 @@ class RoomController extends Controller
         $name = $file->getFilename();
         $url =  $file->getRealPath();
         $em = $this->getDoctrine()->getManager();
+        $isLoad= $em->getRepository('AppBundle:DataLogger')->getArrayLoads($room);
+        $dataloggerLoads=array();
+        foreach ($isLoad as $key => $unique) {
+          $dataloggerLoads[]=$unique['uniqueAttr'];
+        }
+
         if ($file->isValid()) {
           $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject($url);
           $phpExcelObject->setActiveSheetIndex(0);
           $activesheet = $phpExcelObject->getActiveSheet()->toArray();
           $j=2;
+          $nuevos=0;
+          $repetidos=0;
           while (isset($activesheet[$j][4])) {
               $date= \DateTime::createFromFormat( "d/m/y H:i:s A", $activesheet[$j][1]." ".$activesheet[$j][2]);
               $data = new DataLogger($date,$room);
-              $data->setNumber($activesheet[$j][0]);
-              $data->setTemperature($activesheet[$j][3]);
-              $data->setRh($activesheet[$j][4]);
-              $data->setDewpt($activesheet[$j][5]);
-              $em->persist($data);
-              $room->addDataLogger($data);
-              $em->persist($room);
+              if (!in_array($data->getUniqueAttr(), $dataloggerLoads) ) {
+                $data->setNumber($activesheet[$j][0]);
+                $data->setTemperature($activesheet[$j][3]);
+                $data->setRh($activesheet[$j][4]);
+                $data->setDewpt($activesheet[$j][5]);
+                $em->persist($data);
+                $room->addDataLogger($data);
+                $em->persist($room);
+                $nuevos++;
+              }else {
+                $repetidos++;
+                echo "entro porque esta repetido";
+              }
               $j++;
           }
           $em->flush();
-          if ($request->request->get('ajax')) {
-            return new Response(json_encode(true));
-          }
+          $data = array(
+              'status' => true,
+              'nuevos' => $nuevos,
+              "repetidos" => $repetidos
+           );
           return true;
         }
       }else{
-        if ($request->request->get('ajax')) {
-          return new Response(json_encode(false));
-        }
-        return false;
+        $data = array(
+            'status' => false
+         );
       }
+      return new Response(json_encode($data));
     }
 
     /**

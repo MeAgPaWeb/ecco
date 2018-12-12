@@ -42,6 +42,15 @@
   </a>
   <a href="#" data-toggle="modal" data-target="#modal-load">
     <div class="col-lg-3 col-xs-6">
+      <div class="alert alert-success" id="alert" style="display:none;">
+          <button type="button" class="close" data-dismiss="alert">x</button>
+          <strong><i class="icon fa fa-check"></i>! </strong>
+          <div id="contentTrue" style="display:none;">
+            <p id="msjCarga"></p>
+            <p>Registros Nuevos: <span id="nuevos"></span></p>
+            <p>Registros Repetidos: <span id="repetidos"></span></p>
+          </div>
+      </div>
       <div class="small-box bg-red">
         <div class="inner">
           <h3>Cargar</h3>
@@ -279,7 +288,7 @@
             var id = $(this).val()
             $.ajax({
               method: "POST",
-              url: "/room/api/list",
+              url: "{{ path('api_library_list')}}",
               data: { library: id }
             })
             .done(function( data ) {
@@ -346,11 +355,61 @@
             }
           });
 
-        </script>
+      </script>
       </div>
       <div class="form-group">
         <label for="exampleInputFile">Archivo de Registro del DataLogger</label>
         <input id="uploadFile" name="upload" type="file">
         <p class="help-block">Seleccione el archivo .xls que contenga las siguientes columnas <br>   ("#";"Date";"Time, GMT-03:00";"Temp, °C";"RH, %";"DewPt, °C")</p>
       </div>
+{% endblock %}
+{% block modal_footer %}
+  <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
+  <button type="button" id="button_finish" class="btn btn-primary">Cargar</button>
+<script type="text/javascript">
+$('#button_finish').click(function(){
+  var id_room = $('#rooms').val();
+  if (id_room !== "null") {
+    if ($('#uploadFile').val()) {
+      $('#load').show();
+      var formData = new FormData();
+      formData.append('upload', $('#uploadFile')[0].files[0]);
+      formData.append('ajax', 'yes');
+      $.ajax({
+        method: "POST",
+        url: "/sala/"+id_room+"/cargar",
+        cache: false,
+        contentType: false,
+        processData: false,
+        data: formData
+      })
+      .done(function( data ) {
+        if (data.status) {
+          alert('carga completa');
+          $('#load').hide();
+          $('#modal-load').modal('toggle');
+          $('#alert').removeClass('alert-danger');
+          $('#alert').addClass('alert-success');
+          $('#msjCarga').html("Se agregó correctamente el archivo");
+          $('#nuevos').html(data.nuevos);
+          $('#repetidos').html(data.repetidos);
+          $('#contentTrue').show();
+        }else{
+          $('#alert').removeClass('alert-success');
+          $('#alert').addClass('alert-danger');
+          $('#msjCarga').html("No se pudo cargar el archivo. Verifique el formato.");
+          $('#contentTrue').hide();
+        }
+        $("#alert").fadeTo(2000, 500).slideUp(1000, function(){
+          $("#alert").slideUp(3000);
+        });
+      });
+    }else{
+      alert('no selecciono ningun archivo');
+    }
+  }else {
+    alert('seleccione una sala');
+  }
+});
+</script>
 {% endblock %}

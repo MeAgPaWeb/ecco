@@ -34,6 +34,16 @@ class DataLoggerRepository extends \Doctrine\ORM\EntityRepository
           ->getArrayResult();
   }
 
+  public function getArrayLoads($room){
+    return $this->createQueryBuilder('d')
+          ->select('d.uniqueAttr')
+          ->innerJoin('d.room', 'room')
+          ->where('room = :room')
+          ->setParameter('room', $room)
+          ->getQuery()
+          ->getArrayResult();
+  }
+
   public function getDataLoggersValid($room, $from, $to){
     return $this->createQueryBuilder('d')
           ->select('d')

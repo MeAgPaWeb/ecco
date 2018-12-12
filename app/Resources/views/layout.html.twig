@@ -209,48 +209,16 @@
                     <span class="pull-right text-muted">cargando datos...</span>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
-                    <button type="button" id="button_finish" class="btn btn-primary">Cargar</button>
+                    {% block modal_footer %}
+                      <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
+                      <button type="button" id="button_finish" class="btn btn-primary">Cargar</button>
+                    {% endblock %}
                   </div>
                 </div>
                 <!-- /.modal-content -->
               </div>
               <!-- /.modal-dialog -->
             </div>
-            <script type="text/javascript">
-            $('#button_finish').click(function(){
-              var id_room = $('#rooms').val();
-              if (id_room !== "null") {
-                if ($('#uploadFile').val()) {
-                  $('#load').show();
-                  var formData = new FormData();
-                  formData.append('upload', $('#uploadFile')[0].files[0]);
-                  formData.append('ajax', 'yes');
-                  $.ajax({
-                    method: "POST",
-                    url: "/room/"+id_room+"/load",
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    data: formData
-                  })
-                  .done(function( data ) {
-                    if (data) {
-                      alert('carga completa');
-                      $('#load').hide();
-                      $('#modal-load').modal('toggle');
-                    }else{
-                      alert('hubo un error en la carga');
-                    }
-                  });
-                }else{
-                  alert('no selecciono ningun archivo');
-                }
-              }else {
-                alert('seleccione una sala');
-              }
-            });
-            </script>
         {% endblock %}
     </body>
 </html>
