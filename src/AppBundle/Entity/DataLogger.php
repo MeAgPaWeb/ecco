@@ -177,6 +177,16 @@ class DataLogger
     }
 
     /**
+     * Get uniqueAttr.
+     *
+     * @return string|null
+     */
+    public function getUniqueAttr()
+    {
+        return $this->uniqueAttr;
+    }
+
+    /**
      * Set date.
      *
      * @param \DateTime $date

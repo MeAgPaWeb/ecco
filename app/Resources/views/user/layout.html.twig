@@ -6,8 +6,22 @@
         "preclass": "login"
     }
 %}
-
 {% endif %}
+{% if javascripts is not defined %}
+    {% set javascripts = [
+        'lib/jquery/jquery.min.js',
+        'lib/jquery-ui/jquery-ui.min.js',
+        'lib/bootstrap/js/bootstrap.min.js',
+        'lib/moment.js/moment.min.js',
+        'lib/fastclick/fastclick.min.js',
+        'lib/icheck/icheck.min.js',
+        'lib/jquery-inputmask/min/jquery.inputmask.bundle.min.js',
+        'lib/jquery-inputmask/min/inputmask/jquery.inputmask.min.js',
+        'lib/jquery-inputmask/min/inputmask/inputmask.extensions.min.js',
+
+     ] %}
+{% endif %}
+
 
 <!DOCTYPE html>
 <html>
@@ -29,6 +43,7 @@
                     filter='uglifycss'
                     output='css/build/backend_layout.css'
                 %}
+
                     <link type="text/css" rel="stylesheet" href="{{ asset_url }}" />
                     <style media="screen">
                       .login-box, .register-box {
@@ -44,7 +59,6 @@
                     </style>
                 {% endstylesheets %}
             {% endblock %}
-            <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
             {% block styleStylesheets %}
             {% endblock %}
         {% endblock stylesheet %}
@@ -71,9 +85,10 @@
             </div>
         </div>
         {% block javascript %}
-            <script src="//code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+            <!-- <script src="//code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
             <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
             <script src="https://rawgit.com/RobinHerbots/Inputmask/4.x/dist/jquery.inputmask.bundle.js"></script>
+             -->
             <script type="text/javascript">
             $(function() {
               $('.error-email').hide();
@@ -119,4 +134,7 @@
 
         {% endblock javascript %}
     </body>
+    {% block javascriptSrc %}
+        {{ macro.javascripts(javascripts) }}
+    {% endblock javascriptSrc %}
 </html>

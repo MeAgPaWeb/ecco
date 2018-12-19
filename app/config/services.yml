@@ -44,6 +44,10 @@ services:
         arguments:    ["@service_container"]
 
 
+    UploadDataHandler:
+        class:        AppBundle\Service\UploadDataHandler
+        arguments:    ["@service_container"]
+
     # app.form.type.role:
     #     class: AppBundle\Form\Type\RoleType
     #     arguments:

@@ -197,6 +197,7 @@ class RoomController extends Controller
           $j=2;
           $nuevos=0;
           $repetidos=0;
+          $batchSize = 30;
           while (isset($activesheet[$j][4])) {
               $date= \DateTime::createFromFormat( "d/m/y H:i:s A", $activesheet[$j][1]." ".$activesheet[$j][2]);
               $data = new DataLogger($date,$room);
@@ -212,6 +213,14 @@ class RoomController extends Controller
               }else {
                 $repetidos++;
                 echo "entro porque esta repetido";
+              }
+              if (($j % $batchSize) === 0) {
+                try {
+                  $em->flush(); // Executes all updates.
+                  $em = $this->getDoctrine()->getManager();
+                }catch(\Doctrine\DBAL\DBALException $e) {
+
+                }
               }
               $j++;
           }
