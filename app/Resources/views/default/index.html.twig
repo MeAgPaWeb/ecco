@@ -169,13 +169,13 @@
                     </td>
                     <td>
                       {% if follower.state == 'pending' %}
-                        <a href="#" class="ajax" library-id="{{library.id}}" follower-id="{{follower.user.id}}" action="accepted">
-                          <span class="glyphicon glyphicon-ok text-success" id="action_{{library.id}}" aria-hidden="true">Aceptar</span>
-                        </a>
+                        <span library-id="{{library.id}}" follower-id="{{follower.user.id}}" action="accepted" data-toggle="tooltip" title="" class="badge bg-green ajax" role="button" data-original-title="Aceptar">
+                          <span class="glyphicon glyphicon-ok" id="action_{{library.id}}" aria-hidden="true"></span>
+                        </span>
                       {% endif %}
-                      <a href="#" class="ajax"  library-id="{{library.id}}" follower-id="{{follower.user.id}}" action="canceled">
-                        <span class="glyphicon glyphicon-remove text-danger" aria-hidden="true">Cancelar</span>
-                      </a>
+                      <span library-id="{{library.id}}" follower-id="{{follower.user.id}}" action="canceled" data-toggle="tooltip" title="" class="badge bg-red ajax" role="button" data-original-title="Cancelar">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                      </span>
                     </td>
                   {% endif %}
                 </tr>
