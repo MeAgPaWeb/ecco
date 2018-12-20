@@ -51,6 +51,7 @@
             <p>Registros Repetidos: <span id="repetidos"></span></p>
           </div>
       </div>
+      {% if libraries | length %}
       <div class="small-box bg-red">
         <div class="inner">
           <h3>Cargar</h3>
@@ -60,6 +61,7 @@
           <i class="ion ion-upload"></i>
         </div>
       </div>
+      {% endif %}
     </div>
   </a>
   <!-- ./col -->

@@ -75,15 +75,16 @@ class RoomController extends Controller
         $form = $this->createForm('AppBundle\Form\RoomType', $room);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $room->setLibrary($library);
-            $em->persist($room);
-            $library->addRoom($room);
-            $em->persist($library);
-            $em->flush();
-            $this->loadDataAction($request, $room);
-
+        if ($form->isSubmitted()){
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $room->setLibrary($library);
+                $em->persist($room);
+                $library->addRoom($room);
+                $em->persist($library);
+                $em->flush();
+                $this->loadDataAction($request, $room);
+            }
             return $this->redirectToRoute($route, array('request' => $request, 'library' => $library->getId()));
         }
 
