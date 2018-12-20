@@ -10,7 +10,8 @@
 {% block breadcrumb %}
     <li class="active">Portada</li>
 {% endblock %}
-
+{% block contentHeader %}
+{% endblock %}
 {% block content %}
 <div class="row">
   <!-- ./col -->
@@ -64,6 +65,13 @@
   <!-- ./col -->
 </div>
 <div class="row">
+  {% if libraries|length %}
+  <section class="content-header">
+      <h1>
+          Bibliotecas Propias
+      </h1>
+  </section>
+  {% endif %}
   {% for library in libraries %}
     <div class="col-md-6">
       <!-- Widget: user widget style 1 -->
@@ -105,17 +113,19 @@
 
         </div>
         <div class="box-footer">
-            <a class="btn btn-app" href="{{ path('library_edit', { 'id': library.id }) }}">
+            <a class="btn btn-app" href="{{ path('library_edit', { 'id': library.id }) }}" data-toggle="tooltip" title="" data-original-title="Editar Biblioteca">
               <i class="fa fa-edit"></i> Editar
             </a>
-            <a class="btn btn-app" href="{{ path('room_new', { 'library': library.id }) }}">
+            <a class="btn btn-app" href="{{ path('room_new', { 'library': library.id }) }}" data-toggle="tooltip" title="" data-original-title="Agregar Sala">
               <i class="fa fa-plus"></i> Sala
             </a>
-            <a class="btn btn-app" data-toggle="modal" data-target="#modal-default{{library.id}}">
-              {%if library | pending %}<span class="badge bg-green" id="cant_{{library.id}}">{{library | pending}}</span>{% endif %}
-              <i class="fa fa-users"></i> Seguidores
-            </a>
-            <a class="btn btn-app" href="{{ path('library_log', {'id': library.id }) }}">
+            <div data-toggle="tooltip" title="" data-original-title="Gestionar Seguidores" style="display: inline-block;">
+              <a class="btn btn-app" data-toggle="modal" data-target="#modal-default{{library.id}}">
+                {%if library | pending %}<span class="badge bg-green" id="cant_{{library.id}}">{{library | pending}}</span>{% endif %}
+                  <i class="fa fa-users"></i>Seguidores
+              </a>
+            </div>
+            <a class="btn btn-app" href="{{ path('library_log', {'id': library.id }) }}" data-toggle="tooltip" title="" data-original-title="Estadisticas">
               <i class="fa  fa-line-chart"></i> Estadísticas
             </a>
         </div>
@@ -193,12 +203,20 @@
     </div>
   {% endfor %}
     <!--BIBLIOtecas seguidas-->
+    {% if followings|length %}
+      <section class="content-header">
+          <h1>
+              Biblioteca Seguidas
+              <small>solo con acceso a estadisticas</small>
+          </h1>
+      </section>
+    {% endif %}
     {% for library in followings %}
       <div class="col-md-6">
         <!-- Widget: user widget style 1 -->
         <div class="box box-widget widget-user">
           <!-- Add the bg color to the header using any of the bg-* classes -->
-          <a href="#">
+          <a href="{{ path('library_log', {'id': library.id }) }}" data-toggle="tooltip" title="" data-original-title="Acceder a las estadisticas">
             <div class="widget-user-header bg-aqua-active" style="background-color: {{ library.colour|default('#00a7d0') }}!important">
               <h3 class="widget-user-username">{{ library.name }}</h3>
               <h5 class="widget-user-desc">{{ library.address }}</h5>
@@ -234,11 +252,6 @@
             </div>
             <!-- /.row -->
 
-          </div>
-          <div class="box-footer">
-              <a class="btn btn-app" href="{{ path('library_log', {'id': library.id }) }}">
-                <i class="fa  fa-line-chart"></i> Estadísticas
-              </a>
           </div>
         </div>
       </div>
@@ -352,6 +365,7 @@
               });
 
             }
+            $('.tooltip').not(this).hide();
           });
 
       </script>
