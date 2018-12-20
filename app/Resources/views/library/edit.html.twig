@@ -69,17 +69,51 @@
                 return parseInt(buffer.join('')) <= (new Date()).getFullYear();
             }
         });
-
+        $('#button_finish').click(function(){
+            if ($('#uploadFile').val()) {
+              $('#load').show();
+              var route =  $('#route').val();
+              var formData = new FormData();
+              formData.append('upload', $('#uploadFile')[0].files[0]);
+              formData.append('ajax', 'yes');
+              $.ajax({
+                method: "POST",
+                url: route,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType:'json',
+                data: formData
+              })
+              .done(function( data ) {
+                $('#load').hide();
+                $('#modal-load').modal('toggle');
+                if (data.status) {
+                  $('#alert').removeClass('bg-red');
+                  $('#alert').addClass('bg-green');
+                  $('#msjCarga').html("Se agregó correctamente el archivo");
+                  $('#nuevos').html(data.nuevos);
+                  $('#repetidos').html(data.repetidos);
+                  $('#contentTrue').show();
+                }else{
+                  $('#alert').removeClass('bg-green');
+                  $('#alert').addClass('bg-red');
+                  $('#msjCarga').html("No se pudo cargar el archivo. Verifique el formato.");
+                  $('#contentTrue').hide();
+                }
+                $("#alert").fadeTo(2000, 500).slideUp(1000, function(){
+                  $("#alert").slideUp(3000);
+                });
+              });
+            }else{
+              alert('no selecciono ningun archivo');
+            }
+        });
       });
     </script>
     <script>
-      $('input.btn').click(function(){
-        $('#load').show();
-        $('#route').val($(this).attr('data'));
-      });
       $('.carga').click(function(){
-        $('#room').val($(this).attr('room'));
-        $('#library').val($(this).attr('library'));
+        $('#route').val($(this).attr('href'));
         $('#modal-load').modal('toggle');
       });
     </script>
@@ -173,6 +207,14 @@
     <!-- /.Fin Modal eliminar -->
   </div>
   <div class="col-md-6">
+    <div class="alert bg-green" id="alert" style="display:none;">
+        <button type="button" class="close" data-dismiss="alert">x</button>
+        <strong><p id="msjCarga"></p></strong>
+        <div id="contentTrue" style="display:none;">
+          <p>Registros Nuevos: <span id="nuevos"></span></p>
+          <p>Registros Repetidos: <span id="repetidos"></span></p>
+        </div>
+    </div>
     <div class="box box-primary">
         <div class="box-header">
           <h3 class="box-title pull-left">Salas</h3>
@@ -216,12 +258,10 @@
 
 
 {% block modal_body %}
-      <input type="hidden" class="form-control" id="library" />
-
-      <input type="hidden" class="form-control" id="room" />
+      <input type="hidden" id="route" />
       <div class="form-group">
         <label for="exampleInputFile">Archivo de Registro del DataLogger</label>
-        <input id="uploadFile" name="upload" type="file">
+        <input id="uploadFile" name="upload" type="file"  accept=".xls">
         <p class="help-block">Seleccione el archivo .xls que contenga las siguientes columnas <br>   ("#";"Date";"Time, GMT-03:00";"Temp, °C";"RH, %";"DewPt, °C")</p>
       </div>
 {% endblock %}
