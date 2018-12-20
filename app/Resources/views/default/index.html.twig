@@ -42,11 +42,10 @@
   </a>
   <a href="#" data-toggle="modal" data-target="#modal-load">
     <div class="col-lg-3 col-xs-6">
-      <div class="alert alert-success" id="alert" style="display:none;">
+      <div class="alert bg-green" id="alert" style="display:none;">
           <button type="button" class="close" data-dismiss="alert">x</button>
-          <strong><i class="icon fa fa-check"></i>! </strong>
+          <strong><p id="msjCarga"></p></strong>
           <div id="contentTrue" style="display:none;">
-            <p id="msjCarga"></p>
             <p>Registros Nuevos: <span id="nuevos"></span></p>
             <p>Registros Repetidos: <span id="repetidos"></span></p>
           </div>
@@ -369,7 +368,7 @@
 <script type="text/javascript">
 $('#button_finish').click(function(){
   var id_room = $('#rooms').val();
-  if (id_room !== "null") {
+  if (id_room) {
     if ($('#uploadFile').val()) {
       $('#load').show();
       var formData = new FormData();
@@ -381,22 +380,22 @@ $('#button_finish').click(function(){
         cache: false,
         contentType: false,
         processData: false,
+        dataType:'json',
         data: formData
       })
       .done(function( data ) {
+        $('#load').hide();
+        $('#modal-load').modal('toggle');
         if (data.status) {
-          alert('carga completa');
-          $('#load').hide();
-          $('#modal-load').modal('toggle');
-          $('#alert').removeClass('alert-danger');
-          $('#alert').addClass('alert-success');
+          $('#alert').removeClass('bg-red');
+          $('#alert').addClass('bg-green');
           $('#msjCarga').html("Se agregó correctamente el archivo");
           $('#nuevos').html(data.nuevos);
           $('#repetidos').html(data.repetidos);
           $('#contentTrue').show();
         }else{
-          $('#alert').removeClass('alert-success');
-          $('#alert').addClass('alert-danger');
+          $('#alert').removeClass('bg-green');
+          $('#alert').addClass('bg-red');
           $('#msjCarga').html("No se pudo cargar el archivo. Verifique el formato.");
           $('#contentTrue').hide();
         }

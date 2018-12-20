@@ -44,11 +44,12 @@ class DataLoggerRepository extends \Doctrine\ORM\EntityRepository
           ->getArrayResult();
   }
 
-  public function getDataLoggersValid($room, $from, $to){
+  public function getDataLoggersValid($room, $from, $to, $valid=false){
     return $this->createQueryBuilder('d')
           ->select('d')
           ->where('d.room = :room')
-          ->andWhere('d.enabled = 1')
+          ->andWhere('d.enabled = :valid')
+          ->setParameter('valid', $valid)
           ->andWhere('d.date BETWEEN :from AND :to')
           ->setParameter('from', $from )
           ->setParameter('to', $to)
@@ -57,11 +58,12 @@ class DataLoggerRepository extends \Doctrine\ORM\EntityRepository
           ->getResult();
   }
 
-  public function getLastDate($room){
+  public function getLastDate($room, $valid=false){
     return $this->createQueryBuilder('d')
             ->select('d.date')
             ->where('d.room = :room')
-            ->andWhere('d.enabled = 1')
+            ->andWhere('d.enabled = :valid')
+            ->setParameter('valid', $valid)
             ->setParameter('room', $room->getId())
             ->setMaxResults(1)
             ->orderBy('d.date', 'DESC')
@@ -69,11 +71,12 @@ class DataLoggerRepository extends \Doctrine\ORM\EntityRepository
             ->getOneOrNullResult();
     }
 
-  public function getFirstDate($room){
+  public function getFirstDate($room, $valid=false){
     return $this->createQueryBuilder('d')
             ->select('d.date')
             ->where('d.room = :room')
-            ->andWhere('d.enabled = 1')
+            ->andWhere('d.enabled = :valid')
+            ->setParameter('valid', $valid)
             ->setParameter('room', $room->getId())
             ->setMaxResults(1)
             ->orderBy('d.date', 'ASC')

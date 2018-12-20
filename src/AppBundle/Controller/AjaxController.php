@@ -125,7 +125,7 @@ class AjaxController extends Controller
         $room=$em->getRepository('AppBundle:Room')->findOneById($request->request->get('_room'));
         $first = new \DateTime('@'.$request->request->get('_first'));
         $last = new \DateTime('@'.$request->request->get('_last'));
-        $registros= $em->getRepository('AppBundle:DataLogger')->getDataLoggersValid($room, $first->format("Y-m-d H:i:s"), $last->format("Y-m-d H:i:s"));
+        $registros= $em->getRepository('AppBundle:DataLogger')->getDataLoggersValid($room, $first->format("Y-m-d H:i:s"), $last->format("Y-m-d H:i:s"), true);
         $limit ="[";
         $promedio ="[";
         $valor ="[";
@@ -161,7 +161,7 @@ class AjaxController extends Controller
         $room=$em->getRepository('AppBundle:Room')->findOneById($request->request->get('_room'));
         $first = new \DateTime('@'.$request->request->get('_first'));
         $last = new \DateTime('@'.$request->request->get('_last'));
-        $registros= $em->getRepository('AppBundle:DataLogger')->getDataLoggersValid($room, $first, $last);
+        $registros= $em->getRepository('AppBundle:DataLogger')->getDataLoggersValid($room, $first, $last, true);
 
         $limit ="[";
         $promedio ="[";
@@ -197,9 +197,9 @@ class AjaxController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $room=$em->getRepository('AppBundle:Room')->findOneById($request->request->get('_room'));
-        $first= $em->getRepository('AppBundle:DataLogger')->getFirstDate($room);
+        $first= $em->getRepository('AppBundle:DataLogger')->getFirstDate($room, true);
         if (isset($first['date'])) {
-          $last= $em->getRepository('AppBundle:DataLogger')->getLastDate($room);
+          $last= $em->getRepository('AppBundle:DataLogger')->getLastDate($room, true);
           $data = array(
             'first' => $first['date']->format('Y-m-d'),
             'last' => $last['date']->format('Y-m-d')

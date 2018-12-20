@@ -20,7 +20,6 @@ class AppKernel extends Kernel
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new Liuggio\ExcelBundle\LiuggioExcelBundle(),
-            new Yectep\PhpSpreadsheetBundle\PhpSpreadsheetBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
