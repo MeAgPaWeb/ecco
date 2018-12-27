@@ -2,6 +2,10 @@
     padding-top: 17px!important;
     text-align: center!important;
 }
+.padding {
+    padding-left: 5px;
+    padding-right: 5px;
+}
 .btn-app{
   margin: -4px 3px 3px 3px!important;
 }

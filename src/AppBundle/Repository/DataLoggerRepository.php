@@ -34,10 +34,22 @@ class DataLoggerRepository extends \Doctrine\ORM\EntityRepository
           ->getArrayResult();
   }
 
-  public function getDataLoggersValid($room, $from, $to){
+  public function getArrayLoads($room){
+    return $this->createQueryBuilder('d')
+          ->select('d.uniqueAttr')
+          ->innerJoin('d.room', 'room')
+          ->where('room = :room')
+          ->setParameter('room', $room)
+          ->getQuery()
+          ->getArrayResult();
+  }
+
+  public function getDataLoggersValid($room, $from, $to, $valid=false){
     return $this->createQueryBuilder('d')
           ->select('d')
           ->where('d.room = :room')
+          ->andWhere('d.enabled = :valid')
+          ->setParameter('valid', $valid)
           ->andWhere('d.date BETWEEN :from AND :to')
           ->setParameter('from', $from )
           ->setParameter('to', $to)
@@ -46,26 +58,30 @@ class DataLoggerRepository extends \Doctrine\ORM\EntityRepository
           ->getResult();
   }
 
-  public function getLastDate($room){
+  public function getLastDate($room, $valid=false){
     return $this->createQueryBuilder('d')
             ->select('d.date')
             ->where('d.room = :room')
+            ->andWhere('d.enabled = :valid')
+            ->setParameter('valid', $valid)
             ->setParameter('room', $room->getId())
             ->setMaxResults(1)
             ->orderBy('d.date', 'DESC')
             ->getQuery()
-            ->getSingleResult();
+            ->getOneOrNullResult();
     }
 
-  public function getFirstDate($room){
+  public function getFirstDate($room, $valid=false){
     return $this->createQueryBuilder('d')
             ->select('d.date')
             ->where('d.room = :room')
+            ->andWhere('d.enabled = :valid')
+            ->setParameter('valid', $valid)
             ->setParameter('room', $room->getId())
             ->setMaxResults(1)
             ->orderBy('d.date', 'ASC')
             ->getQuery()
-            ->getSingleResult();
+            ->getOneOrNullResult();
     }
 
   public function getDataPersentil($room, $type){

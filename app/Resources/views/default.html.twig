@@ -28,17 +28,18 @@
 
 {% block contentWrapper %}
 <div class="container">
-
-    <section class="content-header">
-        <h1>
-            {{ page.title }}
-            <small>{{ page.subtitle }}</small>
-        </h1>
-        <ol class="breadcrumb">
-            <li><a href="{{ path('homepage')}}"><i class="fa fa-dashboard"></i> Inicio</a></li>
-            {% block breadcrumb %}{% endblock %}
-        </ol>
-    </section>
+    {% block contentHeader %}
+      <section class="content-header">
+          <h1>
+              {{ page.title }}
+              <small>{{ page.subtitle }}</small>
+          </h1>
+          <ol class="breadcrumb">
+              <li><a href="{{ path('homepage')}}"><i class="fa fa-dashboard"></i> Inicio</a></li>
+              {% block breadcrumb %}{% endblock %}
+          </ol>
+      </section>
+    {% endblock %}
 
     <div class="content" style="overflow:auto;">
         {% block content %}{% endblock %}

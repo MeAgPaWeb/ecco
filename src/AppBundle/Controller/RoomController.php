@@ -75,15 +75,16 @@ class RoomController extends Controller
         $form = $this->createForm('AppBundle\Form\RoomType', $room);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $room->setLibrary($library);
-            $em->persist($room);
-            $library->addRoom($room);
-            $em->persist($library);
-            $em->flush();
-            $this->loadDataAction($request, $room);
-
+        if ($form->isSubmitted()){
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $room->setLibrary($library);
+                $em->persist($room);
+                $library->addRoom($room);
+                $em->persist($library);
+                $em->flush();
+                $this->loadDataAction($request, $room);
+            }
             return $this->redirectToRoute($route, array('request' => $request, 'library' => $library->getId()));
         }
 
@@ -172,6 +173,7 @@ class RoomController extends Controller
         ;
     }
 
+
     /**
      * Displays a form to edit an existing room entity.
      *
@@ -184,35 +186,73 @@ class RoomController extends Controller
         $name = $file->getFilename();
         $url =  $file->getRealPath();
         $em = $this->getDoctrine()->getManager();
+        $isLoad= $em->getRepository('AppBundle:DataLogger')->getArrayLoads($room);
+        $dataloggerLoads=array();
+        foreach ($isLoad as $key => $unique) {
+          $dataloggerLoads[]=$unique['uniqueAttr'];
+        }
+
         if ($file->isValid()) {
           $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject($url);
           $phpExcelObject->setActiveSheetIndex(0);
           $activesheet = $phpExcelObject->getActiveSheet()->toArray();
           $j=2;
+          $nuevos=0;
+          $repetidos=0;
+          $batchSize = 30;
           while (isset($activesheet[$j][4])) {
-              $date= \DateTime::createFromFormat( "d/m/y H:i:s A", $activesheet[$j][1]." ".$activesheet[$j][2]);
+              $date= \DateTime::createFromFormat( "d/m/y H:i:s", $activesheet[$j][1]." ".$activesheet[$j][2]);
               $data = new DataLogger($date,$room);
-              $data->setNumber($activesheet[$j][0]);
-              $data->setTemperature($activesheet[$j][3]);
-              $data->setRh($activesheet[$j][4]);
-              $data->setDewpt($activesheet[$j][5]);
-              $em->persist($data);
-              $room->addDataLogger($data);
-              $em->persist($room);
+              if (!in_array($data->getUniqueAttr(), $dataloggerLoads) ) {
+                $data->setNumber($activesheet[$j][0]);
+                $data->setTemperature($activesheet[$j][3]);
+                $data->setRh($activesheet[$j][4]);
+                $data->setDewpt($activesheet[$j][5]);
+                $em->persist($data);
+                $room->addDataLogger($data);
+                $em->persist($room);
+                $nuevos++;
+              }else {
+                $repetidos++;
+              }
+              if (($j % $batchSize) === 0) {
+                try {
+                  $em->flush(); // Executes all updates.
+                  $em = $this->getDoctrine()->getManager();
+                }catch(\Doctrine\DBAL\DBALException $e) {
+                  if (!$em->isOpen()) {
+                    $em = $em->create(
+                        $em->getConnection(),
+                        $em->getConfiguration()
+                    );
+                  }
+                }
+              }
               $j++;
           }
           $em->flush();
-          if ($request->request->get('ajax')) {
-            return new Response(json_encode(true));
-          }
-          return true;
+          $data = array(
+              'status' => true,
+              'nuevos' => $nuevos,
+              "repetidos" => $repetidos
+           );
+        }else {
+          $data = array(
+              'status' => false
+           );
         }
       }else{
-        if ($request->request->get('ajax')) {
-          return new Response(json_encode(false));
-        }
-        return false;
+        $data = array(
+            'status' => false
+         );
       }
+      if ($data['status']) {
+        if ($this->calcDataAction($request, $room)) {
+          $this->calcpersentilAction($request, $room);
+          $this->calcLimitAction($request, $room);
+        }
+      }
+      return new Response(json_encode($data));
     }
 
     /**
@@ -225,23 +265,28 @@ class RoomController extends Controller
       $em = $this->getDoctrine()->getManager();
       $min= $em->getRepository('AppBundle:DataLogger')->getFirstDate($room);
       $max= $em->getRepository('AppBundle:DataLogger')->getLastDate($room);
-      $dataloggers = $em->getRepository('AppBundle:DataLogger')->getDataLoggersValid($room, $min['date']->add(new \DateInterval('P15D')), $max['date']->sub(new \DateInterval('P15D')));
-      foreach ($dataloggers as $datalogger) {
-        $dateMin = clone $datalogger->getDate();
-        $dateMax = clone $datalogger->getDate();
-        $dateMin->sub(new \DateInterval('P15D'));
-        $dateMax->add(new \DateInterval('P15D'));
-        $promedio = $em->getRepository('AppBundle:DataLogger')->getAvgHT($room, $dateMin, $dateMax);
-        $datalogger->setMeanAvH($promedio[0]['meanAvH']);
-        $datalogger->setMeanAvT($promedio[0]['meanAvT']);
-        $datalogger->setEnabled(true);
-        $datalogger->setRegMeanAvH($datalogger->getRh()-$promedio[0]['meanAvH']);
-        $datalogger->setRegMeanAvT($datalogger->getTemperature()-$promedio[0]['meanAvT']);
-        $em->persist($datalogger);
+      if (isset($min['date'])) {
+        $dataloggers = $em->getRepository('AppBundle:DataLogger')->getDataLoggersValid($room, $min['date']->add(new \DateInterval('P15D')), $max['date']->sub(new \DateInterval('P15D')));
+        foreach ($dataloggers as $datalogger) {
+          if (!$datalogger->getEnabled()) {
+            $dateMin = clone $datalogger->getDate();
+            $dateMax = clone $datalogger->getDate();
+            $dateMin->sub(new \DateInterval('P15D'));
+            $dateMax->add(new \DateInterval('P15D'));
+            $promedio = $em->getRepository('AppBundle:DataLogger')->getAvgHT($room, $dateMin, $dateMax);
+            $datalogger->setMeanAvH($promedio[0]['meanAvH']);
+            $datalogger->setMeanAvT($promedio[0]['meanAvT']);
+            $datalogger->setEnabled(true);
+            $datalogger->setRegMeanAvH($datalogger->getRh()-$promedio[0]['meanAvH']);
+            $datalogger->setRegMeanAvT($datalogger->getTemperature()-$promedio[0]['meanAvT']);
+            $em->persist($datalogger);
+          }
+        }
+        $em->flush();
+        return true;
+      }else {
+        return false;
       }
-      $em->flush();
-      return new Response(json_encode(true));
-
     }
 
     /**
@@ -281,9 +326,10 @@ class RoomController extends Controller
         }
         $em->flush();
       }else {
-        die('calcula los percentiles antes ');
+        //necesario calcular los percentiles antes
+        return false;
       }
-      return new Response(json_encode(true));
+      return true;
 
     }
 
@@ -311,7 +357,7 @@ class RoomController extends Controller
       $room->setPerc93T($this->getPercentile(93, $valuesT));
       $em->persist($room);
       $em->flush();
-      return new Response(json_encode(true));
+      return true;
 
     }
 
