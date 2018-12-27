@@ -340,7 +340,7 @@
             <option value=null>vacio</option>
           </select>
           <span class="input-group-addon" style="padding:0px;">
-            <a href="#" id="add-sala" disabled>
+            <a id="add-sala" disabled>
                 <i class="fa fa-plus" style="padding: 8px 18px;background-color: #3c8dbc;margin: 0;color: #fff;"></i>
               </a>
             </span>
@@ -355,7 +355,7 @@
             })
             .done(function( data ) {
               var $el = $("#rooms");
-              $('#add-sala').attr('href', '/room/'+id+'/new')
+              $('#add-sala').attr('href', '/sala/'+id+'/crear')
               $el.empty(); // remove old options
               $.each(data, function(key,value) {
                 $el.append($("<option></option>")
