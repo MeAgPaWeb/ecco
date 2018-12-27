@@ -83,7 +83,10 @@ class RoomController extends Controller
                 $library->addRoom($room);
                 $em->persist($library);
                 $em->flush();
-                $this->loadDataAction($request, $room);
+                $this->addFlash(
+                  'info',
+                  'Se creó la sala'
+                );
             }
             return $this->redirectToRoute($route, array('request' => $request, 'library' => $library->getId()));
         }
@@ -125,8 +128,10 @@ class RoomController extends Controller
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-            //$this->loadDataAction($request, $room);
-
+            $this->addFlash(
+              'info',
+              'Sala modificada'
+            );
             return $this->redirectToRoute('library_edit', array('id' => $room->getLibrary()->getId()));
         }
 
@@ -152,6 +157,10 @@ class RoomController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->remove($room);
             $em->flush();
+            $this->addFlash(
+              'info',
+              'Se eliminó la sala'
+            );
         }
 
         return $this->redirectToRoute('room_index');

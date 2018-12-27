@@ -83,17 +83,12 @@ class LibraryController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $library->setOwner($this->getUser());
-            ///$library->addFollower($this->getUser());
-            //$em->persist($library);
-
-            ///$this->getUser()->addFollowing($library);
-            //$em->persist($this->getUser());
-
-
             $em->persist($library);
             $em->flush();
-
-
+            $this->addFlash(
+              'info',
+              'Se creó la biblioteca'
+            );
             return $this->redirectToRoute($route, array('request' => $request,'library' => $library->getId()));
         }
 
@@ -131,7 +126,10 @@ class LibraryController extends Controller
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
+            $this->addFlash(
+              'info',
+              'Biblioteca modificada'
+            );
             return $this->redirectToRoute('library_edit', array('id' => $library->getId()));
         }
 
@@ -154,7 +152,10 @@ class LibraryController extends Controller
         $library->setEnabled(false);
         $em->persist($library);
         $em->flush();
-
+        $this->addFlash(
+          'info',
+          'Se eliminó la biblioteca'
+        );
         return $this->redirectToRoute('homepage');
     }
 }
