@@ -49,11 +49,17 @@
                 position: results[0].geometry.location
               });
             } else {
-              alert('No se pudo encontrar la ubicación por la siguiente razón: ' + status);
+              alert('No se pudo encontrar la ubicación.');
             }
           });
         });
-        $('.my-colorpicker1').colorpicker();
+
+        $("#my-color-picker").colorpicker( 
+          { color: $('.my-colorpicker1').val(),
+           container: true,
+            inline: true});
+
+        $(".my-colorpicker1").hide();
 
       }
 
@@ -121,7 +127,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-6" id="my-color-picker">
                 <div class="form-group has-feedback{% if form.colour.vars.errors | length %} has-error{% endif %}">
                   {{ form_label(form.colour) }}
                   {{ form_widget(form.colour) }}

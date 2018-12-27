@@ -3,7 +3,7 @@
 {% set page =
     {
         "title": "Biblioteca",
-        "subtitle": "estaditica",
+        "subtitle": "estadística",
     }
 %}
 
@@ -216,13 +216,13 @@
 
 {% block breadcrumb %}
     <li><a href="#"><i class="fa fa-dashboard"></i> Biblioteca</a></li>
-    <li class="active">Estaditicas</li>
+    <li class="active">Estadisticas</li>
 {% endblock %}
 
 {% set page =
     {
         "title": "Biblioteca",
-        "subtitle": "Estadísticas"
+        "subtitle": "Estadísticas por sala"
     }
 %}
 
@@ -242,7 +242,7 @@
               <div class="col-md-6">
                 <label for="select-sala">Eleccione una Sala de la Biblioteca</label>
                 <select class="form-control" id="select-sala" placeholder="seleccione una sala">
-                  <option value="0">seleccione una sala</option>
+                  <option value="0">Seleccione una sala</option>
                   {% for room in library.rooms %}
                   <option value="{{room.id}}">{{room.name}}</option>
                   {% endfor %}

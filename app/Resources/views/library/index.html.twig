@@ -143,7 +143,7 @@
                                               {% if solicitud.library == library %}
                                                 {% set sendSolicitud = false %}
                                                 {% if solicitud.state == "pending" %}
-                                                  <span class="label label-warning" >Pendiente</span>
+                                                  <span class="label label-warning" >Pendiente de aceptación</span>
                                                 {% elseif solicitud.state == "canceled" %}
                                                   <span class="label label-danger">Cancelado</span>
                                                 {% elseif solicitud.state == "accepted" %}

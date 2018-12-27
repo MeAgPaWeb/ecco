@@ -32,7 +32,7 @@ class LibraryType extends AbstractType
                 ))
                 ->add('position',HiddenType::class,array())
                 ->add('colour',null,array(
-                  'label' => 'Color de Identificación',
+                  'label' => 'Elija un color para su biblioteca',
                   'attr' => array(
                     'placeholder'  => '#00000',
                     'empty_data'  => '#22c0dd',

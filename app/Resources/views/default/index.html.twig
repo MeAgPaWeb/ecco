@@ -33,7 +33,7 @@
       <div class="small-box bg-fucia">
         <div class="inner">
           <h3>Buscar</h3>
-          <p>Otras Bibliotecas</p>
+          <p>Bibliotecas para subscribirse</p>
         </div>
         <div class="icon">
           <i class="ion ion-search"></i>
@@ -64,8 +64,54 @@
       {% endif %}
     </div>
   </a>
+
+
+  <a data-toggle="modal" data-target="#modalAyuda">
+    <div class="col-lg-3 col-xs-6">
+      <div class="small-box bg-yellow">
+        <div class="inner">
+          <h3>Ayuda</h3>
+          <p>Preguntas frecuentes</p>
+        </div>
+        <div class="icon">
+          <i class="ion ion-information"></i>
+        </div>
+      </div>
+    </div>
+  </a>
+
+  <!-- /.Modal ayuda -->
+  <div class="modal fade" id="modalAyuda" tabindex="-1" role="dialog" aria-labelledby="modalAyuda" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalAyuda">Información sobre el sistema</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Este sistema está pensado para que pueda analizar cómo se están conservando
+          los materiales en las bibliotecas donde se posea información.<br>
+          Mediante un aparato llamado "datalogger" se mide la temperatura y la humedad de una sala de una biblioteca. <br>
+          Con esa información, junto a la composición de las paredes y a la superficie vidriada entre otros datos, se elaboran estadísticas y proyecciones que permiten tomar decisiones para mejorar la conservación de los materiales.
+          <br><br>
+          Sólo puede cargar información en las bibliotecas bajo su administración, pero puede pedir acceso a información estadística de cualquier otra biblioteca del sistema.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /.Fin Modal ayuda -->
   <!-- ./col -->
 </div>
+
+
+<!--------------------Inicio contenido ---------------------->
+
+
 <div class="row">
   {% if libraries|length %}
   <section class="content-header">
@@ -89,7 +135,9 @@
             <div class="col-sm-4 border-right">
               <div class="description-block">
                 <h5 class="description-header">{{library.rooms|length }}</h5>
-                <span class="description-text">Salas</span>
+                <span class="description-text">
+                  {{ (library.rooms|length == 1) ? 'Sala' : 'Salas' }}
+                </span>
               </div>
               <!-- /.description-block -->
             </div>
@@ -97,7 +145,7 @@
             <div class="col-sm-4 border-right">
               <div class="description-block">
                 <h5 class="description-header">{{library | dataLoggers}}</h5>
-                <span class="description-text">Registros</span>
+                <span class="description-text">Registros cargados</span>
               </div>
               <!-- /.description-block -->
             </div>
@@ -373,9 +421,23 @@
       </script>
       </div>
       <div class="form-group">
-        <label for="exampleInputFile">Archivo de Registro del DataLogger</label>
+        <label for="exampleInputFile">Archivo de registros de temperatura y humedad del DataLogger</label>
+        
+<table class="table table-bordered">
+    <caption>Seleccione el archivo .xls que contenga las siguientes columnas </caption>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Date</th>
+        <th>Time, GMT-03:00</th>
+        <th>Temp, °C</th>
+        <th>RH, %</th>
+        <th>DewPt, °C</th>
+      </tr>
+    </thead>
+</table>
+        
         <input id="uploadFile" name="upload" type="file" accept="application/msexcel">
-        <p class="help-block">Seleccione el archivo .xls que contenga las siguientes columnas <br>   ("#";"Date";"Time, GMT-03:00";"Temp, °C";"RH, %";"DewPt, °C")</p>
       </div>
 {% endblock %}
 {% block modal_footer %}
