@@ -1,12 +1,36 @@
 # **Conservación preventiva de edificios de bibliotecas basados en el clima interior**
-## Instalación previa de:
-* `php`
-* `mysql`
-* `apache2` o `nginx`
-* `jpegoptim`
-* `optipng`
-* `node`
-## Clonar el repositorio
+## 1. Objetivo del proyecto: 
+Desarrollar una aplicación que gestione usuarios, bibliotecas y salas (pertenecientes a una biblioteca), permitiendo que un usuario registrado pueda conocer cuál es el clima ideal de una sala basado en la condición previa a la cual los materiales de dicha sala se aclimataron. Esta información previa se obtiene a través de dataloggers que registran durante cierto tiempo la temperatura y humedad de la sala en cuestión.
+
+## 2. User Stories desarrolladas:
+* Como usuario de una biblioteca monitorizada que aún no ha sido incorporada a sistema (nuevo usuario) deseo registrarme como usuario del sistema, para poder registrar los datos de mi biblioteca.
+
+* Como nuevo usuario deseo registrar la biblioteca en el sistema para poder luego conocer los datos del clima que se desprendan del análisis que realiza el sistema.
+
+* Como usuario registrado deseo visualizar para una sala con datos cargados:
+	* Media móvil
+	* Objetivo climático
+
+* Como usuario de una biblioteca registrada en el sistema deseo registrarme como usuario autorizado a acceder a los datos de una biblioteca.
+
+## 3. Modelo de diseño en UML:
+![alt text](https://github.com/MeAgPaWeb/ecco/blob/master/modelo/Modelo.png)
+
+## 4. Tecnologías usadas en el desarrollo y consideraciones de implementación importantes:
+* `Symfony3.4`
+* `Doctrine`
+* `jQuery`
+* `PHP`
+* `MySQL`
+* `[ Nginx | Apache2 ]`
+* `Bootstrap`
+* `AdminLTE`
+* `Highchart`
+* `Jpegoptim`
+* `Optipng`
+* `Node`
+
+## 5. Clonar el repositorio
 * SSH
 ```bash
 git clone git@github.com:MeAgPaWeb/cpebbci.git
@@ -15,7 +39,7 @@ git clone git@github.com:MeAgPaWeb/cpebbci.git
 ```bash
 git clone https://github.com/MeAgPaWeb/cpebbci.git
 ```
-## Preparar el proyecto
+## 6. Preparar el proyecto
 * Entrar al directorio y dar permisos a cache, logs y sessions
 ```bash
 cd cpebbci
