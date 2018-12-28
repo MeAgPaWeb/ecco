@@ -31,7 +31,6 @@ Desarrollar una aplicación que gestione usuarios, bibliotecas y salas (pertenec
 * `Node`
 
 ## 5. Clonar el repositorio
-* SSH
 ```bash
 git clone git@github.com:MeAgPaWeb/cpebbci.git
 ```
