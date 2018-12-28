@@ -41,7 +41,7 @@ git clone https://github.com/MeAgPaWeb/cpebbci.git
 ## 6. Preparar el proyecto
 * Entrar al directorio y dar permisos a cache, logs y sessions
 ```bash
-cd cpebbci
+cd ecco
 bash # El siguiente filtro corre en bash
 HTTPDUSER=`ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d" " -f1`
 sudo setfacl -R -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX var
